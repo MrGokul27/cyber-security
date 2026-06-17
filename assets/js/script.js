@@ -637,4 +637,34 @@ function initializeVideoPlayer() {
 
 document.addEventListener("DOMContentLoaded", initializeVideoPlayer);
 
+/* ==================================================
+   PRICING TOGGLE
+================================================== */
+
+function initializePricingToggle() {
+  const pricingToggle = document.querySelector(".pricing-toggle");
+  if (!pricingToggle) return;
+
+  const buttons = pricingToggle.querySelectorAll(".btn");
+  const priceElements = document.querySelectorAll(".pricing-card .price");
+  const durationElements = document.querySelectorAll(".pricing-card .duration");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active-plan"));
+      btn.classList.add("active-plan");
+
+      const isYearly = btn.classList.contains("yearly-plan");
+      priceElements.forEach((el) => {
+        el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
+      });
+      durationElements.forEach((el) => {
+        el.textContent = isYearly ? "/yr" : "/mo";
+      });
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initializePricingToggle);
+
 window.togglePassword = togglePassword;

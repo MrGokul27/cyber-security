@@ -512,6 +512,7 @@
 
 .btn-primary-custom:hover {
   transform: translateY(-3px);
+  color: #001d20;
   background: #19f3ff;
 }
 
@@ -1528,8 +1529,18 @@
 
 /* Blog Card */
 .blog-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 1.5rem;
+  backdrop-filter: blur(15px);
   transition: all 0.4s ease;
   cursor: pointer;
+}
+
+.blog-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 240, 255, 0.5);
 }
 
 .blog-image-wrapper {
