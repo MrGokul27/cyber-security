@@ -1,0 +1,1205 @@
+<!doctype html>
+
+<html class="dark" lang="en" data-bs-theme="dark">
+  <head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Advanced Infrastructure Security</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <style>
+      html,
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+      }
+
+      .logo-ticker {
+        overflow: hidden;
+      }
+    </style>
+    <script src="./assets/js/script.js" defer></script>
+  </head>
+  <body>
+    <div id="magic-cursor"></div>
+    <div id="header-placeholder"></div>
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section position-relative overflow-hidden">
+        <div
+          id="heroCarousel"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+        >
+          <!-- Indicators -->
+          <div class="carousel-indicators z-3">
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <!-- Slide 1: Global Threats -->
+            <div
+              class="carousel-item active"
+              style="
+                background-image:
+                  linear-gradient(rgba(11, 17, 24, 0.7), #0b1118),
+                  url(&quot;./assets/images/home/home-hero-bg-1.webp&quot;);
+              "
+            >
+              <div class="container-fluid position-relative z-2">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 col-xl-7 text-center">
+                    <!-- Badge -->
+                    <div
+                      class="hero-badge d-inline-flex align-items-center gap-2 mb-4"
+                    >
+                      <span class="pulse-dot"></span>
+                      <span>Global Threat Matrix Active</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h1 class="hero-title mb-4">
+                      Protect Your Business From
+                      <span class="text-highlight">Global Cyber Threats</span>
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="hero-description mb-5">
+                      Advanced cybersecurity solutions tailored to keep your
+                      infrastructure safe, compliant, and resilient in an
+                      evolving digital landscape.
+                    </p>
+
+                    <!-- Buttons -->
+                    <div
+                      class="d-flex flex-column flex-sm-row justify-content-center gap-3"
+                    >
+                      <a href="#" class="btn btn-primary-custom">
+                        Get Free Assessment
+                      </a>
+                      <a href="#" class="btn btn-outline-custom">
+                        View Our Services
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Cloud Defense -->
+            <div
+              class="carousel-item"
+              style="
+                background-image:
+                  linear-gradient(rgba(11, 17, 24, 0.7), #0b1118),
+                  url(&quot;./assets/images/home/home-hero-bg-2.webp&quot;);
+              "
+            >
+              <div class="container-fluid position-relative z-2">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 col-xl-7 text-center">
+                    <div
+                      class="hero-badge d-inline-flex align-items-center gap-2 mb-4"
+                    >
+                      <span class="pulse-dot"></span>
+                      <span>Cloud Infrastructure Shield</span>
+                    </div>
+                    <h1 class="hero-title mb-4">
+                      Enterprise-Grade
+                      <span class="text-highlight">Cloud Defense</span> &
+                      Security
+                    </h1>
+                    <p class="hero-description mb-5">
+                      Implementation of zero-trust architecture across
+                      multi-cloud environments to prevent unauthorized access
+                      and data exfiltration.
+                    </p>
+                    <div
+                      class="d-flex flex-column flex-sm-row justify-content-center gap-3"
+                    >
+                      <a href="#" class="btn btn-primary-custom"
+                        >Cloud Security Audit</a
+                      >
+                      <a href="#" class="btn btn-outline-custom">Learn More</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Incident Response -->
+            <div
+              class="carousel-item"
+              style="
+                background-image:
+                  linear-gradient(rgba(11, 17, 24, 0.7), #0b1118),
+                  url(&quot;./assets/images/home/home-hero-bg-3.webp&quot;);
+              "
+            >
+              <div class="container-fluid position-relative z-2">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 col-xl-7 text-center">
+                    <div
+                      class="hero-badge d-inline-flex align-items-center gap-2 mb-4"
+                    >
+                      <span class="pulse-dot"></span>
+                      <span>24/7 Incident Response</span>
+                    </div>
+                    <h1 class="hero-title mb-4">
+                      Rapid Mitigation for
+                      <span class="text-highlight">Complex Cyber Attacks</span>
+                    </h1>
+                    <p class="hero-description mb-5">
+                      Our specialized Security Operations Center provides
+                      instant response and forensic analysis to minimize impact
+                      and ensure business continuity.
+                    </p>
+                    <div
+                      class="d-flex flex-column flex-sm-row justify-content-center gap-3"
+                    >
+                      <a href="#" class="btn btn-primary-custom"
+                        >Emergency Support</a
+                      >
+                      <a href="#" class="btn btn-outline-custom"
+                        >Our SOC Team</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Elements (Overlay and Glows remain static over the slider) -->
+        <div class="hero-overlay"></div>
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+      </section>
+
+      <!-- Trusted By Section -->
+      <section class="trusted-section">
+        <div class="container-fluid p-0">
+          <div class="logo-ticker">
+            <div class="ticker-track">
+              <!-- First Set -->
+              <div class="ticker-group">
+                <span>TECHNOVA</span>
+                <span>GLOBALBANK</span>
+                <span>SECURECLOUD</span>
+                <span>INFRA-X</span>
+                <span>CYBERCORE</span>
+                <span>DATASTREAM</span>
+              </div>
+
+              <!-- Duplicate Set -->
+              <div class="ticker-group">
+                <span>TECHNOVA</span>
+                <span>GLOBALBANK</span>
+                <span>SECURECLOUD</span>
+                <span>INFRA-X</span>
+                <span>CYBERCORE</span>
+                <span>DATASTREAM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION -->
+      <section class="about-section py-5 py-lg-7">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <!-- Left Side -->
+            <div class="col-lg-5">
+              <div class="position-relative">
+                <div class="glass-card about-experience-card">
+                  <div class="scan-line"></div>
+
+                  <div class="experience-number">26</div>
+
+                  <h3 class="experience-title">Years of Unmatched Expertise</h3>
+
+                  <p class="experience-text mb-0">
+                    Forging unbreakable digital frontiers since 1998, Stackly
+                    remains at the forefront of defense technology.
+                  </p>
+                </div>
+
+                <div class="experience-glow"></div>
+              </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-7">
+              <h2 class="section-title mb-5">
+                Innovating for a Safer Digital Future
+              </h2>
+
+              <!-- Mission -->
+              <div class="mission-item d-flex mb-5">
+                <div class="icon-box me-4">
+                  <span class="material-symbols-outlined"> security </span>
+                </div>
+
+                <div>
+                  <h3 class="h4 mb-3">Our Mission</h3>
+
+                  <p class="text-muted-custom mb-0">
+                    To empower organizations with predictive security
+                    architectures that neutralize threats before they impact
+                    operations.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Vision -->
+              <div class="mission-item d-flex">
+                <div class="icon-box me-4">
+                  <span class="material-symbols-outlined"> visibility </span>
+                </div>
+
+                <div>
+                  <h3 class="h4 mb-3">Our Vision</h3>
+
+                  <p class="text-muted-custom mb-0">
+                    A world where data is inherently secure, allowing global
+                    innovation to flourish without the fear of systemic breach.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES SECTION -->
+      <section class="services-section py-5 py-lg-7">
+        <div class="container">
+          <!-- Heading -->
+          <div class="text-center mb-5">
+            <h2 class="section-title mb-3">Our Core Defense Services</h2>
+
+            <p class="section-description mx-auto">
+              Scalable security protocols engineered for the complexities of
+              modern enterprise environments.
+            </p>
+          </div>
+
+          <!-- Cards -->
+          <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  lan
+                </span>
+
+                <h3>Advanced Network Security</h3>
+
+                <p>
+                  Zero-trust architecture deployment and robust firewall
+                  management for distributed networks.
+                </p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  radar
+                </span>
+
+                <h3>Proactive Threat Detection</h3>
+
+                <p>
+                  AI-driven monitoring systems that identify and isolate
+                  anomalous behaviors in real-time.
+                </p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  manage_history
+                </span>
+
+                <h3>Managed Security Services</h3>
+
+                <p>Continuous 24/7/365 oversight from our specialized SOC.</p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  enhanced_encryption
+                </span>
+
+                <h3>Data Encryption</h3>
+
+                <p>
+                  Advanced quantum-resistant encryption protocols for data at
+                  rest, in transit, and in use.
+                </p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  analytics
+                </span>
+
+                <h3>Cyber Risk Assessments</h3>
+
+                <p>
+                  Deep-dive audits and stress-testing to identify hidden
+                  vulnerabilities in your tech stack.
+                </p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="service-card h-100">
+                <span class="material-symbols-outlined service-icon">
+                  lock_reset
+                </span>
+
+                <h3>Ransomware Protection</h3>
+
+                <p>
+                  Immutable backup strategies and rapid recovery systems to
+                  neutralize extortion attempts.
+                </p>
+
+                <a href="#" class="service-link">
+                  Read More
+                  <span class="material-symbols-outlined"> arrow_forward </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPECIALTIES SECTION -->
+      <section class="specialties-section py-5 py-lg-7">
+        <div class="container">
+          <div class="row g-5 align-items-start">
+            <!-- Left Content -->
+            <div class="col-lg-4">
+              <span class="section-tag"> Our Specialties </span>
+
+              <h2 class="section-title mt-3 mb-4">Advanced Defense Layers</h2>
+
+              <p class="section-description mb-4">
+                We combine human intelligence with synthetic logic to create a
+                defensive perimeter that adapts in real-time to attacker
+                movements.
+              </p>
+
+              <a href="#" class="btn btn-primary-custom"> Inquire More </a>
+            </div>
+
+            <!-- Right Cards -->
+            <div class="col-lg-8">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">
+                      monitoring
+                    </span>
+
+                    <h4>24/7 Monitoring</h4>
+
+                    <p>
+                      Non-stop surveillance of your entire digital ecosystem.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">
+                      vpn_key
+                    </span>
+
+                    <h4>End-to-End Security</h4>
+
+                    <p>
+                      Securing every node, from edge devices to core cloud
+                      servers.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">
+                      psychology
+                    </span>
+
+                    <h4>Cutting-Edge AI</h4>
+
+                    <p>
+                      Neural networks trained on over 5PB of threat data weekly.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">
+                      verified
+                    </span>
+
+                    <h4>Certified Expertise</h4>
+
+                    <p>
+                      A team holding elite CISSP, CEH, and OSCP certifications.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- METRICS SECTION -->
+      <section class="metrics-section py-5 py-lg-7">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <!-- Metrics -->
+            <div class="col-lg-6">
+              <div class="row g-4">
+                <div class="col-sm-6">
+                  <div class="metric-card">
+                    <h3>350+</h3>
+                    <span>Global Projects</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="metric-card">
+                    <h3>99%</h3>
+                    <span>Success Rate</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="metric-card">
+                    <h3>24/7</h3>
+                    <span>Active Defense</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="metric-card">
+                    <h3>15+</h3>
+                    <span>Innovation Awards</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video/Image -->
+            <div class="col-lg-6">
+              <div class="video-card">
+                <video
+                  id="metricsVideo"
+                  class="img-fluid w-100"
+                  poster="./assets/images/home/METRICS image.webp"
+                >
+                  <source
+                    src="./assets/videos/home-cybercesurity.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+
+                <div class="play-overlay">
+                  <button
+                    class="play-btn border-0 p-0"
+                    id="playVideoBtn"
+                    aria-label="Play Video"
+                  >
+                    <span class="material-symbols-outlined"> play_arrow </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CASE STUDIES SECTION -->
+      <section class="case-studies-section py-5 py-lg-7">
+        <div class="container">
+          <!-- Section Header -->
+          <div class="row mb-5">
+            <div class="col-lg-8">
+              <h2 class="section-title mb-3">Case Studies</h2>
+
+              <p class="section-description mb-0">
+                Proven results in critical infrastructure protection across
+                diverse industries.
+              </p>
+            </div>
+          </div>
+
+          <!-- Cards -->
+          <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="case-card h-100">
+                <div class="case-image">
+                  <img
+                    src="./assets/images/home/home-case-study-img-1.webp"
+                    alt="Legal Security"
+                    class="img-fluid"
+                  />
+                </div>
+
+                <div class="case-content">
+                  <span class="case-category"> Legal Services </span>
+
+                  <h3>Strengthening Law Firm Security</h3>
+
+                  <p>
+                    Securing sensitive client data through multi-tenant
+                    encryption and strict access controls.
+                  </p>
+
+                  <a href="#" class="case-link">
+                    View Study
+
+                    <span class="material-symbols-outlined"> north_east </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="case-card h-100">
+                <div class="case-image">
+                  <img
+                    src="./assets/images/home/home-case-study-img-2.webp"
+                    alt="Cloud Security"
+                    class="img-fluid"
+                  />
+                </div>
+
+                <div class="case-content">
+                  <span class="case-category"> SaaS Enterprise </span>
+
+                  <h3>Cloud Infrastructure for SaaS</h3>
+
+                  <p>
+                    Scaling a robust security mesh to support 1M+ daily active
+                    users without latency issues.
+                  </p>
+
+                  <a href="#" class="case-link">
+                    View Study
+
+                    <span class="material-symbols-outlined"> north_east </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="case-card h-100">
+                <div class="case-image">
+                  <img
+                    src="./assets/images/home/home-case-study-img-3.webp"
+                    alt="Financial Data Protection"
+                    class="img-fluid"
+                  />
+                </div>
+
+                <div class="case-content">
+                  <span class="case-category"> FinTech </span>
+
+                  <h3>Financial Data Protection</h3>
+
+                  <p>
+                    PCI-DSS compliance overhaul and fraud detection integration
+                    for a leading neo-bank.
+                  </p>
+
+                  <a href="#" class="case-link">
+                    View Study
+
+                    <span class="material-symbols-outlined"> north_east </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="pricing-section py-5 reveal">
+        <div class="container">
+          <!-- Section Header -->
+          <div class="text-center mb-5">
+            <h2 class="section-title mb-4">Adaptive Defense Plans</h2>
+
+            <div class="pricing-toggle d-inline-flex align-items-center p-1">
+              <button class="btn active-plan">Monthly</button>
+              <button class="btn yearly-plan">Yearly (Save 20%)</button>
+            </div>
+          </div>
+
+          <!-- Pricing Cards -->
+          <div class="row g-4 align-items-stretch">
+            <!-- Basic -->
+            <div class="col-lg-4 col-md-6">
+              <div class="pricing-card glass-card h-100 d-flex flex-column">
+                <span class="pricing-label">BASIC</span>
+
+                <div class="pricing-price mb-4">
+                  <span class="price">$29</span>
+                  <span class="duration">/mo</span>
+                </div>
+
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    24/7 Basic Monitoring
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Firewall Management
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Weekly Scans
+                  </li>
+                  <li class="disabled">
+                    <span class="material-symbols-outlined">cancel</span>
+                    Advanced AI Analysis
+                  </li>
+                </ul>
+
+                <button class="btn btn-outline-custom w-100 mt-3">
+                  Get Started
+                </button>
+              </div>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="pricing-card featured-card glass-card h-100 d-flex flex-column"
+              >
+                <div class="popular-badge">MOST POPULAR</div>
+
+                <span class="pricing-label featured-label"> ENTERPRISE </span>
+
+                <div class="pricing-price mb-4">
+                  <span class="price">$89</span>
+                  <span class="duration">/mo</span>
+                </div>
+
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Proactive Detection
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    AI-Powered Analysis
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Incident Response
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Data Encryption
+                  </li>
+                </ul>
+
+                <button class="btn btn-primary-custom w-100 mt-3">
+                  Select Plan
+                </button>
+              </div>
+            </div>
+
+            <!-- Pro -->
+            <div class="col-lg-4 col-md-12">
+              <div class="pricing-card glass-card h-100 d-flex flex-column">
+                <span class="pricing-label">PRO</span>
+
+                <div class="pricing-price mb-4">
+                  <span class="price">$129</span>
+                  <span class="duration">/mo</span>
+                </div>
+
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Dedicated Security Team
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Custom Architecture
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Compliance Audits
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Priority Support
+                  </li>
+                </ul>
+
+                <button class="btn btn-outline-custom w-100 mt-3">
+                  Get Started
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section class="testimonials-section py-5 reveal">
+        <div class="container">
+          <!-- Section Heading -->
+          <div class="text-center mb-5">
+            <div class="d-flex justify-content-center gap-1 mb-3">
+              <span class="material-symbols-outlined rating-star">star</span>
+              <span class="material-symbols-outlined rating-star">star</span>
+              <span class="material-symbols-outlined rating-star">star</span>
+              <span class="material-symbols-outlined rating-star">star</span>
+              <span class="material-symbols-outlined rating-star"
+                >star_half</span
+              >
+            </div>
+
+            <h2 class="section-title mb-2">4.9/5 Average Rating</h2>
+
+            <p class="section-description mb-0">
+              Trusted by CTOs and IT Directors worldwide.
+            </p>
+          </div>
+
+          <!-- Testimonials Grid -->
+          <div class="row g-4">
+            <!-- Testimonial 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="testimonial-card glass-card h-100 position-relative">
+                <span class="material-symbols-outlined quote-icon">
+                  format_quote
+                </span>
+
+                <p class="testimonial-text">
+                  "Stackly's proactive detection identified a brute force
+                  attempt within seconds. Their rapid isolation protocol saved
+                  us from a major disruption."
+                </p>
+
+                <div class="d-flex align-items-center gap-3">
+                  <img
+                    src="./assets/images/home/home-testimonial-img-1.webp"
+                    alt="Marcus Thorne"
+                    class="testimonial-avatar"
+                  />
+
+                  <div>
+                    <h6 class="mb-1 fw-bold">Marcus Thorne</h6>
+                    <small class="text-muted-custom">
+                      CTO, DataLink Corp
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="testimonial-card glass-card h-100 position-relative">
+                <span class="material-symbols-outlined quote-icon">
+                  format_quote
+                </span>
+
+                <p class="testimonial-text">
+                  "The level of insight provided during our annual cyber risk
+                  assessment was unprecedented. We found vulnerabilities we
+                  didn't even know existed."
+                </p>
+
+                <div class="d-flex align-items-center gap-3">
+                  <img
+                    src="./assets/images/home/home-testimonial-img-2.webp"
+                    alt="Elena Rodriguez"
+                    class="testimonial-avatar"
+                  />
+
+                  <div>
+                    <h6 class="mb-1 fw-bold">Elena Rodriguez</h6>
+                    <small class="text-muted-custom">
+                      IT Director, Zenith Financial
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="testimonial-card glass-card h-100 position-relative">
+                <span class="material-symbols-outlined quote-icon">
+                  format_quote
+                </span>
+
+                <p class="testimonial-text">
+                  "Their Managed Security Services allow my small team to sleep
+                  at night. Knowing Stackly is watching the gates is an absolute
+                  game-changer."
+                </p>
+
+                <div class="d-flex align-items-center gap-3">
+                  <img
+                    src="./assets/images/home/home-testimonial-img-3.webp"
+                    alt="Jameson Wu"
+                    class="testimonial-avatar"
+                  />
+
+                  <div>
+                    <h6 class="mb-1 fw-bold">Jameson Wu</h6>
+                    <small class="text-muted-custom">
+                      Head of Security, SkyBridge
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section py-5 reveal">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <h2 class="section-title text-center mb-5">
+                Frequently Asked Questions
+              </h2>
+
+              <div class="accordion faq-accordion" id="faqAccordion">
+                <!-- FAQ 1 -->
+                <div class="accordion-item glass-card mb-3">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#faq1"
+                    >
+                      Why is cybersecurity important for modern businesses?
+                    </button>
+                  </h2>
+                  <div
+                    id="faq1"
+                    class="accordion-collapse collapse show"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body">
+                      Digital transformation has increased the surface area for
+                      attacks. Every modern business relies on data; losing that
+                      data or facing downtime can be catastrophic for reputation
+                      and revenue.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="accordion-item glass-card mb-3">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#faq2"
+                    >
+                      Does my small business really need advanced security?
+                    </button>
+                  </h2>
+                  <div
+                    id="faq2"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body">
+                      Yes. Small businesses are often seen as "soft targets" by
+                      automated threat actors. Statistics show that over 40% of
+                      cyber attacks target small businesses.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="accordion-item glass-card mb-3">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#faq3"
+                    >
+                      How do you protect against zero-day ransomware?
+                    </button>
+                  </h2>
+                  <div
+                    id="faq3"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body">
+                      We utilize behavioral analysis rather than just
+                      signature-based detection. Our AI monitors for unusual
+                      encryption patterns and immediately isolates affected
+                      segments.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="accordion-item glass-card mb-3">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#faq4"
+                    >
+                      Can your services help with regulatory compliance?
+                    </button>
+                  </h2>
+                  <div
+                    id="faq4"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body">
+                      Absolutely. We provide specific architectures and reports
+                      designed to meet GDPR, HIPAA, SOC2, and PCI-DSS
+                      requirements.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="accordion-item glass-card">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#faq5"
+                    >
+                      What is the typical response time during an incident?
+                    </button>
+                  </h2>
+                  <div
+                    id="faq5"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body">
+                      Our automated systems respond in milliseconds. Human
+                      intervention from our elite response team is guaranteed
+                      within 15 minutes for critical alerts.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog Section -->
+      <section class="blog-section py-5 reveal">
+        <div class="container">
+          <!-- Section Header -->
+          <div class="row align-items-end mb-5">
+            <div class="col-lg-8">
+              <h2 class="section-title mb-3">Latest Insights</h2>
+              <p class="section-description mb-0">
+                Stay updated on the evolving threat landscape.
+              </p>
+            </div>
+
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+              <a href="#" class="btn btn-outline-primary-custom">
+                View All Posts
+              </a>
+            </div>
+          </div>
+
+          <!-- Blog Cards -->
+          <div class="row g-4">
+            <!-- Blog Card 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="blog-card h-100">
+                <div class="blog-image-wrapper">
+                  <img
+                    src="./assets/images/home/home-blog-1.webp"
+                    alt="AI Security"
+                    class="img-fluid w-100 blog-image"
+                  />
+                </div>
+
+                <div class="blog-content">
+                  <span class="blog-category"> RESEARCH | OCT 24 </span>
+
+                  <h3 class="blog-title">
+                    The Rise of AI-Powered Phishing Attacks
+                  </h3>
+
+                  <p class="blog-text">
+                    How generative AI is being used to create hyper-personalized
+                    social engineering campaigns and how to defend against them.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- Blog Card 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="blog-card h-100">
+                <div class="blog-image-wrapper">
+                  <img
+                    src="./assets/images/home/home-blog-2.webp"
+                    alt="Data Privacy"
+                    class="img-fluid w-100 blog-image"
+                  />
+                </div>
+
+                <div class="blog-content">
+                  <span class="blog-category"> COMPLIANCE | OCT 20 </span>
+
+                  <h3 class="blog-title">
+                    GDPR 2.0: What Your Tech Stack Needs
+                  </h3>
+
+                  <p class="blog-text">
+                    Preparing for the next wave of global privacy regulations
+                    and ensuring your infrastructure remains compliant.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- Blog Card 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="blog-card h-100">
+                <div class="blog-image-wrapper">
+                  <img
+                    src="./assets/images/home/home-blog-3.webp"
+                    alt="Network Defense"
+                    class="img-fluid w-100 blog-image"
+                  />
+                </div>
+
+                <div class="blog-content">
+                  <span class="blog-category"> GUIDES | OCT 15 </span>
+
+                  <h3 class="blog-title">
+                    5 Critical Steps for Incident Response
+                  </h3>
+
+                  <p class="blog-text">
+                    A practical framework for IT teams to manage and mitigate
+                    security breaches within the first 24 hours.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="footer-placeholder"></div>
+  </body>
+</html>

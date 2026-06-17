@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ERROR_CODE: 404 | Stackly</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 404 Styles -->
+    <link rel="stylesheet" href="../../assets/css/404.css" />
+
+    <style>
+      /* Custom Button Styling for 404 Page */
+      .btn-cyan {
+        background: #00f0ff;
+        color: #0b1118 !important;
+        border: none;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 0.8rem 2.5rem;
+        font-family: "JetBrains Mono", monospace;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+      }
+
+      .btn-cyan:hover {
+        background: #00dbe9;
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        color: #0b1118 !important;
+      }
+
+      .btn-outline-cyan {
+        background: rgba(0, 240, 255, 0.05);
+        color: #00f0ff !important;
+        border: 1px solid #00f0ff;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 0.8rem 2.5rem;
+        font-family: "JetBrains Mono", monospace;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+      }
+
+      .btn-outline-cyan:hover {
+        background: rgba(0, 240, 255, 0.15);
+        box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+        color: #00f0ff !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HERO -->
+
+    <main class="error-page">
+      <!-- Background -->
+      <div class="grid-background"></div>
+
+      <div class="hero-glow"></div>
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+            <div class="text-center">
+              <!-- Graphic -->
+
+              <div class="shield-wrapper">
+                <div class="shield-glow"></div>
+
+                <div class="glass-card shield-card">
+                  <div class="scan-line"></div>
+
+                  <span
+                    class="material-symbols-outlined shield-icon glitch-text"
+                  >
+                    security_update_warning
+                  </span>
+
+                  <div class="ring ring-1"></div>
+                  <div class="ring ring-2"></div>
+                </div>
+
+                <div class="badge-status badge-error">SYSTEM_FAILURE</div>
+
+                <div class="badge-status badge-info">CODE: ERR_NULL_PTR</div>
+              </div>
+
+              <!-- Heading -->
+
+              <h1 class="error-title glitch-text">
+                ERROR_CODE:
+                <span>404</span>
+              </h1>
+
+              <div class="divider-row">
+                <div class="divider-line"></div>
+
+                <span class="divider-text">
+                  SECURITY PROTOCOL INITIALIZED
+                </span>
+
+                <div class="divider-line"></div>
+              </div>
+
+              <p class="error-description">
+                PERIMETER BREACH: The requested resource has been relocated or
+                purged from the secure archive. Authentication path led to a
+                non-existent node.
+              </p>
+
+              <!-- CTA -->
+
+              <div
+                class="d-flex flex-column flex-sm-row justify-content-center gap-4 mt-3"
+              >
+                <a href="../../index.html" class="btn btn-cyan btn-lg">
+                  <span class="material-symbols-outlined me-2"> terminal </span>
+                  Home
+                </a>
+
+                <a href="#" class="btn btn-outline-cyan btn-lg">
+                  <span class="material-symbols-outlined me-2">
+                    troubleshoot
+                  </span>
+                  Go back
+                </a>
+              </div>
+
+              <!-- Diagnostics -->
+
+              <div class="diagnostics-panel">
+                <div class="row g-4">
+                  <div class="col-6 col-md-3">
+                    <div class="diag-item">
+                      <div class="diag-label">NODE_ID</div>
+
+                      <div class="diag-value">ALPHA-7-X92</div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="diag-item">
+                      <div class="diag-label">TIMESTAMP</div>
+
+                      <div class="diag-value" id="live-timestamp">
+                        00:00:00:00
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="diag-item">
+                      <div class="diag-label">LOC_COORD</div>
+
+                      <div class="diag-value">40.7128° N</div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="diag-item">
+                      <div class="diag-label">SESSION_ST</div>
+
+                      <div class="diag-value">DISCONNECTED</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 404 Script -->
+    <script src="../../assets/js/404.js"></script>
+  </body>
+</html>

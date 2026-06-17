@@ -1,0 +1,553 @@
+/* ==================================================
+   FONTS
+================================================== */
+
+:root {
+  --primary: #00f0ff;
+  --primary-dark: #00dbe9;
+
+  --background: #101415;
+
+  --surface: #1d2022;
+  --surface-low: #191c1e;
+  --surface-high: #272a2c;
+
+  --text: #e0e3e5;
+  --text-muted: #b9cacb;
+
+  --outline: #3b494b;
+
+  --tertiary: #d5e3fd;
+
+  --radius: 12px;
+
+  --transition: all 0.3s ease;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--background);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ==================================================
+   PAGE
+================================================== */
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 30px 0;
+}
+
+/* ==================================================
+   GRID BACKGROUND
+================================================== */
+
+.grid-background {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(to right, rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+
+  background-size: 40px 40px;
+
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* ==================================================
+   GLOW ORBS
+================================================== */
+
+.bg-orb {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(140px);
+  pointer-events: none;
+}
+
+.orb-left {
+  top: 20%;
+  left: -180px;
+  background: rgba(0, 240, 255, 0.08);
+}
+
+.orb-right {
+  bottom: 15%;
+  right: -180px;
+  background: rgba(213, 227, 253, 0.08);
+}
+
+/* ==================================================
+   GLASS PANEL
+================================================== */
+
+.glass-panel {
+  position: relative;
+
+  background: rgba(29, 32, 34, 0.78);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  padding: 2rem;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 0 30px rgba(0, 240, 255, 0.12),
+    0 25px 60px rgba(0, 0, 0, 0.45);
+
+  transition: var(--transition);
+}
+
+.glass-panel:hover {
+  box-shadow:
+    0 0 40px rgba(0, 240, 255, 0.15),
+    0 30px 70px rgba(0, 0, 0, 0.55);
+}
+
+/* ==================================================
+   SCANLINE
+================================================== */
+
+.scanline {
+  position: absolute;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--primary),
+    transparent
+  );
+
+  opacity: 0.3;
+
+  animation: scanlineMove 4s linear infinite;
+}
+
+@keyframes scanlineMove {
+  from {
+    top: 0%;
+  }
+
+  to {
+    top: 100%;
+  }
+}
+
+/* ==================================================
+   BACK LINK
+================================================== */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: var(--transition);
+}
+
+.back-link:hover {
+  color: var(--primary);
+}
+
+.back-link:hover .material-symbols-outlined {
+  transform: translateX(-4px);
+}
+
+.back-link .material-symbols-outlined {
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.portal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.portal-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+/* ==================================================
+   LABELS
+================================================== */
+
+.custom-label {
+  display: block;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.6px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: rgba(0, 240, 255, 0.8);
+
+  margin-bottom: 10px;
+}
+
+/* ==================================================
+   INPUTS
+================================================== */
+
+.custom-input {
+  background: var(--surface-low) !important;
+
+  border: 1px solid var(--outline);
+
+  color: var(--text);
+
+  min-height: 52px;
+
+  border-radius: 10px;
+
+  transition: var(--transition);
+}
+
+.custom-input:focus {
+  background: var(--surface-low) !important;
+
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.15);
+
+  color: var(--text);
+}
+
+.custom-input::placeholder {
+  color: rgba(185, 202, 203, 0.7);
+}
+
+.form-select.custom-input {
+  color: var(--text);
+}
+
+.form-select.custom-input option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ==================================================
+   SELECT ICON
+================================================== */
+
+.select-icon {
+  position: absolute;
+
+  top: 50%;
+  right: 16px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+
+  color: var(--text-muted);
+}
+
+/* ==================================================
+   PASSWORD TOGGLE
+================================================== */
+
+.password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 14px;
+
+  transform: translateY(-50%);
+
+  background: transparent;
+  border: none;
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  padding: 0;
+
+  transition: var(--transition);
+}
+
+.password-toggle:hover {
+  color: var(--primary);
+}
+
+/* ==================================================
+   CHECKBOX
+================================================== */
+
+.custom-check .form-check-input {
+  width: 18px;
+  height: 18px;
+
+  border-color: var(--outline);
+
+  background-color: var(--surface-low);
+}
+
+.custom-check .form-check-input:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.custom-check label {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.custom-check:hover label {
+  color: var(--text);
+}
+
+/* ==================================================
+   FORGOT LINK
+================================================== */
+
+.forgot-link {
+  text-decoration: none;
+
+  color: var(--primary);
+
+  transition: var(--transition);
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ==================================================
+   LOGIN BUTTON
+================================================== */
+
+.login-btn {
+  min-height: 58px;
+
+  background: var(--primary);
+  border: none;
+
+  color: #002022;
+
+  font-weight: 700;
+  font-size: 1.05rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-radius: 12px;
+
+  transition: var(--transition);
+}
+
+.login-btn:hover {
+  background: var(--primary-dark);
+
+  color: #002022;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+}
+
+.login-btn:disabled {
+  opacity: 0.85;
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.footer-section {
+  margin-top: 2rem;
+
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--outline);
+
+  text-align: center;
+
+  color: var(--text-muted);
+}
+
+.request-link {
+  color: var(--primary);
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  margin-left: 4px;
+}
+
+.request-link:hover {
+  text-decoration: underline;
+}
+
+/* ==================================================
+   FORM FOCUS EFFECT
+================================================== */
+
+.form-focus {
+  transform: scale(1.01);
+  transition: transform 0.25s ease;
+}
+
+/* ==================================================
+   SPINNER
+================================================== */
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 991px) {
+  .glass-panel {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .portal-title {
+    font-size: 1.75rem;
+  }
+
+  .portal-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .glass-panel {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .login-page {
+    padding: 20px 0;
+  }
+
+  .glass-panel {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .portal-title {
+    font-size: 1.6rem;
+  }
+
+  .login-btn {
+    min-height: 54px;
+    font-size: 1rem;
+  }
+
+  .footer-section {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================
+   REGISTER PAGE
+========================================== */
+
+.register-panel {
+  transform-style: preserve-3d;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+  animation: pulseGlow 2s infinite;
+}
+
+.secure-channel {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.text-secondary-custom {
+  color: var(--text-muted);
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.password-feedback {
+  font-size: 11px;
+  color: #ffb4ab;
+  margin-top: 8px;
+  white-space: pre-line;
+  font-family: "JetBrains Mono", monospace;
+  transition: var(--transition);
+}
