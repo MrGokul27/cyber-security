@@ -667,4 +667,20 @@ function initializePricingToggle() {
 
 document.addEventListener("DOMContentLoaded", initializePricingToggle);
 
+// Home Page Loader Logic
+function initializeHomeLoader() {
+  const loader = document.getElementById("initial-loader");
+  if (!loader) return;
+
+  document.body.classList.add("loading");
+
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+    document.body.classList.remove("loading");
+    setTimeout(() => loader.remove(), 600);
+  }, 2000);
+}
+
+document.addEventListener("DOMContentLoaded", initializeHomeLoader);
 window.togglePassword = togglePassword;
