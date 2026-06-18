@@ -64,20 +64,40 @@ document.addEventListener("DOMContentLoaded", () => {
           icon: "dashboard",
           url: "/pages/dashboard/dashboard.html",
         },
-        { label: "User Management", icon: "group", url: "#user-management" },
-        { label: "System Config", icon: "settings", url: "#system-config" },
-        { label: "Global Logs", icon: "terminal", url: "#global-logs" },
+        {
+          label: "User Management",
+          icon: "group",
+          url: "/pages/dashboard/system-adminstrator/user-management.html",
+        },
+        {
+          label: "System Config",
+          icon: "settings",
+          url: "/pages/dashboard/system-adminstrator/system-config.html",
+        },
+        {
+          label: "Global Logs",
+          icon: "terminal",
+          url: "/pages/dashboard/system-adminstrator/global-logs.html",
+        },
         {
           label: "Network Topology",
           icon: "share_location",
-          url: "#network-topology",
+          url: "/pages/dashboard/system-adminstrator/network-topology.html",
         },
-        { label: "Access Policies", icon: "policy", url: "#access-policies" },
-        { label: "Audit Trails", icon: "receipt_long", url: "#audit-trails" },
+        {
+          label: "Access Policies",
+          icon: "policy",
+          url: "/pages/dashboard/system-adminstrator/access-policies.html",
+        },
+        {
+          label: "Audit Trails",
+          icon: "receipt_long",
+          url: "/pages/dashboard/system-adminstrator/audit-trails.html",
+        },
         {
           label: "Backup & Restore",
           icon: "cloud_upload",
-          url: "#backup-restore",
+          url: "/pages/dashboard/system-adminstrator/backup-and-restore.html",
         },
       ],
     },
@@ -302,7 +322,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Helper to resolve paths correctly regardless of current page depth (GitHub Pages compatible)
   const getPrefix = () => {
     const path = window.location.pathname;
-    if (path.includes("/system-analyst/")) return "../../../";
+    if (
+      path.includes("/system-analyst/") ||
+      path.includes("/security-analyst/") ||
+      path.includes("/system-adminstrator/")
+    )
+      return "../../../";
     if (path.includes("/dashboard/")) return "../../";
     return "";
   };

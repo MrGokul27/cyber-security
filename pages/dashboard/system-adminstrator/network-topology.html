@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Network Topology</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../../assets/images/logoStackly.webp"
+    />
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .cyan-glow {
+        box-shadow: 0 0 15px rgba(0, 219, 233, 0.15);
+      }
+      .scanline {
+        width: 100%;
+        height: 2px;
+        background: rgba(0, 219, 233, 0.2);
+        position: absolute;
+        z-index: 10;
+        animation: scan 4s linear infinite;
+      }
+      @keyframes scan {
+        0% {
+          top: 0;
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
+        }
+        95% {
+          opacity: 1;
+        }
+        100% {
+          top: 100%;
+          opacity: 0;
+        }
+      }
+      .node-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(1.1);
+        }
+      }
+      .topology-line {
+        stroke-dasharray: 10;
+        animation: dash 20s linear infinite;
+      }
+      @keyframes dash {
+        to {
+          stroke-dashoffset: -1000;
+        }
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--surface);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--outline-variant);
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-container);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Topology Visualization Stage (Full screen background) -->
+        <div
+          class="position-fixed top-0 start-0 w-100 h-100"
+          style="z-index: -1"
+        >
+          <div class="scanline"></div>
+          <svg class="w-100 h-100" viewbox="0 0 1200 800">
+            <defs>
+              <pattern
+                id="grid"
+                width="40"
+                height="40"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 40 0 L 0 0 0 40"
+                  fill="none"
+                  stroke="rgba(59, 73, 75, 0.15)"
+                  stroke-width="0.5"
+                ></path>
+              </pattern>
+              <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                <stop
+                  offset="0%"
+                  stop-color="#00dbe9"
+                  stop-opacity="0.4"
+                ></stop>
+                <stop
+                  offset="100%"
+                  stop-color="#00dbe9"
+                  stop-opacity="0"
+                ></stop>
+              </radialGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+            <g
+              class="topology-line"
+              fill="none"
+              stroke="#00dbe9"
+              stroke-opacity="0.3"
+              stroke-width="1.5"
+            >
+              <path d="M 300 400 Q 500 200 700 400"></path>
+              <path d="M 700 400 Q 850 500 1000 350"></path>
+              <path d="M 1000 350 Q 650 600 300 400"></path>
+            </g>
+            <g
+              class="cursor-pointer group"
+              data-bs-toggle="modal"
+              data-bs-target="#node-modal"
+              onclick="updateModal('EU-WEST')"
+            >
+              <circle
+                class="node-pulse"
+                cx="300"
+                cy="400"
+                r="40"
+                fill="url(#nodeGlow)"
+              ></circle>
+              <circle cx="300" cy="400" r="4" fill="#00dbe9"></circle>
+              <text
+                class="small font-monospace text-uppercase"
+                fill="#00dbe9"
+                text-anchor="middle"
+                x="300"
+                y="460"
+              >
+                EU-WEST-01
+              </text>
+            </g>
+            <g
+              class="cursor-pointer group"
+              data-bs-toggle="modal"
+              data-bs-target="#node-modal"
+              onclick="updateModal('US-EAST')"
+            >
+              <circle
+                class="node-pulse"
+                cx="700"
+                cy="400"
+                r="40"
+                fill="url(#nodeGlow)"
+              ></circle>
+              <circle cx="700" cy="400" r="4" fill="#00dbe9"></circle>
+              <text
+                class="small font-monospace text-uppercase"
+                fill="#00dbe9"
+                text-anchor="middle"
+                x="700"
+                y="460"
+              >
+                US-EAST-ALPHA
+              </text>
+            </g>
+            <g
+              class="cursor-pointer group"
+              data-bs-toggle="modal"
+              data-bs-target="#node-modal"
+              onclick="updateModal('APAC')"
+            >
+              <circle
+                class="node-pulse"
+                cx="1000"
+                cy="350"
+                r="40"
+                fill="url(#nodeGlow)"
+              ></circle>
+              <circle cx="1000" cy="350" r="4" fill="#00dbe9"></circle>
+              <text
+                class="small font-monospace text-uppercase"
+                fill="#00dbe9"
+                text-anchor="middle"
+                x="1000"
+                y="410"
+              >
+                APAC-CENTRAL
+              </text>
+            </g>
+            <g class="d-none" id="threat-overlay">
+              <circle
+                class="animate-ping"
+                cx="550"
+                cy="280"
+                r="2"
+                fill="#ffb4ab"
+              ></circle>
+              <circle
+                class="animate-ping"
+                cx="820"
+                cy="450"
+                r="2"
+                fill="#ffb4ab"
+              ></circle>
+              <path
+                d="M 550 280 L 700 400"
+                stroke="#ffb4ab"
+                stroke-width="1"
+                stroke-dasharray="4"
+                opacity="0.6"
+              ></path>
+            </g>
+          </svg>
+        </div>
+
+        <!-- UI Overlays -->
+        <div class="p-4">
+          <div class="row g-4">
+          <!-- Left Overlay -->
+            <div class="col-12 col-lg-4 col-xl-3">
+              <div class="d-flex flex-column gap-4">
+            <div
+                  class="glass-panel p-4 rounded-3 border border-outline-variant cyan-glow"
+            >
+              <h3 class="small text-on-surface-variant mb-4 text-uppercase">
+                Global Metrics
+              </h3>
+              <div class="d-flex flex-column gap-3">
+                <div>
+                  <div
+                    class="d-flex justify-content-between small font-monospace mb-1"
+                  >
+                    <span class="text-on-surface-variant">Throughput</span>
+                    <span class="text-primary-container">84.2 Gbps</span>
+                  </div>
+                  <div
+                    class="progress bg-surface-variant"
+                    style="height: 4px"
+                  >
+                    <div
+                      class="progress-bar bg-primary-container"
+                      style="width: 84%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="d-flex justify-content-between small font-monospace mb-1"
+                  >
+                    <span class="text-on-surface-variant"
+                      >Active Threat Level</span
+                    >
+                    <span class="text-danger">Elevated</span>
+                  </div>
+                  <div class="progress bg-surface-variant" style="height: 4px">
+                    <div
+                      class="progress-bar bg-danger"
+                      style="width: 42%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                <div class="glass-panel p-4 rounded-3">
+              <h3 class="small text-on-surface-variant mb-4 text-uppercase">
+                Visual Overlays
+              </h3>
+              <div class="d-flex flex-column gap-3">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="traffic-flow"
+                    checked
+                  />
+                  <label class="form-check-label small" for="traffic-flow"
+                    >Live Traffic Flow</label
+                  >
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="threat-toggle"
+                    onchange="document.getElementById('threat-overlay').classList.toggle('d-none')"
+                  />
+                  <label class="form-check-label small" for="threat-toggle"
+                    >Threat Overlay</label
+                  >
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="cluster-names"
+                    checked
+                  />
+                  <label class="form-check-label small" for="cluster-names"
+                    >Cluster Names</label
+                  >
+                </div>
+              </div>
+            </div>
+              </div>
+          </div>
+
+          <!-- Right Overlay -->
+            <div class="col-12 col-lg-8 col-xl-9">
+              <div
+                class="glass-panel rounded-3 d-flex flex-column h-100 border-start-lg border-primary-container border-opacity-25"
+                style="max-height: 80vh"
+              >
+            <div
+              class="p-3 border-bottom border-outline-variant d-flex justify-content-between align-items-center"
+            >
+              <h3 class="small text-on-surface text-uppercase fw-bold">
+                Node Health
+              </h3>
+              <span class="material-symbols-outlined text-primary-container"
+                >analytics</span
+              >
+            </div>
+            <div class="flex-grow-1 overflow-y-auto p-3 custom-scrollbar">
+              <div class="d-flex flex-column gap-3">
+                <!-- Node Item -->
+                <div
+                  class="p-3 bg-surface-variant bg-opacity-25 rounded border-start border-primary-container border-2"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-2"
+                  >
+                    <div>
+                      <h4 class="small fw-bold text-on-surface">
+                        EU-WEST-01
+                      </h4>
+                      <p class="small font-monospace text-on-surface-variant">
+                        ID: 4492-XQ
+                      </p>
+                    </div>
+                    <span
+                      class="badge bg-primary-container bg-opacity-10 text-dark small"
+                      >OPERATIONAL</span
+                    >
+                  </div>
+                  <div class="row g-2 mt-3">
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Latency
+                        </p>
+                        <p class="small font-monospace text-primary-container">
+                          12ms
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Loss
+                        </p>
+                        <p class="small font-monospace text-on-surface">
+                          0.02%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Node Item -->
+                <div
+                  class="p-3 bg-surface-variant bg-opacity-25 rounded border-start border-primary-container border-2"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-2"
+                  >
+                    <div>
+                      <h4 class="small fw-bold text-on-surface">
+                        US-EAST-ALPHA
+                      </h4>
+                      <p class="small font-monospace text-on-surface-variant">
+                        ID: 8812-ZZ
+                      </p>
+                    </div>
+                    <span
+                      class="badge bg-primary-container bg-opacity-10 text-dark small"
+                      >OPERATIONAL</span
+                    >
+                  </div>
+                  <div class="row g-2 mt-3">
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Latency
+                        </p>
+                        <p class="small font-monospace text-primary-container">
+                          48ms
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Loss
+                        </p>
+                        <p class="small font-monospace text-on-surface">
+                          0.11%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Node Item (Warning) -->
+                <div
+                  class="p-3 bg-danger bg-opacity-10 rounded border-start border-danger border-2"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-2"
+                  >
+                    <div>
+                      <h4 class="small fw-bold text-on-surface">
+                        APAC-CENTRAL
+                      </h4>
+                      <p class="small font-monospace text-on-surface-variant">
+                        ID: 1092-KK
+                      </p>
+                    </div>
+                    <span class="badge bg-danger bg-opacity-10 text-danger small"
+                      >CONGESTED</span
+                    >
+                  </div>
+                  <div class="row g-2 mt-3">
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Latency
+                        </p>
+                        <p class="small font-monospace text-danger">182ms</p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="bg-black bg-opacity-25 p-2 rounded">
+                        <p
+                          class="small text-on-surface-variant text-uppercase mb-0"
+                        >
+                          Loss
+                        </p>
+                        <p class="small font-monospace text-danger">2.4%</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3 bg-surface-container-high bg-opacity-50">
+              <div
+                class="d-flex align-items-center gap-2 small font-monospace text-on-surface-variant"
+              >
+                <span class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+                <span>Auto-refreshing in 5s</span>
+              </div>
+            </div>
+              </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="node-modal"
+      tabindex="-1"
+      aria-labelledby="nodeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-panel border-primary-container">
+          <div
+            class="modal-header bg-primary-container bg-opacity-10 border-0"
+          >
+            <div class="d-flex flex-column">
+              <h1 class="modal-title h5 text-primary-container" id="modal-title">
+                Cluster Focus
+              </h1>
+              <p class="small text-on-surface-variant font-monospace mb-0">
+                System integrity: 99.98%
+              </p>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <h4 class="small text-uppercase text-on-surface-variant mb-3">
+                  Active Instances
+                </h4>
+                <div class="d-flex flex-column gap-2">
+                  <div
+                    class="d-flex justify-content-between align-items-center p-2 bg-surface-container rounded border border-outline-variant"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <div
+                        class="status-dot bg-primary-container"
+                        style="width: 8px; height: 8px"
+                      ></div>
+                      <span class="small font-monospace">SRV-MAIN-01</span>
+                    </div>
+                    <span class="small font-monospace text-on-surface-variant"
+                      >Load: 12%</span
+                    >
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center p-2 bg-surface-container rounded border border-outline-variant"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <div
+                        class="status-dot bg-primary-container"
+                        style="width: 8px; height: 8px"
+                      ></div>
+                      <span class="small font-monospace">SRV-MAIN-02</span>
+                    </div>
+                    <span class="small font-monospace text-on-surface-variant"
+                      >Load: 08%</span
+                    >
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center p-2 bg-surface-container rounded border border-outline-variant"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <div
+                        class="status-dot bg-primary-container"
+                        style="width: 8px; height: 8px"
+                      ></div>
+                      <span class="small font-monospace">SRV-BKUP-01</span>
+                    </div>
+                    <span class="small font-monospace text-on-surface-variant"
+                      >Load: 02%</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4 class="small text-uppercase text-on-surface-variant mb-3">
+                  Traffic Breakdown
+                </h4>
+                <div
+                  class="ratio ratio-1x1 position-relative d-flex align-items-center justify-content-center"
+                >
+                  <svg class="w-100 h-100" viewbox="0 0 100 100">
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="transparent"
+                      stroke="var(--surface-variant)"
+                      stroke-width="10"
+                    ></circle>
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="transparent"
+                      stroke="var(--primary-container)"
+                      stroke-width="10"
+                      stroke-dasharray="251.2"
+                      stroke-dashoffset="45.2"
+                      transform="rotate(-90 50 50)"
+                    ></circle>
+                  </svg>
+                  <div class="position-absolute text-center">
+                    <p class="h3 fw-bold text-on-surface mb-0">82%</p>
+                    <p class="small text-on-surface-variant">Utilization</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-surface-container-high border-0">
+            <button
+              type="button"
+              class="btn btn-outline-custom"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary-custom">
+              Rebalance Node
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contextual FAB -->
+    <button
+      class="btn btn-primary-custom rounded-circle position-fixed d-flex align-items-center justify-content-center"
+      style="
+        bottom: 2rem;
+        right: 2rem;
+        width: 56px;
+        height: 56px;
+        z-index: 1050;
+      "
+    >
+      <span class="material-symbols-outlined fs-4">add</span>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      function updateModal(nodeId) {
+        const title = document.getElementById("modal-title");
+        title.textContent = nodeId + " Cluster Details";
+      }
+    </script>
+  </body>
+</html>

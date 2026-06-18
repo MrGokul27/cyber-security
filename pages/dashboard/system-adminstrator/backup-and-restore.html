@@ -1,0 +1,468 @@
+<!doctype html>
+
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Backup & Restore</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../../assets/images/logoStackly.webp"
+    />
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .glow-cyan {
+        box-shadow: 0 0 15px rgba(0, 219, 233, 0.3);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4">
+          <!-- Page Header -->
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-4 mb-5 pb-4 border-bottom border-outline-variant"
+          >
+            <div>
+              <h1 class="h2 text-on-surface fw-bold">Backup & Restore</h1>
+              <p class="lead text-on-surface-variant" style="max-width: 700px">
+                Comprehensive lifecycle management for global data clusters.
+                Automated redundancy verification and disaster recovery
+                protocols.
+              </p>
+            </div>
+            <div
+              class="glass-panel p-3 rounded d-flex align-items-center gap-4"
+            >
+              <div class="text-end">
+                <span class="small text-on-surface-variant text-uppercase"
+                  >Next Automated Sync</span
+                >
+                <div
+                  class="h5 fw-bold text-primary-container font-monospace mb-0"
+                  id="sync-timer"
+                >
+                  00:14:52
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center"
+                style="width: 48px; height: 48px"
+              >
+                <div
+                  class="spinner-border text-primary-container"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Grid Dashboard -->
+          <div class="row g-4">
+            <!-- Data Redundancy Cluster Status -->
+            <div class="col-12 col-lg-8">
+              <div
+                class="glass-panel rounded-3 p-4 position-relative overflow-hidden h-100"
+              >
+                <div class="scan-line"></div>
+                <div
+                  class="d-flex justify-content-between align-items-start mb-4"
+                >
+                  <div>
+                    <h3 class="h5 fw-bold text-on-surface">Data Redundancy</h3>
+                    <p class="small text-on-surface-variant text-uppercase">
+                      Active Global Clusters (99.99% Guaranteed)
+                    </p>
+                  </div>
+                  <span class="material-symbols-outlined text-primary-container"
+                    >lan</span
+                  >
+                </div>
+                <div class="row g-4">
+                  <!-- Cluster Item -->
+                  <div class="col-12 col-md-4">
+                    <div class="d-flex flex-column gap-2">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="small text-on-surface-variant"
+                          >North America-01</span
+                        >
+                        <span class="small text-primary-container">Active</span>
+                      </div>
+                      <div
+                        class="progress bg-surface-container"
+                        style="height: 8px"
+                      >
+                        <div
+                          class="progress-bar bg-primary-container glow-cyan"
+                          style="width: 92%"
+                        ></div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between small font-monospace opacity-75"
+                      >
+                        <span>8.4 PB Synced</span>
+                        <span>92% Cap</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Cluster Item -->
+                  <div class="col-12 col-md-4">
+                    <div class="d-flex flex-column gap-2">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="small text-on-surface-variant"
+                          >EMEA-Central-04</span
+                        >
+                        <span class="small text-primary-container">Active</span>
+                      </div>
+                      <div
+                        class="progress bg-surface-container"
+                        style="height: 8px"
+                      >
+                        <div
+                          class="progress-bar bg-primary-container glow-cyan"
+                          style="width: 78%"
+                        ></div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between small font-monospace opacity-75"
+                      >
+                        <span>12.1 PB Synced</span>
+                        <span>78% Cap</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Cluster Item -->
+                  <div class="col-12 col-md-4">
+                    <div class="d-flex flex-column gap-2">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="small text-on-surface-variant"
+                          >APAC-South-02</span
+                        >
+                        <span class="small text-danger">Critical</span>
+                      </div>
+                      <div
+                        class="progress bg-surface-container"
+                        style="height: 8px"
+                      >
+                        <div
+                          class="progress-bar bg-danger"
+                          style="width: 45%"
+                        ></div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between small font-monospace opacity-75"
+                      >
+                        <span>4.2 PB Synced</span>
+                        <span>45% Cap</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Disaster Recovery Drill Simulator -->
+            <div class="col-12 col-lg-4">
+              <div
+                class="glass-panel rounded-3 p-4 d-flex flex-column justify-content-between h-100"
+              >
+                <div>
+                  <h3 class="h5 fw-bold text-on-surface mb-2">
+                    Recovery Drill
+                  </h3>
+                  <p class="small text-on-surface-variant mb-4">
+                    Simulate and validate system recovery under specific failure
+                    scenarios.
+                  </p>
+                  <div class="d-flex flex-column gap-3">
+                    <div>
+                      <label
+                        class="small text-on-surface-variant text-uppercase mb-2"
+                        >Failure Scenario</label
+                      >
+                      <select
+                        class="form-select bg-surface-container border-outline-variant text-on-surface"
+                      >
+                        <option>Complete Regional Blackout</option>
+                        <option>Ransomware Encryption (Tier 3)</option>
+                        <option>Metadata Corruption (Global)</option>
+                      </select>
+                    </div>
+                    <div
+                      class="p-3 rounded bg-surface-container-low border border-outline-variant"
+                    >
+                      <div
+                        class="d-flex justify-content-between small text-on-surface-variant"
+                      >
+                        <span>Last Pass Score</span>
+                        <span class="fw-bold text-primary-container"
+                          >94/100</span
+                        >
+                      </div>
+                      <div
+                        class="progress bg-surface-variant mt-2"
+                        style="height: 4px"
+                      >
+                        <div
+                          class="progress-bar bg-primary-container"
+                          style="width: 94%"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-outline-custom w-100 mt-4 d-flex align-items-center justify-content-center gap-2"
+                >
+                  <span class="material-symbols-outlined small"
+                    >play_arrow</span
+                  >
+                  Initialize Simulator
+                </button>
+              </div>
+            </div>
+            <!-- Archive Table -->
+            <div class="col-12">
+              <div class="glass-panel rounded-3 overflow-hidden">
+                <div
+                  class="p-4 border-bottom border-outline-variant d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <h3 class="h5 fw-bold text-on-surface">Stored Archives</h3>
+                    <p class="small text-on-surface-variant">
+                      Secure Immutable S3 Vaults
+                    </p>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control bg-surface-container-low border-outline-variant"
+                        placeholder="Filter archives..."
+                      />
+                      <button class="btn btn-outline-custom">
+                        <span class="material-symbols-outlined small"
+                          >search</span
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-borderless w-100 text-start mb-0">
+                    <thead class="bg-surface-container-low">
+                      <tr class="small text-on-surface-variant text-uppercase">
+                        <th class="px-4 py-3">Vault ID</th>
+                        <th class="px-4 py-3">Timestamp</th>
+                        <th class="px-4 py-3">Size</th>
+                        <th class="px-4 py-3">Integrity</th>
+                        <th class="px-4 py-3 text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="small">
+                      <tr class="transition-colors">
+                        <td
+                          class="px-4 py-3 font-monospace text-primary-container"
+                        >
+                          CG-BKP-0x889A
+                        </td>
+                        <td class="px-4 py-3">2024-03-04 08:00:02</td>
+                        <td class="px-4 py-3">24.8 TB</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge bg-primary-container bg-opacity-10 text-dark"
+                            >Verified</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                          <button class="btn btn-outline-custom btn-sm">
+                            Verify
+                          </button>
+                          <button class="btn btn-primary-custom btn-sm">
+                            Restore
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="transition-colors">
+                        <td
+                          class="px-4 py-3 font-monospace text-primary-container"
+                        >
+                          CG-BKP-0x721B
+                        </td>
+                        <td class="px-4 py-3">2024-03-03 23:00:15</td>
+                        <td class="px-4 py-3">192.1 TB</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge bg-primary-container bg-opacity-10 text-dark"
+                            >Verified</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                          <button class="btn btn-outline-custom btn-sm">
+                            Verify
+                          </button>
+                          <button class="btn btn-primary-custom btn-sm">
+                            Restore
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="transition-colors">
+                        <td
+                          class="px-4 py-3 font-monospace text-primary-container"
+                        >
+                          CG-BKP-0x45E2
+                        </td>
+                        <td class="px-4 py-3">2024-03-03 04:00:10</td>
+                        <td class="px-4 py-3">12.4 TB</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge bg-danger bg-opacity-10 text-danger"
+                            >Warning</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 text-end">
+                          <button class="btn btn-outline-custom btn-sm">
+                            Verify
+                          </button>
+                          <button class="btn btn-primary-custom btn-sm">
+                            Restore
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      // Simple micro-interaction for the countdown timer
+      function updateTimer() {
+        const timerEl = document.getElementById("sync-timer");
+        if (!timerEl) return;
+        let [h, m, s] = timerEl.innerText.split(":").map(Number);
+
+        s--;
+        if (s < 0) {
+          s = 59;
+          m--;
+        }
+        if (m < 0) {
+          m = 59;
+          h--;
+        }
+        if (h < 0) {
+          h = 23;
+        }
+
+        timerEl.innerText = [h, m, s]
+          .map((v) => String(v).padStart(2, "0"))
+          .join(":");
+      }
+      setInterval(updateTimer, 1000);
+    </script>
+  </body>
+</html>
