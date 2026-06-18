@@ -290,3 +290,167 @@
     letter-spacing: 0.3rem;
   }
 }
+
+/* =========================
+   VISUALIZATION
+========================= */
+
+.visualization-showcase {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  margin-top: 60px;
+}
+
+.visualization-image {
+  width: 100%;
+  height: 650px;
+  object-fit: cover;
+  filter: brightness(0.45);
+}
+
+.visualization-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.visualization-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 240, 255, 0.05), rgba(0, 240, 255, 0.02)),
+    repeating-linear-gradient(
+      transparent,
+      transparent 3px,
+      rgba(0, 240, 255, 0.03) 4px
+    );
+}
+
+.pulse-node {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #00f0ff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #00f0ff;
+  animation: pulseNode 2s infinite;
+}
+
+.node-1 {
+  top: 30%;
+  left: 25%;
+}
+
+.node-2 {
+  top: 50%;
+  right: 20%;
+}
+
+.node-3 {
+  bottom: 25%;
+  left: 55%;
+}
+
+.visualization-stats {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.viz-stat {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+}
+
+.viz-stat span {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.viz-stat strong {
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+
+/* =========================
+   SOC SECTION
+========================= */
+
+.soc-section {
+  background: #191c1e;
+}
+
+.soc-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+}
+
+.soc-image-wrap img {
+  width: 100%;
+  transition: 0.6s;
+}
+
+.soc-image-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.soc-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.soc-text {
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 40px;
+}
+
+.soc-feature {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.soc-feature .material-symbols-outlined {
+  font-size: 32px;
+  color: var(--primary);
+}
+
+.soc-feature h5 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.soc-feature p {
+  color: var(--muted);
+  margin: 0;
+}
+
+@keyframes pulseNode {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
