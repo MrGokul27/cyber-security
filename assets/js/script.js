@@ -10,12 +10,14 @@ const pathPrefix = getPathPrefix();
 
 // Function to load shared components (Header/Footer)
 async function loadComponent(id, url) {
+  const container = document.getElementById(id);
+  if (!container) return;
+
   try {
     // Prepend prefix to the component URL (removing leading slash if present)
     const fetchUrl = pathPrefix + url.replace(/^\//, "");
     const response = await fetch(fetchUrl);
     const html = await response.text();
-    const container = document.getElementById(id);
     container.innerHTML = html;
 
     // Fix absolute-style paths (starting with /) in the injected content for GitHub Pages compatibility
