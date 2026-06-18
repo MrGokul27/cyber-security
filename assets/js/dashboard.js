@@ -61,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
       nav: [
         {
           label: "Dashboard",
-          icon: "settings_input_component",
-          url: "#node-control",
+          icon: "dashboard",
+          url: "/pages/dashboard/dashboard.html",
         },
         { label: "User Management", icon: "group", url: "#user-management" },
         { label: "System Config", icon: "settings", url: "#system-config" },
@@ -134,18 +134,30 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
       },
       nav: [
-        { label: "Dashboard", icon: "radar", url: "#threat-matrix" },
+        {
+          label: "Dashboard",
+          icon: "dashboard",
+          url: "/pages/dashboard/dashboard.html",
+        },
         {
           label: "Pattern Analysis",
           icon: "analytics",
-          url: "#pattern-analysis",
+          url: "/pages/dashboard/system-analyst/pattern-analysis.html",
         },
-        { label: "Forensics", icon: "biotech", url: "#forensics" },
-        { label: "Intel Reports", icon: "description", url: "#intel-reports" },
+        {
+          label: "Forensics",
+          icon: "biotech",
+          url: "/pages/dashboard/system-analyst/forensics.html",
+        },
+        {
+          label: "Intel Reports",
+          icon: "description",
+          url: "/pages/dashboard/system-analyst/intel-reports.html",
+        },
         {
           label: "Vulnerability Scan",
           icon: "bug_report",
-          url: "#vulnerability-scan",
+          url: "/pages/dashboard/system-analyst/vulnerability-scan.html",
         },
         {
           label: "Incident History",
@@ -215,8 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
       nav: [
         {
           label: "Dashboard",
-          icon: "visibility",
-          url: "#active-monitoring",
+          icon: "dashboard",
+          url: "/pages/dashboard/dashboard.html",
         },
         {
           label: "Incident Response",
@@ -282,10 +294,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 3. Populate Sidebar
   const sidebarNav = document.getElementById("sidebar-nav");
-  currentRole.nav.forEach((item, index) => {
+
+  // Helper to resolve paths correctly regardless of current page depth (GitHub Pages compatible)
+  const getPrefix = () => {
+    const path = window.location.pathname;
+    if (path.includes("/system-analyst/")) return "../../../";
+    if (path.includes("/dashboard/")) return "../../";
+    return "";
+  };
+  const prefix = getPrefix();
+
+  currentRole.nav.forEach((item) => {
     const link = document.createElement("a");
-    link.href = item.url; // Use the URL from the roleInfo
-    link.className = `nav-link-custom ${index === 0 ? "active" : ""}`;
+
+    // Resolve URL: absolute-style paths starting with '/' are corrected to relative ones
+    let resolvedUrl = item.url;
+    if (resolvedUrl && resolvedUrl.startsWith("/")) {
+      resolvedUrl = prefix + resolvedUrl.substring(1);
+    }
+    link.href = resolvedUrl || "#";
+
+    // Determine active state by comparing the link's filename with the current pathname
+    const isCurrentPage =
+      item.url &&
+      !item.url.startsWith("#") &&
+      window.location.pathname.includes(item.url.split("/").pop());
+    link.className = `nav-link-custom ${isCurrentPage ? "active" : ""}`;
+
     link.innerHTML = `
       <span class="material-symbols-outlined">${item.icon}</span>
       ${item.label}

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Intel Reports</title>
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <img
+            src="../../../assets/images/logoStackly.webp"
+            alt="Logo"
+            width="100"
+          />
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Header Section -->
+          <div
+            class="mb-5 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-4"
+          >
+            <div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">
+                Intelligence Reports
+              </h1>
+              <p class="lead text-on-surface-variant mb-0">
+                Comprehensive analysis and actionable insights from global
+                threat intelligence feeds.
+              </p>
+            </div>
+            <div class="d-flex gap-3">
+              <button
+                class="btn btn-outline-custom d-flex align-items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined"
+                  style="font-size: 18px"
+                  data-icon="add_notes"
+                  >add_notes</span
+                >
+                Generate New Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Reports Table -->
+          <div class="glass-panel overflow-hidden">
+            <div
+              class="p-4 border-bottom border-outline-variant d-flex justify-content-between align-items-center bg-surface-container-low"
+            >
+              <div>
+                <h3 class="h5 fw-bold text-on-surface">Latest Reports</h3>
+                <p class="small text-on-surface-variant">
+                  Recently generated and archived intelligence reports
+                </p>
+              </div>
+              <div class="d-flex gap-3">
+                <div
+                  class="d-flex align-items-center bg-surface-container rounded border border-outline-variant overflow-hidden"
+                >
+                  <span
+                    class="material-symbols-outlined px-2 text-on-surface-variant small"
+                    >filter_alt</span
+                  >
+                  <select
+                    class="form-select bg-transparent border-0 small text-on-surface pe-4"
+                    style="box-shadow: none"
+                  >
+                    <option>Sort by Date</option>
+                    <option>Sort by Type</option>
+                    <option>Sort by Status</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-borderless w-100 text-start">
+                <thead class="bg-surface-container-high">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase"
+                    >
+                      Report ID
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase"
+                    >
+                      Title
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase"
+                    >
+                      Author
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 small text-on-surface-variant text-uppercase text-end"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Report Row 1 -->
+                  <tr class="transition-colors group">
+                    <td class="px-4 py-3 small text-primary-container">
+                      #INTEL-2024-001
+                    </td>
+                    <td class="px-4 py-3">Global Cyber Threat Landscape Q2</td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      2024-07-15
+                    </td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      Analyst_Alpha
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="badge rounded-pill bg-success bg-opacity-10 text-success-emphasis border-start border-success border-2 px-2 py-1"
+                        >FINALIZED</span
+                      >
+                    </td>
+                    <td class="px-4 py-3 text-end">
+                      <button class="btn btn-link text-primary-container p-0">
+                        <span class="small fw-bold">VIEW</span>
+                        <span
+                          class="material-symbols-outlined"
+                          style="font-size: 14px"
+                          >chevron_right</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Report Row 2 -->
+                  <tr class="transition-colors group">
+                    <td class="px-4 py-3 small text-primary-container">
+                      #INTEL-2024-002
+                    </td>
+                    <td class="px-4 py-3">
+                      APT Group "ShadowBrokers" Activity
+                    </td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      2024-07-10
+                    </td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      Analyst_Beta
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="badge rounded-pill bg-warning bg-opacity-10 text-warning-emphasis border-start border-warning border-2 px-2 py-1"
+                        >DRAFT</span
+                      >
+                    </td>
+                    <td class="px-4 py-3 text-end">
+                      <button class="btn btn-link text-primary-container p-0">
+                        <span class="small fw-bold">EDIT</span>
+                        <span
+                          class="material-symbols-outlined"
+                          style="font-size: 14px"
+                          >chevron_right</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Report Row 3 -->
+                  <tr class="transition-colors group">
+                    <td class="px-4 py-3 small text-primary-container">
+                      #INTEL-2024-003
+                    </td>
+                    <td class="px-4 py-3">
+                      Supply Chain Vulnerabilities Review
+                    </td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      2024-07-01
+                    </td>
+                    <td class="px-4 py-3 small text-on-surface-variant">
+                      Analyst_Gamma
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="badge rounded-pill bg-info bg-opacity-10 text-info-emphasis border-start border-info border-2 px-2 py-1"
+                        >PENDING_REVIEW</span
+                      >
+                    </td>
+                    <td class="px-4 py-3 text-end">
+                      <button class="btn btn-link text-primary-container p-0">
+                        <span class="small fw-bold">REVIEW</span>
+                        <span
+                          class="material-symbols-outlined"
+                          style="font-size: 14px"
+                          >chevron_right</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="p-3 bg-surface-container-low border-top border-outline-variant d-flex justify-content-center"
+            >
+              <button
+                class="btn btn-link small text-on-surface-variant d-flex align-items-center gap-2 transition-colors"
+              >
+                View All Reports
+                <span class="material-symbols-outlined" style="font-size: 14px"
+                  >keyboard_arrow_down</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+  </body>
+</html>
