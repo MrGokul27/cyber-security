@@ -72,10 +72,18 @@
               <form id="loginForm">
                 <!-- Role -->
                 <div class="mb-4">
-                  <label class="form-label custom-label"> Access Role </label>
+                  <label for="accessRole" class="form-label custom-label">
+                    Access Role
+                  </label>
 
                   <div class="position-relative">
-                    <select class="form-select custom-input" required>
+                    <select
+                      id="accessRole"
+                      name="accessRole"
+                      class="form-select custom-input"
+                      required
+                      autocomplete="off"
+                    >
                       <option selected disabled>Select Security Level</option>
 
                       <option value="analyst">Security Analyst</option>
@@ -93,15 +101,18 @@
 
                 <!-- Email -->
                 <div class="mb-4">
-                  <label class="form-label custom-label">
+                  <label for="operatorId" class="form-label custom-label">
                     Operator Identifier
                   </label>
 
                   <input
                     type="email"
+                    id="operatorId"
+                    name="operatorId"
                     class="form-control custom-input"
                     placeholder="name@company.com"
                     required
+                    autocomplete="username"
                   />
                 </div>
 
@@ -110,7 +121,7 @@
                   <div
                     class="d-flex justify-content-between align-items-center mb-2"
                   >
-                    <label class="form-label custom-label mb-0">
+                    <label for="password" class="form-label custom-label mb-0">
                       Encrypted Key
                     </label>
                   </div>
@@ -119,9 +130,11 @@
                     <input
                       type="password"
                       id="password"
+                      name="password"
                       placeholder="••••••••"
                       class="form-control custom-input pe-5"
                       required
+                      autocomplete="current-password"
                     />
 
                     <button

@@ -65,23 +65,35 @@
               <form id="registrationForm">
                 <div class="row">
                   <div class="col-md-6 mb-4">
-                    <label class="custom-label"> Username </label>
+                    <label for="username" class="custom-label">
+                      Username
+                    </label>
 
                     <input
                       type="text"
                       id="username"
+                      name="username"
                       class="form-control custom-input"
                       placeholder="User Name"
                       maxlength="16"
                       required
+                      autocomplete="username"
                     />
                   </div>
 
                   <div class="col-md-6 mb-4">
-                    <label class="custom-label"> Security Role </label>
+                    <label for="securityRole" class="custom-label">
+                      Security Role
+                    </label>
 
                     <div class="position-relative">
-                      <select class="form-select custom-input" required>
+                      <select
+                        id="securityRole"
+                        name="securityRole"
+                        class="form-select custom-input"
+                        required
+                        autocomplete="off"
+                      >
                         <option value="" selected disabled>
                           Select Security Level
                         </option>
@@ -100,27 +112,36 @@
                 </div>
 
                 <div class="mb-4">
-                  <label class="custom-label"> Email Address </label>
+                  <label for="email" class="custom-label">
+                    Email Address
+                  </label>
 
                   <input
                     type="email"
+                    id="email"
+                    name="email"
                     class="form-control custom-input"
                     placeholder="Enter Email"
                     required
+                    autocomplete="email"
                   />
                 </div>
 
                 <div class="row">
                   <div class="col-md-6 mb-4">
-                    <label class="custom-label"> Password </label>
+                    <label for="password" class="custom-label">
+                      Password
+                    </label>
 
                     <div class="position-relative">
                       <input
                         type="password"
                         id="password"
+                        name="password"
                         class="form-control custom-input pe-5"
                         placeholder="••••••••"
                         required
+                        autocomplete="new-password"
                       />
 
                       <button
@@ -141,14 +162,18 @@
                   </div>
 
                   <div class="col-md-6 mb-4">
-                    <label class="custom-label"> Confirm Password </label>
+                    <label for="confirm-password" class="custom-label">
+                      Confirm Password
+                    </label>
 
                     <input
                       type="password"
                       id="confirm-password"
+                      name="confirm-password"
                       class="form-control custom-input"
                       placeholder="••••••••"
                       required
+                      autocomplete="new-password"
                     />
                   </div>
                 </div>
