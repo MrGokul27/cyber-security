@@ -83,7 +83,12 @@ document.addEventListener("click", (e) => {
   const href = anchor.getAttribute("href");
 
   // 1. Handle missing, empty, or placeholder '#' links
-  if (!href || href.trim() === "" || href.trim() === "#" || href === "javascript:void(0)") {
+  if (
+    !href ||
+    href.trim() === "" ||
+    href.trim() === "#" ||
+    href === "javascript:void(0)"
+  ) {
     e.preventDefault();
     window.location.href = pathPrefix + "pages/components/404.html";
     return;
@@ -133,7 +138,7 @@ function setActiveNavLink() {
 
   navLinks.forEach((link) => {
     const rawHref = link.getAttribute("href");
-    
+
     // Reset active state
     link.classList.remove("active");
 
@@ -144,7 +149,8 @@ function setActiveNavLink() {
     const linkPath = link.pathname;
 
     // Normalize both paths by removing trailing slashes and 'index.html' for a clean comparison
-    const normalize = (p) => p.replace(/\/index\.html$/, "").replace(/\/$/, "") || "/";
+    const normalize = (p) =>
+      p.replace(/\/index\.html$/, "").replace(/\/$/, "") || "/";
 
     if (normalize(currentPath) === normalize(linkPath)) {
       link.classList.add("active");
@@ -177,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeInputInteractions();
   initializeLoginForm();
   initializeKeyboardEnhancements();
+  initializeContactForm(); // Initialize the contact form handler
   initializeButtonEffects();
 });
 
@@ -377,6 +384,22 @@ function showSuccessState(button) {
 }
 
 /* ==================================================
+   CONTACT FORM SUBMIT
+================================================== */
+
+function initializeContactForm() {
+  const contactForm = document.getElementById("contactForm");
+
+  if (!contactForm) return;
+
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // Prevent default form submission
+    // Redirect to the 404 page
+    window.location.href = pathPrefix + "pages/components/404.html";
+  });
+}
+
+/* ==================================================
    SHAKE EFFECT
 ================================================== */
 
@@ -511,11 +534,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeUsernameFilter() {
   const username = document.getElementById("username");
+  const operatorName = document.getElementById("operatorName");
 
-  if (!username) return;
-
-  username.addEventListener("input", (e) => {
-    e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+  [username, operatorName].forEach((input) => {
+    if (input) {
+      input.addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+      });
+    }
   });
 }
 

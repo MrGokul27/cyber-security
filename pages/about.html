@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-tint": "#00dbe9",
+                  "on-surface-variant": "#b9cacb",
+                  "surface-container-lowest": "#0b0f10",
+                  "outline": "#849495",
+                  "on-error-container": "#ffdad6",
+                  "primary-fixed-dim": "#00dbe9",
+                  "on-error": "#690005",
+                  "on-primary-fixed-variant": "#004f54",
+                  "on-secondary-fixed": "#131b2e",
+                  "primary": "#dbfcff",
+                  "surface-container-low": "#191c1e",
+                  "on-tertiary-fixed-variant": "#3a485c",
+                  "tertiary-fixed-dim": "#b9c7e0",
+                  "on-tertiary-fixed": "#0d1c2f",
+                  "tertiary-fixed": "#d5e3fd",
+                  "on-tertiary": "#233144",
+                  "on-secondary": "#283044",
+                  "surface-bright": "#363a3b",
+                  "primary-fixed": "#7df4ff",
+                  "surface-variant": "#323537",
+                  "on-primary-fixed": "#002022",
+                  "error": "#ffb4ab",
+                  "on-background": "#e0e3e5",
+                  "surface-container-highest": "#323537",
+                  "on-secondary-fixed-variant": "#3f465c",
+                  "primary-container": "#00f0ff",
+                  "surface-container": "#1d2022",
+                  "outline-variant": "#3b494b",
+                  "background": "#101415",
+                  "secondary-fixed-dim": "#bec6e0",
+                  "surface-container-high": "#272a2c",
+                  "surface-dim": "#101415",
+                  "secondary-fixed": "#dae2fd",
+                  "secondary": "#bec6e0",
+                  "surface": "#101415",
+                  "on-tertiary-container": "#515f75",
+                  "on-surface": "#e0e3e5",
+                  "on-secondary-container": "#adb4ce",
+                  "tertiary": "#f3f5ff",
+                  "inverse-on-surface": "#2d3133",
+                  "on-primary": "#00363a",
+                  "inverse-primary": "#006970",
+                  "on-primary-container": "#006970",
+                  "inverse-surface": "#e0e3e5",
+                  "secondary-container": "#3f465c",
+                  "tertiary-container": "#ccdaf3",
+                  "error-container": "#93000a"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "spacing": {
+                  "base": "8px",
+                  "margin-desktop": "64px",
+                  "gutter": "24px",
+                  "margin-mobile": "20px",
+                  "container-max": "1280px"
+          },
+          "fontFamily": {
+                  "label-caps": ["JetBrains Mono"],
+                  "headline-lg": ["Inter"],
+                  "display-xl": ["Inter"],
+                  "body-lg": ["Inter"],
+                  "headline-md": ["Inter"],
+                  "code-sm": ["JetBrains Mono"],
+                  "body-md": ["Inter"],
+                  "headline-lg-mobile": ["Inter"]
+          },
+          "fontSize": {
+                  "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                  "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                  "display-xl": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                  "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "headline-md": ["30px", {"lineHeight": "38px", "fontWeight": "600"}],
+                  "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { background-color: #101415; color: #e0e3e5; -webkit-font-smoothing: antialiased; }
+    .glass-panel {
+      background: rgba(50, 53, 55, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(185, 202, 203, 0.1);
+    }
+    .grid-bg {
+      background-image: linear-gradient(rgba(59, 73, 75, 0.1) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(59, 73, 75, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .scanline-active::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(0, 219, 233, 0.05), transparent);
+      animation: scan 4s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes scan {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+    .glow-cyan {
+      box-shadow: 0 0 20px rgba(0, 219, 233, 0.15);
+    }
+    .text-glow {
+      text-shadow: 0 0 8px rgba(0, 219, 233, 0.5);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Our Story Section -->
+<section class="py-32 relative overflow-hidden">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+<div class="order-2 md:order-1 relative group">
+<div class="absolute -inset-4 border border-surface-tint/20 rounded-xl group-hover:border-surface-tint/40 transition-colors"></div>
+<div class="glass-panel p-2 rounded-xl overflow-hidden aspect-video">
+<img alt="High-end server rack" class="w-full h-full object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida/AP1WRLtHV6hPWWL551SmeROgCWpcU_pvfCZTxbXuyRAMrholAv0-np2Fppw_BeqqfDa1gVqxwtVo9HOfqdigjODfnzvNuppCYVEvXViwLOm1LcbhE3cDVw3uiRu9KdtaCeqir62x0RR0lkRoWwfEDjPa3zYhKFWMefUC77-hnpayez7UzPwYa7IkFK1FPd67wQWEDN76cdvXZWYNUQBNOrnQlzo3ftqm0Jj5Sf9zEHlPApapd-rWsAHREzkweiTw"/>
+</div>
+<div class="absolute -bottom-6 -right-6 glass-panel p-6 rounded-lg hidden md:block">
+<p class="font-label-caps text-headline-md text-surface-tint mb-1">EST. 1998</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SILICON VALLEY HQ</p>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-8 border-l-4 border-surface-tint pl-6">Our Story</h2>
+<div class="space-y-6 font-body-lg text-body-lg text-on-surface-variant">
+<p>
+              In 1998, CypherGuard began as a small boutique security firm specializing in cryptographic protocols for financial institutions. Our founders realized that as the digital landscape expanded, perimeter defense alone would eventually fail.
+            </p>
+<p>
+              By 2010, we pioneered the first behavioral-based threat detection engine, moving away from static signatures. Today, we stand as a global leader in autonomous threat intelligence, managing security for the world's most critical infrastructure with mathematical precision.
+            </p>
+</div>
+<div class="mt-12 flex gap-12">
+<div>
+<p class="font-headline-md text-headline-md text-surface-tint">25+</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Years Experience</p>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-surface-tint">400+</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Patents Filed</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Values Section -->
+<section class="py-32 bg-surface-container-lowest relative border-y border-outline-variant/10">
+<div class="absolute inset-0 grid-bg opacity-5"></div>
+<div class="px-margin-desktop max-w-container-max mx-auto relative z-10">
+<div class="mb-20">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Core Values</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Our methodology is built on four pillars that define how we protect the global digital ecosystem.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Integrity -->
+<div class="glass-panel p-8 rounded-xl relative group hover:bg-surface-tint/5 transition-all duration-300">
+<div class="w-12 h-12 bg-surface-tint/10 flex items-center justify-center rounded-lg mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-surface-tint">verified_user</span>
+</div>
+<h3 class="font-headline-md text-2xl text-primary mb-4">Integrity</h3>
+<p class="font-body-md text-on-surface-variant">Uncompromising ethics in every algorithm and interaction. Trust is our primary asset.</p>
+</div>
+<!-- Innovation -->
+<div class="glass-panel p-8 rounded-xl relative group hover:bg-surface-tint/5 transition-all duration-300">
+<div class="w-12 h-12 bg-surface-tint/10 flex items-center justify-center rounded-lg mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-surface-tint">psychology</span>
+</div>
+<h3 class="font-headline-md text-2xl text-primary mb-4">Innovation</h3>
+<p class="font-body-md text-on-surface-variant">AI-driven defense systems that evolve faster than the threats they are designed to stop.</p>
+</div>
+<!-- Vigilance -->
+<div class="glass-panel p-8 rounded-xl relative group hover:bg-surface-tint/5 transition-all duration-300">
+<div class="w-12 h-12 bg-surface-tint/10 flex items-center justify-center rounded-lg mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-surface-tint">visibility</span>
+</div>
+<h3 class="font-headline-md text-2xl text-primary mb-4">Vigilance</h3>
+<p class="font-body-md text-on-surface-variant">24/7 hyper-monitoring across all vectors. We never sleep, so our clients can.</p>
+</div>
+<!-- Precision -->
+<div class="glass-panel p-8 rounded-xl relative group hover:bg-surface-tint/5 transition-all duration-300">
+<div class="w-12 h-12 bg-surface-tint/10 flex items-center justify-center rounded-lg mb-6 group-hover:glow-cyan transition-all">
+<span class="material-symbols-outlined text-surface-tint">target</span>
+</div>
+<h3 class="font-headline-md text-2xl text-primary mb-4">Precision</h3>
+<p class="font-body-md text-on-surface-variant">Surgical threat removal with zero collateral damage to business continuity.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Mission & Vision Section -->
+<section class="py-32">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="p-12 glass-panel rounded-2xl relative overflow-hidden scanline-active border-l-4 border-surface-tint">
+<h2 class="font-headline-lg text-headline-lg text-surface-tint mb-6">Our Mission</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            To provide impenetrable security frameworks that enable organizations to innovate without fear. We exist to protect the world's most sensitive data through predictive intelligence and uncompromising engineering excellence.
+          </p>
+<div class="mt-8 pt-8 border-t border-outline-variant/30 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border border-surface-tint flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-tint text-sm">bolt</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">IMPACT DRIVEN DEFENSE</span>
+</div>
+</div>
+<div class="p-12 glass-panel rounded-2xl relative overflow-hidden border-l-4 border-primary/40">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Our Vision</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            A future where cyber threats are rendered obsolete by autonomous, self-healing security ecosystems. We envision a digital world where trust is implicit, and security is an invisible, seamless layer of modern civilization.
+          </p>
+<div class="mt-8 pt-8 border-t border-outline-variant/30 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">language</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">GLOBAL SECURITY PARADIGM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Impact Section -->
+<section class="py-32 relative bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<img alt="Professional security analysts in command center" class="w-full h-full object-cover opacity-10" src="https://lh3.googleusercontent.com/aida/AP1WRLsniWDtssjE9YiRuDu8_6FCGAQTrO_Ic1pD8NhiIKC6vrOcHRbYACc8-chuLnjCSBuuH-XCpziX-xWBFhIlsA6JT6Lfk-lsQDTwqtEhAvarnKjaAXoYO--zNYZJosU0EHRXScudetGE6BMDdiK9J3M1fO0spTLkZQ0Zagb1xJ3JHCMskdnBBOJ_W7nA7pkvZWh6mts66G03DiwqgfU7fgrJnAOuTnTiF4tg6yttVJmHCX3iO2iQSHOGTnqg"/>
+<div class="absolute inset-0 bg-background/80"></div>
+</div>
+<div class="px-margin-desktop max-w-container-max mx-auto relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Global Impact</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+            From our command centers in London to Tokyo, CypherGuard operates on a global scale to neutralize threats before they reach our clients' perimeters.
+          </p>
+<div class="space-y-8">
+<div class="flex items-center gap-6">
+<span class="font-display-xl text-5xl text-surface-tint font-bold">50+</span>
+<div>
+<p class="font-label-caps text-lg text-primary">Security Centers</p>
+<p class="font-body-md text-on-surface-variant">Strategically located for global coverage.</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-display-xl text-5xl text-surface-tint font-bold">2k+</span>
+<div>
+<p class="font-label-caps text-lg text-primary">Enterprise Clients</p>
+<p class="font-body-md text-on-surface-variant">Protecting Fortune 500 &amp; Governments.</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-display-xl text-5xl text-surface-tint font-bold">100%</span>
+<div>
+<p class="font-label-caps text-lg text-primary">Uptime Guarantee</p>
+<p class="font-body-md text-on-surface-variant">Zero-fail operational commitment.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative hidden md:block">
+<div class="aspect-square glass-panel rounded-full flex items-center justify-center relative border-dashed border-2 border-surface-tint/20 animate-[spin_60s_linear_infinite]">
+<div class="w-full h-full absolute inset-0 rounded-full border border-surface-tint/30 scale-90"></div>
+<div class="w-full h-full absolute inset-0 rounded-full border border-surface-tint/30 scale-75 border-dashed"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<span class="material-symbols-outlined text-8xl text-surface-tint mb-4">public</span>
+<p class="font-label-caps text-label-caps text-surface-tint animate-pulse">MONITORING LIVE</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Executive Leadership Section -->
+<section class="py-32 bg-background">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="mb-20 text-center">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Executive Leadership</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+          Led by visionaries in cryptography, national security, and artificial intelligence.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- CEO -->
+<div class="group relative">
+<div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden mb-6 relative border border-outline-variant/20 group-hover:border-surface-tint/40 transition-colors">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80 z-10"></div>
+<div class="absolute bottom-6 left-6 z-20">
+<p class="font-label-caps text-[10px] text-surface-tint mb-1 tracking-widest">FOUNDER &amp; CEO</p>
+<h4 class="font-headline-md text-2xl text-primary">Dr. Elias Vance</h4>
+</div>
+<div class="absolute inset-0 bg-surface-tint/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center p-8 backdrop-blur-sm z-30">
+<p class="text-primary font-body-md text-center">Former NIST advisor with 30 years in industrial cryptography and quantum-safe protocols.</p>
+</div>
+</div>
+</div>
+<!-- CTO -->
+<div class="group relative">
+<div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden mb-6 relative border border-outline-variant/20 group-hover:border-surface-tint/40 transition-colors">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80 z-10"></div>
+<div class="absolute bottom-6 left-6 z-20">
+<p class="font-label-caps text-[10px] text-surface-tint mb-1 tracking-widest">CTO</p>
+<h4 class="font-headline-md text-2xl text-primary">Sarah Chen</h4>
+</div>
+<div class="absolute inset-0 bg-surface-tint/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center p-8 backdrop-blur-sm z-30">
+<p class="text-primary font-body-md text-center">AI architect specializing in neural threat mapping and autonomous defense systems.</p>
+</div>
+</div>
+</div>
+<!-- Head of Intelligence -->
+<div class="group relative">
+<div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden mb-6 relative border border-outline-variant/20 group-hover:border-surface-tint/40 transition-colors">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80 z-10"></div>
+<div class="absolute bottom-6 left-6 z-20">
+<p class="font-label-caps text-[10px] text-surface-tint mb-1 tracking-widest">HEAD OF INTELLIGENCE</p>
+<h4 class="font-headline-md text-2xl text-primary">Marcus Thorne</h4>
+</div>
+<div class="absolute inset-0 bg-surface-tint/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center p-8 backdrop-blur-sm z-30">
+<p class="text-primary font-body-md text-center">Veteran tactical analyst focused on state-sponsored actor behavior and zero-day forensics.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32">
+<div class="px-margin-desktop max-w-container-max mx-auto">
+<div class="glass-panel p-16 rounded-3xl text-center border-surface-tint/30 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-surface-tint to-transparent"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Ready to Secure Your Legacy?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
+          Join the ranks of the world's most secure organizations. Consult with our elite engineering team today.
+        </p>
+<div class="flex justify-center gap-6">
+<button class="bg-surface-tint text-background px-10 py-4 font-label-caps text-label-caps rounded-lg hover:glow-cyan transition-all">Schedule Consultation</button>
+<button class="border border-outline text-primary px-10 py-4 font-label-caps text-label-caps rounded-lg hover:bg-white/5 transition-all">Technical Documentation</button>
+</div>
+</div>
+</div>
+</section>
+<script>
+    // Intersection Observer for scroll reveal animations
+    const observerOptions = {
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.glass-panel, h2, .group').forEach(el => {
+      el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+      observer.observe(el);
+    });
+  </script>
+</body></html>

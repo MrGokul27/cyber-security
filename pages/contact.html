@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Contact | Stackly Secure Uplink</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="../assets/css/services.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .custom-input {
+        background: var(--surface-container-low) !important;
+        border: 1px solid var(--outline-variant);
+        color: var(--on-surface);
+        padding: 0.8rem 1rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+      .custom-input:focus {
+        border-color: var(--primary-container);
+        box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.15);
+        background: var(--surface-container-low) !important;
+        color: var(--on-surface);
+      }
+      .label-caps {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+      }
+    </style>
+  </head>
+  <body class="contact-page">
+    <div id="magic-cursor"></div>
+    <div id="header-placeholder"></div>
+
+    <main>
+      <!-- Banner -->
+      <section class="services-hero reveal">
+        <div class="container-xl">
+          <nav class="breadcrumb-nav">
+            <a href="../index.html">Home</a>
+            <span class="material-symbols-outlined">chevron_right</span>
+            <span class="active">Contact</span>
+          </nav>
+          <h1 class="hero-title">Secure <span>Uplink</span></h1>
+          <p class="hero-description mx-auto">
+            Establish an encrypted communication channel with our global
+            security operations center.
+          </p>
+          <div
+            class="mt-4 d-flex justify-content-center align-items-center gap-3"
+          >
+            <div
+              class="px-3 py-1 bg-opacity-10 bg-info border-start border-2 border-info d-flex align-items-center gap-2"
+            >
+              <span class="status-dot"></span>
+              <span class="label-caps text-info">Status: Nominal</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="py-5 py-lg-7">
+        <div class="container-xl">
+          <div class="row g-5">
+            <!-- Form Side -->
+            <div class="col-lg-7">
+              <div class="glass-card p-4 p-md-5 rounded-4 reveal">
+                <h2 class="section-title h3 mb-3 text-info">
+                  Transmission Portal
+                </h2>
+                <p class="text-on-surface-variant mb-5">
+                  Initialize an encrypted channel to our security architects.
+                  All transmissions are subject to 256-bit E2EE.
+                </p>
+
+                <form class="row g-4" id="contactForm">
+                  <div class="col-md-6">
+                    <label class="label-caps mb-2 d-block">Operator Name</label>
+                    <input
+                      type="text"
+                      id="operatorName"
+                      class="form-control custom-input"
+                      placeholder="Alpha Operator"
+                      required
+                      maxlength="16"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="label-caps mb-2 d-block">Organization</label>
+                    <input
+                      type="text"
+                      class="form-control custom-input"
+                      placeholder="Enterprise Entity"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="label-caps mb-2 d-block">Secure Email</label>
+                    <input
+                      type="email"
+                      class="form-control custom-input"
+                      placeholder="operator@stackly.sys"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="label-caps mb-2 d-block"
+                      >Priority Level</label
+                    >
+                    <select class="form-select custom-input" required>
+                      <option>Routine Security Inquiry</option>
+                      <option>Critical Infrastructure Integration</option>
+                      <option>Emergency Incident Response</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="label-caps mb-2 d-block"
+                      >Encrypted Message</label
+                    >
+                    <textarea
+                      class="form-control custom-input"
+                      rows="5"
+                      placeholder="Enter transmission payload..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button
+                      type="submit"
+                      class="btn btn-primary-custom w-100 py-3 d-flex align-items-center justify-content-center gap-2"
+                    >
+                      <span>Execute Transmission</span>
+                      <span class="material-symbols-outlined">send</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-5">
+              <div class="d-flex flex-column gap-4">
+                <!-- System Status -->
+                <div
+                  class="glass-card p-4 rounded-4 border-start border-4 border-info reveal"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+                    <span class="label-caps">System Status</span>
+                    <span class="label-caps text-info">Live</span>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="small">Uplink Encryption</span>
+                      <span class="text-info small fw-bold">ACTIVE</span>
+                    </div>
+                    <div
+                      class="progress"
+                      style="height: 4px; background: rgba(255, 255, 255, 0.05)"
+                    >
+                      <div
+                        class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                        role="progressbar"
+                        style="width: 94%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span class="small">Node Latency</span>
+                    <span class="text-info font-monospace">12ms</span>
+                  </div>
+                </div>
+
+                <!-- Secure Nodes -->
+                <div class="glass-card p-4 rounded-4 reveal">
+                  <h3 class="label-caps mb-4">Direct Secure Nodes</h3>
+                  <div class="d-flex flex-column gap-4">
+                    <div class="d-flex gap-3 align-items-start">
+                      <div
+                        class="p-2 bg-surface-container rounded border border-outline-variant text-info"
+                      >
+                        <span class="material-symbols-outlined">terminal</span>
+                      </div>
+                      <div>
+                        <span
+                          class="label-caps text-info d-block mb-1"
+                          style="font-size: 10px"
+                          >Primary Link</span
+                        >
+                        <a
+                          href="mailto:uplink@stackly.sys"
+                          class="text-decoration-none text-on-surface fw-bold"
+                          >uplink@stackly.sys</a
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                      <div
+                        class="p-2 bg-surface-container rounded border border-outline-variant text-info"
+                      >
+                        <span class="material-symbols-outlined">emergency</span>
+                      </div>
+                      <div>
+                        <span
+                          class="label-caps text-info d-block mb-1"
+                          style="font-size: 10px"
+                          >Incident Node</span
+                        >
+                        <span class="fw-bold">+91 98765 54321</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Documentation CTA -->
+                <a
+                  href="#"
+                  class="glass-card p-4 rounded-4 text-decoration-none glow-hover reveal"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div>
+                      <h4 class="text-info h6 mb-1">Technical Documentation</h4>
+                      <p class="text-on-surface-variant small mb-0">
+                        Review integration protocols
+                      </p>
+                    </div>
+                    <span class="material-symbols-outlined text-info fs-1"
+                      >menu_book</span
+                    >
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Locations -->
+      <section
+        class="py-5 py-lg-7 bg-surface-container-lowest border-top border-outline-variant"
+      >
+        <div class="container-xl">
+          <div class="mb-5">
+            <span class="label-caps text-info">Global Operations</span>
+            <h2 class="section-title h2 mt-2">Physical Security Clusters</h2>
+          </div>
+          <div class="row g-4">
+            <!-- London -->
+            <div class="col-md-4">
+              <div class="case-card h-100 reveal">
+                <div class="case-image" style="height: 180px">
+                  <img
+                    src="../assets/images/case-studies/case-studies-img1.webp"
+                    alt="London Node"
+                    class="img-fluid w-100 h-100 object-fit-cover"
+                  />
+                </div>
+                <div class="p-4">
+                  <div class="d-flex justify-content-between mb-3">
+                    <h5 class="mb-0 text-info">London (EU-01)</h5>
+                    <span class="badge bg-secondary-container">GMT +0</span>
+                  </div>
+                  <address class="small text-on-surface-variant mb-0">
+                    12 Cyber Quarter, Canary Wharf<br />London, UK
+                  </address>
+                </div>
+              </div>
+            </div>
+            <!-- Tokyo -->
+            <div class="col-md-4">
+              <div class="case-card h-100 reveal">
+                <div class="case-image" style="height: 180px">
+                  <img
+                    src="../assets/images/case-studies/case-studies-img2.webp"
+                    alt="Tokyo Node"
+                    class="img-fluid w-100 h-100 object-fit-cover"
+                  />
+                </div>
+                <div class="p-4">
+                  <div class="d-flex justify-content-between mb-3">
+                    <h5 class="mb-0 text-info">Tokyo (AS-03)</h5>
+                    <span class="badge bg-secondary-container">JST +9</span>
+                  </div>
+                  <address class="small text-on-surface-variant mb-0">
+                    Shinjuku Nomura Bldg, 41F<br />Tokyo, JP
+                  </address>
+                </div>
+              </div>
+            </div>
+            <!-- New York -->
+            <div class="col-md-4">
+              <div class="case-card h-100 reveal">
+                <div class="case-image" style="height: 180px">
+                  <img
+                    src="../assets/images/case-studies/case-studies-img3.webp"
+                    alt="NY Node"
+                    class="img-fluid w-100 h-100 object-fit-cover"
+                  />
+                </div>
+                <div class="p-4">
+                  <div class="d-flex justify-content-between mb-3">
+                    <h5 class="mb-0 text-info">New York (US-E)</h5>
+                    <span class="badge bg-secondary-container">EST -5</span>
+                  </div>
+                  <address class="small text-on-surface-variant mb-0">
+                    750 Security Plaza, Fin. District<br />New York, US
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section class="py-5 py-lg-7 reveal">
+        <div class="container-xl">
+          <div class="mb-5 text-center">
+            <span class="label-caps text-info">Network Visualization</span>
+            <h2 class="section-title h2 mt-2">Active Node Map</h2>
+          </div>
+          <div
+            class="glass-card p-3 rounded-4 overflow-hidden position-relative glow-cyan"
+          >
+            <div class="scan-line"></div>
+            <div
+              class="map-wrapper"
+              style="
+                height: 500px;
+                border-radius: 12px;
+                overflow: hidden;
+                position: relative;
+              "
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093643!2d144.9537363153166!3d-37.816279742021665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4c2b349649%3A0xb6899234e561db11!2sEnvato!5e0!3m2!1sen!2sau!4v1718695200000!5m2!1sen!2sau"
+                width="100%"
+                height="100%"
+                style="
+                  border: 0;
+                  filter: grayscale(1) invert(0.9) hue-rotate(180deg)
+                    brightness(0.7) contrast(1.2);
+                "
+                allowfullscreen=""
+                loading="lazy"
+              >
+              </iframe>
+              <div
+                class="position-absolute bottom-0 end-0 p-3 bg-dark bg-opacity-75 m-3 rounded border border-info border-opacity-25 label-caps text-info"
+                style="font-size: 10px"
+              >
+                MAP_SATELLITE_LINK: ENCRYPTED // COORDINATES_ALPHA_7
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script>
+      // Mock System Status Live Update
+      setInterval(() => {
+        const bar = document.querySelector(".progress-bar");
+        if (bar) {
+          const newVal = Math.floor(Math.random() * (98 - 92) + 92);
+          bar.style.width = newVal + "%";
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>

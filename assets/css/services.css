@@ -1,6 +1,7 @@
 .services-page .services-hero,
 .case-studies-page .services-hero,
-.pricing-page .services-hero {
+.pricing-page .services-hero,
+.contact-page .services-hero {
   padding: 200px 0 140px;
   position: relative;
   text-align: center;
@@ -521,4 +522,10 @@
   background-image:
     linear-gradient(rgba(16, 20, 21, 0.75), rgba(16, 20, 21, 0.95)),
     url("../images/pricing/pricing-banner.webp");
+}
+
+.contact-page .services-hero {
+  background-image:
+    linear-gradient(rgba(16, 20, 21, 0.75), rgba(16, 20, 21, 0.95)),
+    url("../images/contact/contact-banner-image.webp");
 }
