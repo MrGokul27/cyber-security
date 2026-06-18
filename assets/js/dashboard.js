@@ -152,7 +152,11 @@ document.addEventListener("DOMContentLoaded", () => {
           icon: "history",
           url: "#incident-history",
         },
-        { label: "Malware Analysis", icon: "virus", url: "#malware-analysis" },
+        {
+          label: "Malware Analysis",
+          icon: "coronavirus",
+          url: "#malware-analysis",
+        },
         { label: "Compliance Check", icon: "gavel", url: "#compliance-check" },
       ],
     },
