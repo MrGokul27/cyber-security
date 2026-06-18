@@ -393,10 +393,10 @@ body {
   position: relative;
 }
 
-.hero-section.hero-subpage {
+/* .hero-section.hero-subpage {
   min-height: 60vh;
   padding: 160px 0 80px;
-}
+} */
 
 .hero-overlay {
   position: absolute;

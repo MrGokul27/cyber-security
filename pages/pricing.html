@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pricing | Stackly Infrastructure</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="../assets/css/services.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+
+    <style>
+      .comparison-section {
+        background: var(--surface-container-lowest);
+      }
+      .table {
+        --bs-table-bg: transparent;
+        --bs-table-color: var(--on-surface);
+        border-color: var(--outline-variant);
+      }
+      .table thead th {
+        color: var(--primary-container);
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid var(--primary-container);
+      }
+      .feature-category {
+        background: rgba(0, 240, 255, 0.05);
+        color: var(--primary-container);
+        font-weight: 700;
+        letter-spacing: 2px;
+        font-size: 0.75rem;
+      }
+      .price-value {
+        text-shadow: 0 0 10px rgba(0, 219, 233, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="magic-cursor"></div>
+    <div id="header-placeholder"></div>
+
+    <main class="pricing-page">
+      <!-- Hero Banner -->
+      <section class="services-hero reveal">
+        <div class="container-xl">
+          <nav class="breadcrumb-nav">
+            <a href="../index.html">Home</a>
+            <span class="material-symbols-outlined">chevron_right</span>
+            <span class="active">Pricing</span>
+          </nav>
+          <h1 class="hero-title">Adaptive <span>Security</span></h1>
+          <p class="hero-description">
+            Precision-engineered defense tiers tailored for modern enterprise
+            infrastructures. Scalable protection against evolving quantum-level
+            threats.
+          </p>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="pricing-section py-5 py-lg-7 reveal">
+        <div class="container-xl">
+          <!-- Toggle -->
+          <div class="text-center mb-5">
+            <div class="pricing-toggle d-inline-flex align-items-center p-1">
+              <button class="btn monthly-plan active-plan">Monthly</button>
+              <button class="btn yearly-plan">Yearly (Save 20%)</button>
+            </div>
+          </div>
+
+          <!-- Pricing Grid -->
+          <div class="row g-4 justify-content-center mb-5">
+            <!-- Tier 1 -->
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="pricing-card glass-card h-100 d-flex flex-column glow-hover"
+              >
+                <span class="pricing-label">ESSENTIAL SENTINEL</span>
+                <p class="text-on-surface-variant mb-4">
+                  Foundational security for growing digital assets.
+                </p>
+                <div class="pricing-price mb-4">
+                  <span
+                    class="price price-value"
+                    data-monthly="$499"
+                    data-yearly="$4,790"
+                    >$499</span
+                  >
+                  <span class="duration">/mo</span>
+                </div>
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    24/7 Core Monitoring
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    AI Threat Detection
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Standard API Integration
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Auto-Response Scripts
+                  </li>
+                </ul>
+                <a href="#">
+                  <button class="btn btn-outline-custom w-100 mt-4">
+                    Deploy Sentinel
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            <!-- Tier 2 - Featured -->
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="pricing-card featured-card glass-card h-100 d-flex flex-column relative overflow-hidden"
+              >
+                <div class="scan-line"></div>
+                <div class="popular-badge">MOST DEPLOYED</div>
+                <span class="pricing-label featured-label"
+                  >ENTERPRISE GUARDIAN</span
+                >
+                <p class="text-on-surface-variant mb-4">
+                  Comprehensive defense for complex networks.
+                </p>
+                <div class="pricing-price mb-4">
+                  <span
+                    class="price price-value"
+                    data-monthly="$1,299"
+                    data-yearly="$12,470"
+                    >$1,299</span
+                  >
+                  <span class="duration">/mo</span>
+                </div>
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Full SOC Monitoring
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Adaptive Behavioral Analysis
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Custom Logic Integration
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    4hr Priority Response
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Advanced Data Leakage Prev.
+                  </li>
+                </ul>
+                <a href="#">
+                  <button class="btn btn-primary-custom w-100 mt-4">
+                    Deploy Guardian
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="pricing-card glass-card h-100 d-flex flex-column glow-hover"
+              >
+                <span class="pricing-label">QUANTUM DEFENSE</span>
+                <p class="text-on-surface-variant mb-4">
+                  Military-grade protection for future-state threats.
+                </p>
+                <div class="pricing-price mb-4">
+                  <span
+                    class="price price-value"
+                    data-monthly="$3,499"
+                    data-yearly="$33,590"
+                    >$3,499</span
+                  >
+                  <span class="duration">/mo</span>
+                </div>
+                <ul class="pricing-features list-unstyled flex-grow-1">
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Post-Quantum Cryptography
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Predictive Offensive Scanning
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Full White-Glove Integration
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Dedicated Response Squad
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Zero-Day Immunity Shield
+                  </li>
+                </ul>
+                <a href="#">
+                  <button class="btn btn-outline-custom w-100 mt-4">
+                    Deploy Defense
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparison Matrix -->
+      <section class="comparison-section py-5 py-lg-7 reveal">
+        <div class="container-xl">
+          <div class="text-center mb-5">
+            <h2 class="section-title mb-3">Technical Specification</h2>
+            <p class="section-description mx-auto">
+              Granular breakdown of defensive capabilities across tiers.
+            </p>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th scope="col" class="py-4 px-4">FEATURE CAPABILITY</th>
+                  <th scope="col" class="py-4 px-4">SENTINEL</th>
+                  <th scope="col" class="py-4 px-4">GUARDIAN</th>
+                  <th scope="col" class="py-4 px-4">QUANTUM</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="feature-category">
+                  <td colspan="4" class="py-3 px-4">INFRASTRUCTURE SECURITY</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 fw-bold">Asset Monitoring</td>
+                  <td class="py-4 px-4">Up to 500 nodes</td>
+                  <td class="py-4 px-4 text-primary-container">
+                    Up to 10k nodes
+                  </td>
+                  <td class="py-4 px-4 text-primary-container">Unlimited</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 fw-bold">Log Retention</td>
+                  <td class="py-4 px-4">30 Days</td>
+                  <td class="py-4 px-4">180 Days</td>
+                  <td class="py-4 px-4 text-primary-container">
+                    Immutable (Infinite)
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 fw-bold">Deployment Model</td>
+                  <td class="py-4 px-4">SaaS</td>
+                  <td class="py-4 px-4">Hybrid/On-Prem</td>
+                  <td class="py-4 px-4 text-primary-container">
+                    Air-Gapped Ready
+                  </td>
+                </tr>
+                <tr class="feature-category">
+                  <td colspan="4" class="py-3 px-4">
+                    AI & THREAT INTELLIGENCE
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 fw-bold">Predictive Modeling</td>
+                  <td class="py-4 px-4">—</td>
+                  <td class="py-4 px-4 text-primary-container">
+                    Yes (Standard)
+                  </td>
+                  <td class="py-4 px-4 text-primary-container">
+                    Yes (Real-time)
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 fw-bold">Zero-Day Engine</td>
+                  <td class="py-4 px-4">—</td>
+                  <td class="py-4 px-4">—</td>
+                  <td class="py-4 px-4 text-primary-container">Enabled</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Custom Quote -->
+      <section class="container-xl py-5 reveal">
+        <div
+          class="glass-card p-5 text-center position-relative overflow-hidden"
+        >
+          <div class="scan-line"></div>
+          <div class="mb-4">
+            <span
+              class="material-symbols-outlined display-4 text-primary-container opacity-50"
+              >hub</span
+            >
+          </div>
+          <span class="section-tag d-block mb-2"
+            >Bespoke Enterprise Solutions</span
+          >
+          <h3 class="h2 mb-4">Unrestricted Scale?</h3>
+          <p class="section-description mx-auto mb-5" style="max-width: 700px">
+            For global infrastructures requiring bespoke SLAs, air-gapped
+            environments, and custom hardware acceleration.
+          </p>
+          <a href="#" class="btn btn-primary-custom px-5 py-3">
+            Request Custom Quote
+            <span class="material-symbols-outlined align-middle ms-2"
+              >arrow_forward</span
+            >
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>
