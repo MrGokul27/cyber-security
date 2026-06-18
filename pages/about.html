@@ -244,71 +244,134 @@
 
       <!-- Global Impact Section -->
       <section
-        class="py-5 py-lg-7 relative bg-surface-container-low overflow-hidden"
+        class="py-5 py-lg-7 relative bg-surface-container-low overflow-hidden border-top border-bottom border-outline-variant"
       >
-        <!-- <div class="scan-line"></div> -->
+        <div class="opacity-25"></div>
         <div class="container-xl position-relative z-1">
           <div class="row align-items-center g-5">
             <div class="col-lg-7 reveal">
-              <h2 class="section-title mb-4">Global Impact</h2>
+              <span class="section-tag mb-2 d-block">Network Reach</span>
+              <h2 class="section-title mb-4 h1">Global Operational Impact</h2>
               <p class="text-muted-custom fs-5 mb-5">
                 From our command centers in London to Tokyo, Stackly operates on
                 a global mesh network to neutralize threats before they reach
                 our clients' perimeters.
               </p>
               <div class="row g-4">
-                <div class="col-md-6 d-flex align-items-center gap-4">
-                  <span class="display-3 text-info fw-bold">50+</span>
-                  <div>
-                    <p class="h6 mb-1">Security Centers</p>
+                <div class="col-md-6">
+                  <div
+                    class="glass-card p-4 rounded-4 border-start border-4 border-info h-100"
+                  >
+                    <span
+                      class="display-4 text-info fw-bold font-monospace d-block mb-2"
+                      >50+</span
+                    >
+                    <h6
+                      class="text-uppercase tracking-widest small fw-bold mb-2"
+                    >
+                      Security Centers
+                    </h6>
                     <p class="small text-muted-custom mb-0">
-                      Strategically located for global coverage.
+                      Strategically located command nodes for global coverage.
                     </p>
                   </div>
                 </div>
-                <div class="col-md-6 d-flex align-items-center gap-4">
-                  <span class="display-3 text-info fw-bold">2k+</span>
-                  <div>
-                    <p class="h6 mb-1">Enterprise Clients</p>
+                <div class="col-md-6">
+                  <div
+                    class="glass-card p-4 rounded-4 border-start border-4 border-info h-100"
+                  >
+                    <span
+                      class="display-4 text-info fw-bold font-monospace d-block mb-2"
+                      >2k+</span
+                    >
+                    <h6
+                      class="text-uppercase tracking-widest small fw-bold mb-2"
+                    >
+                      Enterprise Clients
+                    </h6>
                     <p class="small text-muted-custom mb-0">
-                      Protecting Fortune 500 & Governments.
+                      Protecting Fortune 500 entities & global governments.
                     </p>
                   </div>
                 </div>
-                <div class="col-md-6 d-flex align-items-center gap-4">
-                  <span class="display-3 text-info fw-bold">100%</span>
-                  <div>
-                    <p class="h6 mb-1">Uptime Guarantee</p>
-                    <p class="small text-muted-custom mb-0">
-                      Zero-fail operational commitment.
-                    </p>
+                <div class="col-md-12">
+                  <div
+                    class="glass-card p-4 rounded-4 border-start border-4 border-info"
+                  >
+                    <div class="d-flex align-items-center gap-4">
+                      <span
+                        class="display-4 text-info fw-bold font-monospace mb-0"
+                        >100%</span
+                      >
+                      <div>
+                        <h6
+                          class="text-uppercase tracking-widest small fw-bold mb-1"
+                        >
+                          Uptime Guarantee
+                        </h6>
+                        <p class="small text-muted-custom mb-0">
+                          Our zero-fail operational commitment to
+                          mission-critical infrastructure.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block reveal">
-              <div class="visualization-box position-relative mt-0 h-auto">
+              <div
+                class="visualization-box position-relative mt-0 h-auto d-flex justify-content-center"
+              >
                 <div
-                  class="visualization-showcase glass-card rounded-circle border border-info border-opacity-25 shadow-lg"
+                  class="visualization-showcase glass-card rounded-circle border border-info border-opacity-25 shadow-lg position-relative"
+                  style="width: 400px; height: 400px"
                 >
+                  <!-- Inner ring decoration -->
                   <div
-                    class="d-flex flex-column align-items-center justify-content-center p-5 text-center"
-                    style="width: 400px; height: 400px"
+                    class="position-absolute top-50 start-50 translate-middle rounded-circle border border-info border-opacity-10"
+                    style="width: 85%; height: 85%"
+                  ></div>
+
+                  <div
+                    class="d-flex flex-column align-items-center justify-content-center p-5 text-center h-100"
                   >
                     <div
-                      class="pulse-node position-relative mb-4"
-                      style="animation-duration: 1s"
-                    ></div>
-                    <div
-                      class="pulse-node position-absolute top-25 start-25"
+                      class="pulse-node mb-4"
+                      style="
+                        position: relative;
+                        animation-duration: 1.5s;
+                        width: 24px;
+                        height: 24px;
+                      "
                     ></div>
                     <span
-                      class="material-symbols-outlined display-1 text-info mb-3"
+                      class="material-symbols-outlined display-1 text-info mb-3 glow-cyan"
                       >public</span
                     >
-                    <p class="font-monospace text-info animate-pulse mb-0">
-                      MONITORING LIVE
+                    <p
+                      class="font-monospace text-info animate-pulse mb-1 tracking-widest fw-bold"
+                    >
+                      LIVE MONITORING
                     </p>
+                    <p class="small font-monospace text-muted-custom mb-0">
+                      UPLINK_STATUS: NOMINAL
+                    </p>
+                    <!-- Decorative pulse nodes -->
+                    <div
+                      class="pulse-node position-absolute"
+                      style="top: 20%; left: 25%; width: 10px; height: 10px"
+                    ></div>
+                    <div
+                      class="pulse-node position-absolute"
+                      style="
+                        bottom: 25%;
+                        right: 20%;
+                        width: 12px;
+                        height: 12px;
+                        animation-delay: 0.5s;
+                      "
+                    ></div>
                   </div>
                 </div>
               </div>

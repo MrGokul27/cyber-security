@@ -41,7 +41,7 @@ async function loadComponent(id, url) {
 const cursor = document.getElementById("magic-cursor");
 
 // Only enable magic cursor on desktop devices with a fine pointer (mouse)
-if (window.matchMedia("(pointer: fine)").matches) {
+if (cursor && window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener("mousemove", (e) => {
     cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
   });
@@ -55,7 +55,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
     cursor.style.transform += " scale(1)";
     cursor.style.background = "rgba(0, 240, 255, 0.3)";
   });
-} else {
+} else if (cursor) {
   cursor.style.display = "none";
 }
 
@@ -110,20 +110,18 @@ loadComponent("footer-placeholder", "/pages/components/footer.html");
 // Navbar Scroll
 window.addEventListener("scroll", () => {
   const navbar = document.querySelector(".custom-navbar");
-
-  if (window.scrollY > 50) {
+  if (navbar && window.scrollY > 50) {
     navbar.classList.add("scrolled");
-  } else {
+  } else if (navbar) {
     navbar.classList.remove("scrolled");
   }
 });
 
-const navbar = document.querySelector(".custom-navbar");
-
 function toggleNavbar() {
-  if (window.scrollY > 50) {
+  const navbar = document.querySelector(".custom-navbar");
+  if (navbar && window.scrollY > 50) {
     navbar.classList.add("scrolled");
-  } else {
+  } else if (navbar) {
     navbar.classList.remove("scrolled");
   }
 }
