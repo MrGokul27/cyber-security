@@ -120,6 +120,18 @@ body {
   transition: var(--transition);
 }
 
+.glass-panel::before, .glass-panel::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--primary);
+  z-index: 2;
+}
+
+.glass-panel::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.glass-panel::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+
 .glass-panel:hover {
   box-shadow:
     0 0 40px rgba(0, 240, 255, 0.15),
@@ -157,6 +169,24 @@ body {
   to {
     top: 100%;
   }
+}
+
+/* ==================================================
+   TERMINAL ACCENTS
+================================================== */
+
+.terminal-controls {
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+.t-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 /* ==================================================
@@ -199,6 +229,8 @@ body {
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -1px;
   margin-bottom: 12px;
 }
 
@@ -237,6 +269,8 @@ body {
   border: 1px solid var(--outline);
 
   color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
 
   min-height: 52px;
 

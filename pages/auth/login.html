@@ -40,6 +40,11 @@
           <div class="col-12 col-sm-11 col-md-9 col-lg-7 col-xl-5">
             <div class="glass-panel">
               <div class="scanline"></div>
+              <div class="terminal-controls">
+                <div class="t-dot bg-danger opacity-50"></div>
+                <div class="t-dot bg-warning opacity-50"></div>
+                <div class="t-dot bg-success opacity-50"></div>
+              </div>
 
               <!-- Back Link -->
               <div class="mb-4">
@@ -50,10 +55,13 @@
               </div>
 
               <!-- Header -->
-              <div class="text-center mb-5">
+              <div class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span class="status-dot"></span>
+                  <span class="secure-channel text-uppercase">Node: Auth_Proxy_v4</span>
+                </div>
                 <h1 class="portal-title">Portal Access</h1>
-
-                <p class="portal-subtitle">
+                <p class="portal-subtitle small">
                   Verify your credentials to enter the secure environment.
                 </p>
               </div>
