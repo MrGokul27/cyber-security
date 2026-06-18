@@ -162,14 +162,18 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Incident History",
           icon: "history",
-          url: "#incident-history",
+          url: "/pages/dashboard/system-analyst/incident-history.html",
         },
         {
           label: "Malware Analysis",
           icon: "coronavirus",
-          url: "#malware-analysis",
+          url: "/pages/dashboard/system-analyst/malware-analysis.html",
         },
-        { label: "Compliance Check", icon: "gavel", url: "#compliance-check" },
+        {
+          label: "Compliance Check",
+          icon: "gavel",
+          url: "/pages/dashboard/system-analyst/compliance-check.html",
+        },
       ],
     },
     operator: {

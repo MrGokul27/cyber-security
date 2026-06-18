@@ -1,0 +1,693 @@
+<!doctype html>
+
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Compliance Check</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../../assets/images/logoStackly.webp"
+    />
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .alert-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .alert-card:hover {
+        background-color: var(--surface-container-high) !important;
+        transform: translateY(-2px);
+      }
+      .remediation-steps {
+        display: none;
+      }
+      .alert-card:hover .remediation-steps {
+        display: block;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Page Header -->
+          <div
+            class="mb-5 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4"
+          >
+            <div>
+              <div
+                class="d-flex align-items-center gap-2 mb-2 small text-primary-container"
+              >
+                <span class="pulse-dot"></span>
+                <span class="font-monospace text-uppercase"
+                  >Security Operations Center / Compliance</span
+                >
+              </div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">Compliance Check</h1>
+              <p
+                class="lead text-on-surface-variant mb-0"
+                style="max-width: 700px"
+              >
+                Real-time monitoring and automated auditing against global
+                regulatory standards. System integrity verified across 42
+                endpoints.
+              </p>
+            </div>
+            <div class="d-flex gap-3">
+              <button
+                class="btn btn-outline-custom d-flex align-items-center gap-2"
+              >
+                <span class="material-symbols-outlined small">refresh</span>
+                Re-Scan All
+              </button>
+              <button
+                class="btn btn-primary-custom d-flex align-items-center gap-2"
+              >
+                <span class="material-symbols-outlined small">download</span>
+                Export Archive
+              </button>
+            </div>
+          </div>
+
+          <!-- Bento Grid - Compliance Overview -->
+          <div class="row g-4 mb-5">
+            <!-- Audit Progress: SOC2 -->
+            <div class="col-12 col-md-4">
+              <div
+                class="glass-panel p-4 position-relative overflow-hidden h-100"
+              >
+                <div class="scan-line"></div>
+                <div
+                  class="d-flex justify-content-between align-items-start mb-4"
+                >
+                  <div>
+                    <h3 class="h6 text-on-surface fw-bold">SOC2 Type II</h3>
+                    <p class="small text-on-surface-variant text-uppercase">
+                      Service Organization Control
+                    </p>
+                  </div>
+                  <span class="material-symbols-outlined text-primary-container"
+                    >verified_user</span
+                  >
+                </div>
+                <div
+                  class="d-flex justify-content-center align-items-center py-3"
+                >
+                  <div
+                    class="position-relative"
+                    style="width: 140px; height: 140px"
+                  >
+                    <svg
+                      class="w-100 h-100"
+                      style="transform: rotate(-90deg)"
+                      viewbox="0 0 100 100"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--surface-variant)"
+                        stroke-width="10"
+                        opacity="0.3"
+                      ></circle>
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--primary-container)"
+                        stroke-width="10"
+                        stroke-dasharray="282.7"
+                        stroke-dashoffset="28.27"
+                      ></circle>
+                    </svg>
+                    <div
+                      class="position-absolute top-50 start-50 translate-middle text-center"
+                    >
+                      <span class="h3 font-monospace fw-bold text-on-surface"
+                        >90%</span
+                      >
+                      <span
+                        class="d-block small text-primary-container text-uppercase"
+                        style="font-size: 10px"
+                        >Optimal</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 pt-3 border-top border-outline-variant d-flex justify-content-between small"
+                >
+                  <span class="text-on-surface-variant"
+                    >Last Audit:
+                    <span class="text-on-surface">14h ago</span></span
+                  >
+                  <span class="text-on-surface-variant"
+                    >Controls:
+                    <span class="text-on-surface">124/138</span></span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Audit Progress: HIPAA -->
+            <div class="col-12 col-md-4">
+              <div
+                class="glass-panel p-4 position-relative overflow-hidden h-100"
+              >
+                <div class="scan-line" style="animation-delay: -1s"></div>
+                <div
+                  class="d-flex justify-content-between align-items-start mb-4"
+                >
+                  <div>
+                    <h3 class="h6 text-on-surface fw-bold">HIPAA</h3>
+                    <p class="small text-on-surface-variant text-uppercase">
+                      Health Insurance Portability
+                    </p>
+                  </div>
+                  <span class="material-symbols-outlined text-primary-container"
+                    >health_and_safety</span
+                  >
+                </div>
+                <div
+                  class="d-flex justify-content-center align-items-center py-3"
+                >
+                  <div
+                    class="position-relative"
+                    style="width: 140px; height: 140px"
+                  >
+                    <svg
+                      class="w-100 h-100"
+                      style="transform: rotate(-90deg)"
+                      viewbox="0 0 100 100"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--surface-variant)"
+                        stroke-width="10"
+                        opacity="0.3"
+                      ></circle>
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--primary-container)"
+                        stroke-width="10"
+                        stroke-dasharray="282.7"
+                        stroke-dashoffset="70.67"
+                      ></circle>
+                    </svg>
+                    <div
+                      class="position-absolute top-50 start-50 translate-middle text-center"
+                    >
+                      <span class="h3 font-monospace fw-bold text-on-surface"
+                        >75%</span
+                      >
+                      <span
+                        class="d-block small text-primary-container text-uppercase"
+                        style="font-size: 10px"
+                        >Active</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 pt-3 border-top border-outline-variant d-flex justify-content-between small"
+                >
+                  <span class="text-on-surface-variant"
+                    >Last Audit:
+                    <span class="text-on-surface">2h ago</span></span
+                  >
+                  <span class="text-on-surface-variant"
+                    >Controls: <span class="text-on-surface">82/110</span></span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Audit Progress: GDPR -->
+            <div class="col-12 col-md-4">
+              <div
+                class="glass-panel p-4 position-relative overflow-hidden h-100"
+              >
+                <div class="scan-line" style="animation-delay: -2s"></div>
+                <div
+                  class="d-flex justify-content-between align-items-start mb-4"
+                >
+                  <div>
+                    <h3 class="h6 text-on-surface fw-bold">GDPR</h3>
+                    <p class="small text-on-surface-variant text-uppercase">
+                      General Data Protection Reg.
+                    </p>
+                  </div>
+                  <span class="material-symbols-outlined text-danger"
+                    >warning</span
+                  >
+                </div>
+                <div
+                  class="d-flex justify-content-center align-items-center py-3"
+                >
+                  <div
+                    class="position-relative"
+                    style="width: 140px; height: 140px"
+                  >
+                    <svg
+                      class="w-100 h-100"
+                      style="transform: rotate(-90deg)"
+                      viewbox="0 0 100 100"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--surface-variant)"
+                        stroke-width="10"
+                        opacity="0.3"
+                      ></circle>
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="transparent"
+                        stroke="var(--error)"
+                        stroke-width="10"
+                        stroke-dasharray="282.7"
+                        stroke-dashoffset="118.73"
+                      ></circle>
+                    </svg>
+                    <div
+                      class="position-absolute top-50 start-50 translate-middle text-center"
+                    >
+                      <span class="h3 font-monospace fw-bold text-on-surface"
+                        >58%</span
+                      >
+                      <span
+                        class="d-block small text-danger text-uppercase"
+                        style="font-size: 10px"
+                        >Warning</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 pt-3 border-top border-outline-variant d-flex justify-content-between small"
+                >
+                  <span class="text-on-surface-variant"
+                    >Last Audit: <span class="text-on-surface">Now</span></span
+                  >
+                  <span class="text-on-surface-variant"
+                    >Controls: <span class="text-on-surface">42/72</span></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- Non-Compliance Alerts List -->
+            <div class="col-12 col-lg-8">
+              <div class="glass-panel p-4 border-start border-danger border-4">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-4"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="material-symbols-outlined text-danger"
+                      >emergency_home</span
+                    >
+                    <h2 class="h5 fw-bold text-on-surface mb-0">
+                      Non-Compliance Alerts
+                    </h2>
+                  </div>
+                  <span
+                    class="badge bg-danger bg-opacity-10 text-danger-emphasis small"
+                    >3 Critical Issues</span
+                  >
+                </div>
+                <div class="d-flex flex-column gap-3">
+                  <!-- Alert Item 1 -->
+                  <div
+                    class="p-3 bg-surface-container bg-opacity-50 border border-outline-variant rounded alert-card"
+                  >
+                    <div
+                      class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"
+                    >
+                      <div class="d-flex align-items-start gap-3">
+                        <div
+                          class="p-2 rounded bg-danger bg-opacity-10 border border-danger border-opacity-25 flex-shrink-0"
+                        >
+                          <span class="material-symbols-outlined text-danger"
+                            >lock_reset</span
+                          >
+                        </div>
+                        <div>
+                          <div class="d-flex align-items-center gap-3 mb-1">
+                            <span class="fw-bold text-on-surface small"
+                              >Unauthorized S3 Access Policy</span
+                            >
+                            <span
+                              class="badge bg-surface-variant text-on-surface-variant border border-outline-variant small"
+                              >GDPR Art. 32</span
+                            >
+                          </div>
+                          <p class="small text-on-surface-variant mb-0">
+                            External read permissions detected on production
+                            bucket 'cg-us-east-1-data-core'. Risk of PII
+                            exposure.
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-md-column align-items-center align-items-md-end gap-2 flex-shrink-0"
+                      >
+                        <span class="small fw-bold text-danger">CRITICAL</span>
+                        <button
+                          class="btn btn-primary-custom btn-sm py-1 px-2 small"
+                        >
+                          Remediate
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mt-3 ps-md-5 remediation-steps">
+                      <div
+                        class="p-3 bg-surface-container-lowest border-start border-primary-container border-2"
+                      >
+                        <p
+                          class="small text-primary-container fw-bold mb-1 text-uppercase"
+                        >
+                          Remediation Steps:
+                        </p>
+                        <ul class="small text-on-surface-variant ps-3 mb-0">
+                          <li>
+                            Execute AWS CLI:
+                            <code class="bg-surface-variant p-1 rounded"
+                              >aws s3api put-bucket-acl --bucket
+                              cg-us-east-1-data-core --acl private</code
+                            >
+                          </li>
+                          <li>Verify IAM cross-account access policies.</li>
+                          <li>
+                            Force-rotation of bucket access keys within 15
+                            minutes.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Alert Item 2 -->
+                  <div
+                    class="p-3 bg-surface-container bg-opacity-50 border border-outline-variant rounded alert-card"
+                  >
+                    <div
+                      class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"
+                    >
+                      <div class="d-flex align-items-start gap-3">
+                        <div
+                          class="p-2 rounded bg-secondary bg-opacity-10 border border-secondary border-opacity-25 flex-shrink-0"
+                        >
+                          <span
+                            class="material-symbols-outlined text-primary-container"
+                            >key</span
+                          >
+                        </div>
+                        <div>
+                          <div class="d-flex align-items-center gap-3 mb-1">
+                            <span class="fw-bold text-on-surface small"
+                              >Expired SSL Certificate</span
+                            >
+                            <span
+                              class="badge bg-surface-variant text-on-surface-variant border border-outline-variant small"
+                              >HIPAA Security Rule</span
+                            >
+                          </div>
+                          <p class="small text-on-surface-variant mb-0">
+                            Secondary gateway auth-token-proxy SSL expires in 48
+                            hours. Transmission security violation pending.
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-md-column align-items-center align-items-md-end gap-2 flex-shrink-0"
+                      >
+                        <span class="small fw-bold text-warning">WARNING</span>
+                        <button
+                          class="btn btn-outline-custom btn-sm py-1 px-2 small"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Alert Item 3 -->
+                  <div
+                    class="p-3 bg-surface-container bg-opacity-50 border border-outline-variant rounded alert-card"
+                  >
+                    <div
+                      class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"
+                    >
+                      <div class="d-flex align-items-start gap-3">
+                        <div
+                          class="p-2 rounded bg-danger bg-opacity-10 border border-danger border-opacity-25 flex-shrink-0"
+                        >
+                          <span class="material-symbols-outlined text-danger"
+                            >history_toggle_off</span
+                          >
+                        </div>
+                        <div>
+                          <div class="d-flex align-items-center gap-3 mb-1">
+                            <span class="fw-bold text-on-surface small"
+                              >Log Retention Period Breach</span
+                            >
+                            <span
+                              class="badge bg-surface-variant text-on-surface-variant border border-outline-variant small"
+                              >SOC2 CC7.1</span
+                            >
+                          </div>
+                          <p class="small text-on-surface-variant mb-0">
+                            Logging for sub-node cluster Gamma is purging after
+                            30 days. Standard requirement is 365 days.
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-md-column align-items-center align-items-md-end gap-2 flex-shrink-0"
+                      >
+                        <span class="small fw-bold text-danger">CRITICAL</span>
+                        <button
+                          class="btn btn-primary-custom btn-sm py-1 px-2 small"
+                        >
+                          Adjust Policy
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Generated Reports Archive -->
+            <div class="col-12 col-lg-4">
+              <div class="glass-panel p-4 h-100 d-flex flex-column">
+                <div class="d-flex align-items-center gap-3 mb-4">
+                  <span class="material-symbols-outlined text-primary-container"
+                    >inventory_2</span
+                  >
+                  <h2 class="h5 fw-bold text-on-surface mb-0">
+                    Report Archive
+                  </h2>
+                </div>
+                <div class="d-flex flex-column gap-2 flex-grow-1">
+                  <a
+                    href="#"
+                    class="d-block p-3 border-start border-primary-container border-2 bg-surface-container bg-opacity-50 rounded text-decoration-none"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <p class="small fw-bold text-on-surface mb-1">
+                        SOC2_Compliance_Final_Q3.pdf
+                      </p>
+                      <span
+                        class="material-symbols-outlined text-on-surface-variant small"
+                        >download</span
+                      >
+                    </div>
+                    <p class="small text-on-surface-variant mb-0">
+                      Generated: 2023-10-14 | 14.2 MB
+                    </p>
+                  </a>
+                  <a
+                    href="#"
+                    class="d-block p-3 border-start border-outline-variant border-2 bg-surface-container bg-opacity-50 rounded text-decoration-none"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <p class="small fw-bold text-on-surface mb-1">
+                        HIPAA_Data_Flow_Mapping.xlsx
+                      </p>
+                      <span
+                        class="material-symbols-outlined text-on-surface-variant small"
+                        >download</span
+                      >
+                    </div>
+                    <p class="small text-on-surface-variant mb-0">
+                      Generated: 2023-10-12 | 2.1 MB
+                    </p>
+                  </a>
+                  <a
+                    href="#"
+                    class="d-block p-3 border-start border-outline-variant border-2 bg-surface-container bg-opacity-50 rounded text-decoration-none"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <p class="small fw-bold text-on-surface mb-1">
+                        GDPR_Gap_Analysis_V2.pdf
+                      </p>
+                      <span
+                        class="material-symbols-outlined text-on-surface-variant small"
+                        >download</span
+                      >
+                    </div>
+                    <p class="small text-on-surface-variant mb-0">
+                      Generated: 2023-09-28 | 8.4 MB
+                    </p>
+                  </a>
+                </div>
+                <div class="mt-4">
+                  <div
+                    class="p-3 bg-surface-container-lowest border border-outline-variant rounded d-flex align-items-center justify-content-between"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <span
+                        class="material-symbols-outlined text-primary-container small"
+                        >auto_awesome</span
+                      >
+                      <span class="small text-on-surface-variant font-monospace"
+                        >AI INSIGHTS GENERATING...</span
+                      >
+                    </div>
+                    <div
+                      class="spinner-grow spinner-grow-sm text-primary-container"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+  </body>
+</html>

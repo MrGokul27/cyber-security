@@ -1,6 +1,9 @@
 // Helper function to determine the relative path prefix based on the current page location
 function getPathPrefix() {
   const path = window.location.pathname;
+  if (path.includes("/system-analyst/") || path.includes("/security-analyst/"))
+    return "../../../";
+  if (path.includes("/dashboard/")) return "../../";
   if (path.includes("/pages/auth/")) return "../../";
   if (path.includes("/pages/")) return "../";
   return "";
@@ -79,6 +82,24 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
 // Global Link Handler: Redirect placeholder links to 404 or provide smooth scrolling for hashes
 document.addEventListener("click", (e) => {
+  // Handle all button clicks on dashboard pages and redirect to 404 (excluding structural/Bootstrap controls)
+  const button = e.target.closest("button");
+  if (button && window.location.pathname.includes("/dashboard/")) {
+    // Ignore structural buttons to keep the dashboard functional
+    const isStructural =
+      button.id === "sidebarToggle" ||
+      button.id === "scroll-to-top" ||
+      button.hasAttribute("data-bs-toggle") ||
+      button.hasAttribute("data-bs-target") ||
+      button.hasAttribute("data-bs-slide");
+
+    if (!isStructural) {
+      e.preventDefault();
+      window.location.href = pathPrefix + "pages/components/404.html";
+      return;
+    }
+  }
+
   const anchor = e.target.closest("a");
   if (!anchor) return;
 
