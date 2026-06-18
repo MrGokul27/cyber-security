@@ -1,0 +1,314 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Dashboard</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+  </head>
+  <body class="bg-background text-on-background bg-cyber-radial">
+    <!-- Sidebar -->
+    <aside class="sidebar d-flex flex-column" id="sidebar">
+      <div class="p-4 mb-4">
+        <h4 class="text-primary-container fw-bold mb-0">Stackly</h4>
+        <small
+          class="text-muted text-uppercase tracking-widest"
+          style="font-size: 10px"
+          >Security Operations</small
+        >
+      </div>
+
+      <nav class="flex-grow-1 px-3">
+        <a href="#" class="nav-link-custom active">
+          <span class="material-symbols-outlined">biotech</span> Threat Labs
+        </a>
+        <a href="#" class="nav-link-custom">
+          <span class="material-symbols-outlined">emergency_home</span> Incident
+          Queue
+        </a>
+        <a href="#" class="nav-link-custom">
+          <span class="material-symbols-outlined">hub</span> Nodes
+        </a>
+        <a href="#" class="nav-link-custom">
+          <span class="material-symbols-outlined">policy</span> Policy
+        </a>
+        <a href="#" class="nav-link-custom">
+          <span class="material-symbols-outlined">settings_input_antenna</span>
+          Live Uplink
+        </a>
+      </nav>
+
+      <div class="p-3 border-top border-secondary">
+        <button
+          class="btn btn-primary-custom w-100 cyan-glow mb-3 py-2 fw-bold"
+        >
+          SYSTEM LOCK
+        </button>
+        <div class="d-flex flex-column gap-2 mt-auto pb-3">
+          <a href="#" class="nav-link-custom py-2 opacity-75"
+            ><span class="material-symbols-outlined fs-6">terminal</span>
+            Logs</a
+          >
+          <a href="#" class="nav-link-custom py-2 opacity-75"
+            ><span class="material-symbols-outlined fs-6">settings</span>
+            Settings</a
+          >
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <header
+        class="dashboard-header d-flex align-items-center justify-content-between px-4"
+      >
+        <div class="d-flex align-items-center gap-3">
+          <button
+            class="btn d-lg-none p-0 text-primary-container"
+            id="sidebarToggle"
+          >
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h5 class="mb-0 text-primary-container fw-extrabold tracking-tight">
+            Stackly SOC
+          </h5>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <div
+            class="d-none d-md-flex align-items-center border border-secondary rounded-pill px-3 py-1 bg-dark"
+          >
+            <span class="material-symbols-outlined fs-6 text-muted"
+              >search</span
+            >
+            <input
+              type="text"
+              class="bg-transparent border-0 text-white ms-2 text-sm"
+              style="outline: none"
+              placeholder="Search vectors..."
+            />
+          </div>
+          <button class="btn btn-sm btn-outline-cyan d-none d-sm-block">
+            DEPLOY COUNTERMEASURE
+          </button>
+          <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-muted"
+              >notifications</span
+            >
+            <div
+              class="rounded-circle border border-primary-container overflow-hidden"
+              style="width: 32px; height: 32px"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMFzyOQUDf1-k78ud4Tjf5qEufs-It9fPFzHqQCx5OIERNLaIIxvTafIRbq0fsZAyPWjY9-Giw_HoGZ0sIaXVynhzL8IC1hOivysJrOZMGFxxfPkzPov4709fSqeP1fIX1nVS1R86WutV6Az749ydERZ1rgwWFHq7T9bHrR3pyVP6T177WomSdjE5vVuSvOy9LqECKsEMoucxxAMfWAs0CMpMiIZtkZ7Tn42QqbaqXQn_UWsakjiBlaupq3KObOfCDdEqVa-d0imm0"
+                class="w-100 h-100 object-fit-cover"
+                alt="User Avatar"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <main class="container-fluid p-4">
+        <!-- Top Stats -->
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-md-6 col-xl-3">
+            <div
+              class="glass-panel p-4 rounded-4 stat-card overflow-hidden position-relative"
+            >
+              <div class="scanline"></div>
+              <p class="text-muted tracking-widest text-uppercase small mb-1">
+                Active Ingress
+              </p>
+              <h3 class="text-primary-container mb-0">
+                2.4 <small class="fs-6 text-muted">TB/s</small>
+              </h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div
+              class="glass-panel p-4 rounded-4 stat-card error overflow-hidden position-relative"
+            >
+              <p class="text-muted tracking-widest text-uppercase small mb-1">
+                Critical Blocks
+              </p>
+              <h3 class="text-danger mb-0">
+                148 <small class="fs-6 text-muted">+12%</small>
+              </h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div
+              class="glass-panel p-4 rounded-4 stat-card overflow-hidden position-relative"
+            >
+              <p class="text-muted tracking-widest text-uppercase small mb-1">
+                Global Sync
+              </p>
+              <h3 class="text-primary-container mb-0">
+                99.99 <small class="fs-6 text-muted">% Stable</small>
+              </h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div
+              class="glass-panel p-4 rounded-4 stat-card overflow-hidden position-relative"
+              style="border-left-color: var(--secondary)"
+            >
+              <p class="text-muted tracking-widest text-uppercase small mb-1">
+                Vulnerabilities
+              </p>
+              <h3 class="text-white mb-0">
+                32 <small class="fs-6 text-muted">Detected</small>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 pb-5">
+          <!-- Main Map Visual -->
+          <div class="col-12 col-xl-8">
+            <div class="glass-panel p-4 rounded-4 mb-4">
+              <div
+                class="d-flex justify-content-between align-items-start mb-4"
+              >
+                <div>
+                  <h5 class="fw-bold mb-1">Threat Severity Heatmap</h5>
+                  <p class="text-muted small">
+                    Real-time vector distribution across global nodes
+                  </p>
+                </div>
+                <span
+                  class="badge rounded-pill bg-primary-container text-dark py-2 px-3"
+                  >LIVE FEED</span
+                >
+              </div>
+              <div
+                class="rounded-3 bg-dark overflow-hidden position-relative"
+                style="
+                  height: 400px;
+                  border: 1px solid rgba(255, 255, 255, 0.05);
+                "
+              >
+                <div
+                  class="w-100 h-100 opacity-25"
+                  style="
+                    background: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDHXFnhwhQrCOeLARziuUQvo-tANp9ZG5wnMs4xPCpXUY4X76gCfqSGY-T15e4lom_44xdolQnGVmfNmOMspEzPZaNDgEPYrieMSghUVmoZwkviCNaqSD5rFMmkTDmIVK1s5ZdtNGLb7CQ5ZMevJRB3ZzMKDM36kLoPPeFN2IaH7ROLTYpmSVTqmassP4iOTdEhPDbnZS8_iCRUYDVQf7KrN1YB5Kx7-L4WV2Vx3XGRUrcmxqBzDnQudX_XU-MM-WozZpyEDU82irXy&quot;)
+                      center/cover no-repeat;
+                  "
+                ></div>
+                <!-- Heatmap Spot Simulation -->
+                <div class="position-absolute" style="top: 40%; left: 30%">
+                  <div
+                    class="w-4 h-4 bg-danger rounded-circle animate-pulse shadow-lg"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Latency Graph -->
+            <div class="glass-panel p-4 rounded-4">
+              <h5 class="fw-bold mb-4">Network Latency</h5>
+              <div
+                class="d-flex align-items-end gap-1 px-2"
+                style="height: 150px"
+                id="latency-graph"
+              >
+                <!-- JavaScript will generate bars here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Alerts Panel -->
+          <div class="col-12 col-xl-4">
+            <div
+              class="glass-panel rounded-4 overflow-hidden h-100 d-flex flex-column"
+            >
+              <div class="p-4 border-bottom border-secondary">
+                <h5 class="fw-bold mb-0">Critical Alerts</h5>
+                <small
+                  class="text-muted text-uppercase tracking-widest"
+                  style="font-size: 10px"
+                  >Priority Queue</small
+                >
+              </div>
+              <div
+                class="flex-grow-1 overflow-auto p-0"
+                style="max-height: 600px"
+              >
+                <!-- Alert Item -->
+                <div
+                  class="p-4 border-bottom border-secondary-subtle hover-bg-dark transition-all cursor-pointer"
+                >
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="badge bg-danger-subtle text-danger px-2 py-1"
+                      >CRITICAL</span
+                    >
+                    <small class="text-muted font-monospace">14:22:01</small>
+                  </div>
+                  <h6 class="fw-bold mb-1">SQL Injection Attempt</h6>
+                  <p class="text-muted small mb-3">
+                    Multiple malformed queries detected targeting main database
+                    node...
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <small class="text-muted tracking-tighter"
+                      >RISK SCORE:
+                      <span class="text-danger fw-bold">9.8</span></small
+                    >
+                    <span class="material-symbols-outlined fs-5"
+                      >chevron_right</span
+                    >
+                  </div>
+                </div>
+                <!-- Alert Item -->
+                <div
+                  class="p-4 border-bottom border-secondary-subtle hover-bg-dark transition-all cursor-pointer"
+                >
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="badge bg-warning-subtle text-warning px-2 py-1"
+                      >HIGH</span
+                    >
+                    <small class="text-muted font-monospace">14:18:45</small>
+                  </div>
+                  <h6 class="fw-bold mb-1">Credential Stuffing</h6>
+                  <p class="text-muted small mb-0">
+                    Unusual login failures from 42.188.1.192
+                  </p>
+                </div>
+              </div>
+              <div class="p-4 bg-dark-subtle mt-auto">
+                <button class="btn btn-outline-secondary btn-sm w-100">
+                  VIEW FULL LOGS
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../assets/js/script.js"></script>
+  </body>
+</html>

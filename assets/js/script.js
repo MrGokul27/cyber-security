@@ -268,17 +268,13 @@ function initializeInputInteractions() {
 
 function initializeLoginForm() {
   const loginForm = document.getElementById("loginForm");
-
   if (!loginForm) return;
-
   loginForm.addEventListener("submit", handleLoginSubmit);
 }
 
 function handleLoginSubmit(event) {
   event.preventDefault();
-
   const form = event.target;
-
   const submitButton = form.querySelector('button[type="submit"]');
 
   if (!submitButton) return;
@@ -288,7 +284,6 @@ function handleLoginSubmit(event) {
   }
 
   startAuthenticationAnimation(submitButton);
-
   setTimeout(() => {
     showSuccessState(submitButton);
   }, 1500);
@@ -300,9 +295,7 @@ function handleLoginSubmit(event) {
 
 function validateForm(form) {
   const emailInput = form.querySelector('input[type="email"]');
-
   const passwordInput = document.getElementById("password");
-
   const roleSelect = form.querySelector("select");
 
   if (roleSelect && roleSelect.selectedIndex === 0) {
@@ -332,7 +325,6 @@ function validateForm(form) {
 
 function startAuthenticationAnimation(button) {
   button.disabled = true;
-
   button.innerHTML = `
     <span class="material-symbols-outlined spin">
       progress_activity
@@ -352,33 +344,17 @@ function showSuccessState(button) {
     </span>
     Access Granted
   `;
-
   button.style.background = "#d5e3fd";
-
   button.style.color = "#0d1c2f";
-
   button.style.boxShadow = "0 0 25px rgba(213,227,253,.4)";
-
   button.classList.add("success-state");
 
   createSuccessPulse(button);
 
   setTimeout(() => {
-    button.disabled = false;
-
-    button.innerHTML = `
-      <span class="material-symbols-outlined">
-        lock
-      </span>
-      Secure Login
-    `;
-
-    button.style.background = "";
-    button.style.color = "";
-    button.style.boxShadow = "";
-
-    button.classList.remove("success-state");
-  }, 3000);
+    // window.location.href = pathPrefix + "pages/dashboard/dashboard.html";
+    window.location.href = pathPrefix + "index.html";
+  }, 1500);
 }
 
 /* ==================================================
