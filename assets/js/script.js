@@ -285,6 +285,11 @@ function handleLoginSubmit(event) {
     return;
   }
 
+  // Capture session data for the dashboard
+  const role = form.querySelector("#accessRole").value;
+  const operatorId = form.querySelector("#operatorId").value;
+  localStorage.setItem("stackly_session", JSON.stringify({ role, operatorId }));
+
   startAuthenticationAnimation(submitButton);
   setTimeout(() => {
     showSuccessState(submitButton);
@@ -354,8 +359,7 @@ function showSuccessState(button) {
   createSuccessPulse(button);
 
   setTimeout(() => {
-    // window.location.href = pathPrefix + "pages/dashboard/dashboard.html";
-    window.location.href = pathPrefix + "index.html";
+    window.location.href = pathPrefix + "pages/dashboard/dashboard.html";
   }, 1500);
 }
 
