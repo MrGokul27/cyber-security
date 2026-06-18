@@ -8,6 +8,9 @@ async function loadComponent(id, url) {
 
     // Re-run observer for newly injected content to fix visibility/animation issues
     container.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    // Update active navigation link if the header was loaded
+    if (id === "header-placeholder") setActiveNavLink();
   } catch (error) {
     console.error(`Error loading ${url}:`, error);
   }
@@ -67,11 +70,12 @@ document.addEventListener("click", (e) => {
     const loc = window.location.pathname;
 
     if (loc.includes("/pages/auth/")) {
-      path404 = "../components/404.html";
+      path404 = "/pages/components/404.html"; // Absolute path
     } else if (loc.includes("/pages/components/")) {
-      path404 = "404.html";
+      path404 = "/pages/components/404.html"; // Absolute path
+    } else if (loc.includes("/pages/")) {
+      path404 = "/pages/components/404.html"; // Absolute path
     }
-
     window.location.href = path404;
     return;
   }
@@ -86,8 +90,9 @@ document.addEventListener("click", (e) => {
   }
 });
 
-loadComponent("header-placeholder", "./pages/components/header.html");
-loadComponent("footer-placeholder", "./pages/components/footer.html");
+// Use absolute paths for loading components to ensure consistency across all pages
+loadComponent("header-placeholder", "/pages/components/header.html");
+loadComponent("footer-placeholder", "/pages/components/footer.html");
 
 // Navbar Scroll
 window.addEventListener("scroll", () => {
@@ -112,6 +117,32 @@ function toggleNavbar() {
 
 window.addEventListener("scroll", toggleNavbar);
 window.addEventListener("load", toggleNavbar);
+
+// Function to set the active class on the current page's nav link
+function setActiveNavLink() {
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll(".custom-navbar .nav-link");
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+
+    // Reset active state
+    link.classList.remove("active");
+
+    const isHomePath =
+      currentPath === "/" || currentPath.endsWith("index.html");
+    const isHomeLink = href === "/" || href.endsWith("index.html");
+
+    // Match if both are home, or if the current path ends with the link href
+    if (
+      (isHomePath && isHomeLink) ||
+      (href !== "/" && currentPath.endsWith(href))
+    ) {
+      link.classList.add("active");
+    }
+  });
+}
 
 // Scroll to Top Button Logic
 window.addEventListener("scroll", () => {
