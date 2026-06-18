@@ -1,10 +1,31 @@
+// Helper function to determine the relative path prefix based on the current page location
+function getPathPrefix() {
+  const path = window.location.pathname;
+  if (path.includes("/pages/auth/")) return "../../";
+  if (path.includes("/pages/")) return "../";
+  return "";
+}
+
+const pathPrefix = getPathPrefix();
+
 // Function to load shared components (Header/Footer)
 async function loadComponent(id, url) {
   try {
-    const response = await fetch(url);
+    // Prepend prefix to the component URL (removing leading slash if present)
+    const fetchUrl = pathPrefix + url.replace(/^\//, "");
+    const response = await fetch(fetchUrl);
     const html = await response.text();
     const container = document.getElementById(id);
     container.innerHTML = html;
+
+    // Fix absolute-style paths (starting with /) in the injected content for GitHub Pages compatibility
+    container.querySelectorAll("a, img").forEach((el) => {
+      const attr = el.tagName === "A" ? "href" : "src";
+      const val = el.getAttribute(attr);
+      if (val && val.startsWith("/")) {
+        el.setAttribute(attr, pathPrefix + val.substring(1));
+      }
+    });
 
     // Re-run observer for newly injected content to fix visibility/animation issues
     container.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
@@ -62,24 +83,11 @@ document.addEventListener("click", (e) => {
   const href = anchor.getAttribute("href");
 
   // 1. Handle missing, empty, or placeholder '#' links
-  if (!href || href.trim() === "" || href.trim() === "#") {
+  if (!href || href.trim() === "" || href.trim() === "#" || href === "javascript:void(0)") {
     e.preventDefault();
-
-    // Determine the correct relative path to 404.html based on current location
-    let path404 = "pages/components/404.html";
-    const loc = window.location.pathname;
-
-    if (loc.includes("/pages/auth/")) {
-      path404 = "/pages/components/404.html"; // Absolute path
-    } else if (loc.includes("/pages/components/")) {
-      path404 = "/pages/components/404.html"; // Absolute path
-    } else if (loc.includes("/pages/")) {
-      path404 = "/pages/components/404.html"; // Absolute path
-    }
-    window.location.href = path404;
+    window.location.href = pathPrefix + "pages/components/404.html";
     return;
   }
-
   // 2. Smooth Scroll for valid internal hash links (e.g., #services)
   if (href.startsWith("#") && href.length > 1) {
     const target = document.querySelector(href);
@@ -124,21 +132,21 @@ function setActiveNavLink() {
   const navLinks = document.querySelectorAll(".custom-navbar .nav-link");
 
   navLinks.forEach((link) => {
-    const href = link.getAttribute("href");
-    if (!href) return;
-
+    const rawHref = link.getAttribute("href");
+    
     // Reset active state
     link.classList.remove("active");
 
-    const isHomePath =
-      currentPath === "/" || currentPath.endsWith("index.html");
-    const isHomeLink = href === "/" || href.endsWith("index.html");
+    // Skip placeholders like '#', '', or 'javascript:void(0)' as they resolve to the current page path
+    if (!rawHref || rawHref === "#" || rawHref === "javascript:void(0)") return;
 
-    // Match if both are home, or if the current path ends with the link href
-    if (
-      (isHomePath && isHomeLink) ||
-      (href !== "/" && currentPath.endsWith(href))
-    ) {
+    // link.pathname resolves relative URLs to absolute paths automatically
+    const linkPath = link.pathname;
+
+    // Normalize both paths by removing trailing slashes and 'index.html' for a clean comparison
+    const normalize = (p) => p.replace(/\/index\.html$/, "").replace(/\/$/, "") || "/";
+
+    if (normalize(currentPath) === normalize(linkPath)) {
       link.classList.add("active");
     }
   });
