@@ -541,6 +541,14 @@ body {
   color: #00f0ff;
 }
 
+.btn-outline-danger {
+  padding: 14px 32px;
+}
+
+.btn-outline-secondary {
+  padding: 14px 32px;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 991.98px) {

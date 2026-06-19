@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Perimeter Defense</title>
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      /* Page-scoped effects specific to Perimeter Defense (not part of shared dashboard.css) */
+      @keyframes pd-scanline {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(2000%);
+        }
+      }
+      .pd-scanline-effect {
+        position: relative;
+        overflow: hidden;
+      }
+      .pd-scanline-effect::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(0, 219, 233, 0.15),
+          transparent
+        );
+        animation: pd-scanline 4s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes pd-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .pd-spin {
+        animation: pd-spin 20s linear infinite;
+      }
+      @keyframes pd-breathe {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .pd-breathe {
+        animation: pd-breathe 6s ease-in-out infinite;
+      }
+      @keyframes pd-ping {
+        75%,
+        100% {
+          transform: scale(2.2);
+          opacity: 0;
+        }
+      }
+      .pd-ping::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: currentColor;
+        animation: pd-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+      .pd-ring {
+        border: 1px solid rgba(0, 219, 233, 0.2);
+        border-radius: 999px;
+      }
+      .pd-ring-dashed {
+        border: 1px dashed rgba(0, 219, 233, 0.35);
+        border-radius: 999px;
+      }
+      .pd-ring-solid {
+        border: 1px solid rgba(0, 219, 233, 0.5);
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Header Section -->
+          <div
+            class="mb-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4"
+          >
+            <div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">Perimeter Defense</h1>
+              <p class="lead text-on-surface-variant mb-0">
+                Live monitoring of network perimeter shielding, geofencing
+                rules, and sensor array telemetry across all deployed nodes.
+              </p>
+            </div>
+            <div class="d-flex gap-3">
+              <button
+                class="btn bg-primary-container text-dark fw-bold d-flex align-items-center gap-2 px-4 py-2 text-nowrap"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >bolt</span
+                >
+                Deploy Countermeasure
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Status Row -->
+          <div class="row g-4 mb-4">
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div
+                class="glass-panel p-4 h-100 position-relative overflow-hidden border-start border-4 border-primary-container"
+              >
+                <div
+                  class="label-caps text-on-surface-variant mb-2"
+                  style="font-size: 11px"
+                >
+                  SHIELD INTEGRITY
+                </div>
+                <div
+                  class="h3 mb-0 text-primary-container fw-bold"
+                  id="shield-integrity-value"
+                >
+                  99.8%
+                </div>
+                <div
+                  class="mt-3 bg-surface-container-high rounded-pill overflow-hidden"
+                  style="height: 4px"
+                >
+                  <div
+                    class="bg-primary-container h-100"
+                    style="width: 99.8%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div
+                class="glass-panel p-4 h-100 position-relative overflow-hidden border-start border-4 border-info"
+              >
+                <div
+                  class="label-caps text-on-surface-variant mb-2"
+                  style="font-size: 11px"
+                >
+                  THROUGHPUT
+                </div>
+                <div class="h3 mb-0 text-info-emphasis fw-bold">4.2 GB/S</div>
+                <div
+                  class="d-flex gap-1 mt-3 align-items-end"
+                  style="height: 16px"
+                >
+                  <div class="bg-info flex-fill h-100"></div>
+                  <div class="bg-info flex-fill" style="height: 65%"></div>
+                  <div class="bg-info flex-fill" style="height: 80%"></div>
+                  <div class="bg-info flex-fill" style="height: 50%"></div>
+                  <div class="bg-info flex-fill" style="height: 75%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div
+                class="glass-panel p-4 h-100 position-relative overflow-hidden border-start border-4 border-danger"
+              >
+                <div
+                  class="label-caps text-on-surface-variant mb-2"
+                  style="font-size: 11px"
+                >
+                  ACTIVE THREATS
+                </div>
+                <div class="h3 mb-0 text-danger-emphasis fw-bold">02</div>
+                <div
+                  class="mt-3 d-flex align-items-center gap-2 text-danger-emphasis pd-breathe"
+                  style="font-size: 10px"
+                >
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-size: 14px"
+                    >warning</span
+                  >
+                  HIGH RISK VECTOR
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div
+                class="glass-panel p-4 h-100 position-relative overflow-hidden border-start border-4 border-outline-variant"
+              >
+                <div
+                  class="label-caps text-on-surface-variant mb-2"
+                  style="font-size: 11px"
+                >
+                  UPTIME
+                </div>
+                <div class="h3 mb-0 text-on-surface fw-bold">1,424:08</div>
+                <div
+                  class="text-on-surface-variant mt-3 font-monospace"
+                  style="font-size: 10px"
+                >
+                  SINCE LAST GLOBAL REBOOT
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Interactive Section -->
+          <div class="row g-4 mb-4">
+            <!-- Perimeter Shield Grid -->
+            <div class="col-12 col-lg-8">
+              <div
+                class="glass-panel h-100 d-flex flex-column pd-scanline-effect"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-start p-4 pb-0"
+                >
+                  <div class="d-flex align-items-center gap-2">
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      >shield</span
+                    >
+                    <h3
+                      class="label-caps text-on-surface mb-0"
+                      style="font-size: 12px"
+                    >
+                      Perimeter Shield Grid
+                    </h3>
+                  </div>
+                  <span
+                    class="text-on-surface-variant font-monospace"
+                    style="font-size: 10px"
+                    >GRID_COORD: 42.92 // AUTO_SYNC_ENABLED</span
+                  >
+                </div>
+
+                <div
+                  class="position-relative flex-grow-1 d-flex align-items-center justify-content-center"
+                  style="min-height: 320px"
+                >
+                  <div
+                    class="pd-ring pd-breathe d-flex align-items-center justify-content-center"
+                    style="width: 320px; height: 320px"
+                  >
+                    <div
+                      class="pd-ring-dashed pd-spin d-flex align-items-center justify-content-center"
+                      style="width: 260px; height: 260px"
+                    >
+                      <div
+                        class="pd-ring-solid d-flex align-items-center justify-content-center"
+                        style="width: 200px; height: 200px"
+                      >
+                        <div
+                          class="bg-primary-container rounded-circle pd-breathe"
+                          style="
+                            width: 100px;
+                            height: 100px;
+                            opacity: 0.08;
+                            filter: blur(12px);
+                          "
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Pings -->
+                  <span
+                    class="position-absolute text-danger pd-ping rounded-circle"
+                    style="top: 25%; left: 30%; width: 8px; height: 8px"
+                  ></span>
+                  <span
+                    class="position-absolute text-primary-container pd-ping rounded-circle"
+                    style="
+                      bottom: 30%;
+                      right: 25%;
+                      width: 8px;
+                      height: 8px;
+                      animation-delay: 1s;
+                    "
+                  ></span>
+                  <span
+                    class="position-absolute text-info pd-ping rounded-circle"
+                    style="
+                      top: 50%;
+                      right: 48%;
+                      width: 8px;
+                      height: 8px;
+                      animation-delay: 2s;
+                    "
+                  ></span>
+                </div>
+
+                <div
+                  class="border-top border-outline-variant p-4 d-flex flex-wrap gap-3 justify-content-between align-items-center bg-surface-container-low bg-opacity-50"
+                >
+                  <div class="d-flex gap-4">
+                    <div>
+                      <div
+                        class="text-on-surface-variant font-monospace"
+                        style="font-size: 10px"
+                      >
+                        ENCRYPTION
+                      </div>
+                      <div class="fw-bold text-primary-container small">
+                        AES-512-XTS
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        class="text-on-surface-variant font-monospace"
+                        style="font-size: 10px"
+                      >
+                        SYNC_LATENCY
+                      </div>
+                      <div class="fw-bold text-primary-container small">
+                        0.42ms
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button
+                      class="btn btn-outline-custom"
+                      style="font-size: 10px"
+                    >
+                      RESET GRID
+                    </button>
+                    <button
+                      class="btn bg-primary-container text-dark fw-bold"
+                      style="font-size: 10px"
+                    >
+                      RECALIBRATE
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Geofencing -->
+            <div class="col-12 col-lg-4">
+              <div class="glass-panel p-4 h-100 d-flex flex-column">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <h3
+                    class="label-caps text-on-surface mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 12px"
+                  >
+                    <span class="material-symbols-outlined text-info"
+                      >location_on</span
+                    >
+                    Geofencing
+                  </h3>
+                  <span
+                    class="text-primary-container font-monospace"
+                    style="font-size: 10px"
+                    >3 ACTIVE BLOCKS</span
+                  >
+                </div>
+
+                <div
+                  class="position-relative bg-surface-container-lowest rounded overflow-hidden border border-outline-variant flex-grow-1"
+                  style="min-height: 220px"
+                >
+                  <div
+                    class="position-absolute top-0 start-0 w-100 h-100 opacity-25"
+                    style="
+                      background-image:
+                        linear-gradient(
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        ),
+                        linear-gradient(
+                          90deg,
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        );
+                      background-size: 32px 32px;
+                    "
+                  ></div>
+                  <div
+                    class="d-flex align-items-center justify-content-center h-100 text-on-surface-variant opacity-50 small position-relative"
+                  >
+                    GEOFENCE MAP — RENDERING
+                  </div>
+                  <div
+                    class="position-absolute bottom-0 start-0 end-0 p-3 d-flex flex-column gap-2"
+                  >
+                    <div
+                      class="p-2 bg-surface-container-high bg-opacity-75 border border-danger border-opacity-25 rounded d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="bg-danger rounded-circle d-inline-block"
+                          style="width: 6px; height: 6px"
+                        ></span>
+                        <span class="font-monospace" style="font-size: 10px"
+                          >185.22.XX.XX [RU]</span
+                        >
+                      </div>
+                      <span
+                        class="text-danger-emphasis fw-bold text-uppercase"
+                        style="font-size: 10px"
+                        >DROPPED</span
+                      >
+                    </div>
+                    <div
+                      class="p-2 bg-surface-container-high bg-opacity-75 border border-danger border-opacity-25 rounded d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="bg-danger rounded-circle d-inline-block"
+                          style="width: 6px; height: 6px"
+                        ></span>
+                        <span class="font-monospace" style="font-size: 10px"
+                          >103.41.XX.XX [CN]</span
+                        >
+                      </div>
+                      <span
+                        class="text-danger-emphasis fw-bold text-uppercase"
+                        style="font-size: 10px"
+                        >DROPPED</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <h4
+                    class="text-on-surface-variant label-caps mb-2"
+                    style="font-size: 10px"
+                  >
+                    SQUAD DEPLOYMENT STATUS
+                  </h4>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div
+                        class="border border-outline-variant rounded p-2 d-flex flex-column"
+                      >
+                        <span
+                          class="font-monospace opacity-50"
+                          style="font-size: 10px"
+                          >NODE_ALPHA</span
+                        >
+                        <span
+                          class="fw-bold text-primary-container"
+                          style="font-size: 12px"
+                          >SECURED</span
+                        >
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div
+                        class="border border-outline-variant rounded p-2 d-flex flex-column"
+                      >
+                        <span
+                          class="font-monospace opacity-50"
+                          style="font-size: 10px"
+                          >NODE_BETA</span
+                        >
+                        <span
+                          class="fw-bold text-info-emphasis"
+                          style="font-size: 12px"
+                          >MONITORING</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Bar Chart & Sensor Array -->
+          <div class="row g-4">
+            <!-- Firewall Throughput -->
+            <div class="col-12 col-lg-7">
+              <div class="glass-panel p-4 h-100">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+                >
+                  <h3
+                    class="label-caps text-on-surface mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 12px"
+                  >
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      >equalizer</span
+                    >
+                    Firewall Throughput
+                  </h3>
+                  <div class="d-flex gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                      <span
+                        class="bg-primary-container d-inline-block"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      <span class="font-monospace" style="font-size: 10px"
+                        >INBOUND</span
+                      >
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <span
+                        class="bg-info d-inline-block"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      <span class="font-monospace" style="font-size: 10px"
+                        >OUTBOUND</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-flex align-items-end justify-content-between gap-3 px-2"
+                  style="height: 190px"
+                >
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 96px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 48px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 128px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 64px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 160px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 80px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 144px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 56px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 176px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 72px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 112px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 40px"></div>
+                  </div>
+                  <div
+                    class="flex-fill d-flex flex-column gap-1 justify-content-end h-100"
+                  >
+                    <div
+                      class="bg-primary-container w-100"
+                      style="height: 128px"
+                    ></div>
+                    <div class="bg-info w-100" style="height: 64px"></div>
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between mt-3 px-2 text-on-surface-variant font-monospace"
+                  style="font-size: 10px"
+                >
+                  <span>T-60M</span>
+                  <span>T-45M</span>
+                  <span>T-30M</span>
+                  <span>T-15M</span>
+                  <span>NOW</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sensor Array -->
+            <div class="col-12 col-lg-5">
+              <div class="glass-panel p-4 h-100 d-flex flex-column">
+                <h3
+                  class="label-caps text-on-surface mb-4 d-flex align-items-center gap-2"
+                  style="font-size: 12px"
+                >
+                  <span class="material-symbols-outlined text-primary-container"
+                    >sensors</span
+                  >
+                  Sensor Array Status
+                </h3>
+                <div class="flex-grow-1 d-flex flex-column">
+                  <div
+                    class="d-flex justify-content-between align-items-center p-3 border-bottom border-outline-variant border-opacity-25"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <span
+                        class="position-relative bg-primary-container text-primary-container pd-ping rounded-circle d-inline-block"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      <div>
+                        <div class="fw-bold" style="font-size: 12px">
+                          MON_NORTH_01
+                        </div>
+                        <div
+                          class="text-on-surface-variant font-monospace"
+                          style="font-size: 10px"
+                        >
+                          LAT: 52.5200 N // LNG: 13.4050 E
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <div
+                        class="text-primary-container font-monospace"
+                        style="font-size: 11px"
+                      >
+                        OPERATIONAL
+                      </div>
+                      <div
+                        class="text-on-surface-variant"
+                        style="font-size: 10px"
+                      >
+                        TEMP: 32&deg;C
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center p-3 border-bottom border-outline-variant border-opacity-25"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <span
+                        class="position-relative bg-primary-container text-primary-container pd-ping rounded-circle d-inline-block"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      <div>
+                        <div class="fw-bold" style="font-size: 12px">
+                          MON_SOUTH_04
+                        </div>
+                        <div
+                          class="text-on-surface-variant font-monospace"
+                          style="font-size: 10px"
+                        >
+                          LAT: 34.0522 N // LNG: 118.2437 W
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <div
+                        class="text-primary-container font-monospace"
+                        style="font-size: 11px"
+                      >
+                        OPERATIONAL
+                      </div>
+                      <div
+                        class="text-on-surface-variant"
+                        style="font-size: 10px"
+                      >
+                        TEMP: 28&deg;C
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center p-3 border-bottom border-outline-variant border-opacity-25"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <span
+                        class="bg-danger rounded-circle d-inline-block"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      <div>
+                        <div class="fw-bold" style="font-size: 12px">
+                          MON_EAST_02
+                        </div>
+                        <div
+                          class="text-on-surface-variant font-monospace"
+                          style="font-size: 10px"
+                        >
+                          LAT: 35.6762 N // LNG: 139.6503 E
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <div
+                        class="text-danger-emphasis font-monospace"
+                        style="font-size: 11px"
+                      >
+                        SIGNAL LOSS
+                      </div>
+                      <div class="text-danger-emphasis" style="font-size: 10px">
+                        ERR: NO_POLL
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-outline-custom w-100 mt-3"
+                  id="run-diagnostic-btn"
+                  style="font-size: 10px"
+                >
+                  RUN ARRAY DIAGNOSTIC
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      // Simulate live shield integrity updates
+      const integrityEl = document.getElementById("shield-integrity-value");
+      setInterval(() => {
+        if (integrityEl) {
+          const newVal = (99.5 + Math.random() * 0.4).toFixed(1);
+          integrityEl.textContent = newVal + "%";
+        }
+      }, 3000);
+
+      // Run Array Diagnostic feedback
+      const diagBtn = document.getElementById("run-diagnostic-btn");
+      if (diagBtn) {
+        diagBtn.addEventListener("click", () => {
+          const original = diagBtn.textContent;
+          diagBtn.textContent = "RUNNING DIAGNOSTIC...";
+          diagBtn.disabled = true;
+          setTimeout(() => {
+            diagBtn.textContent = original;
+            diagBtn.disabled = false;
+          }, 2000);
+        });
+      }
+    </script>
+  </body>
+</html>

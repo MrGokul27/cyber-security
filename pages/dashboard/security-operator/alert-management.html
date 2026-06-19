@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Alert Management</title>
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      /* Page-scoped effects specific to Alert Management (not part of shared dashboard.css) */
+      @keyframes am-scan {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(100vh);
+        }
+      }
+      .am-scan-line {
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(0, 219, 233, 0.05) 50%,
+          transparent 100%
+        );
+        height: 100px;
+        width: 100%;
+        position: absolute;
+        animation: am-scan 4s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes am-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .am-pulse {
+        animation: am-pulse 2s ease-in-out infinite;
+      }
+      .am-alert-row {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+      .am-alert-row:hover {
+        background-color: var(--bs-tertiary-bg, rgba(255, 255, 255, 0.03));
+      }
+      .am-chevron {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .am-alert-row:hover .am-chevron {
+        opacity: 1;
+      }
+      .am-flash {
+        background-color: rgba(0, 219, 233, 0.06) !important;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main
+        class="main-content w-100 vh-100 overflow-y-auto bg-background position-relative"
+      >
+        <div class="am-scan-line opacity-25"></div>
+
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Header Section -->
+          <div
+            class="mb-5 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-4"
+          >
+            <div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">
+                Alert Management Center
+              </h1>
+              <p
+                class="text-on-surface-variant d-flex align-items-center gap-2 mb-0"
+              >
+                <span
+                  class="bg-primary-container rounded-circle am-pulse d-inline-block"
+                  style="width: 8px; height: 8px"
+                ></span>
+                MONITORING REAL-TIME TRAFFIC FLOW | 1,429 EVENTS/SEC
+              </p>
+            </div>
+            <div
+              class="glass-panel p-2 d-flex align-items-center gap-2 rounded"
+            >
+              <span
+                class="material-symbols-outlined text-on-surface-variant px-2"
+                >filter_alt</span
+              >
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Alert filter mode"
+              >
+                <button
+                  type="button"
+                  class="btn bg-primary-container text-dark fw-bold"
+                  style="font-size: 11px"
+                >
+                  RAW
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-custom"
+                  style="font-size: 11px"
+                >
+                  FILTERED
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-custom"
+                  style="font-size: 11px"
+                >
+                  ML_OPTIMIZED
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Grid Layout -->
+          <div class="row g-4">
+            <!-- Active Alert Queue -->
+            <div class="col-12 col-xl-8">
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <h2
+                  class="label-caps text-on-surface-variant mb-0"
+                  style="font-size: 11px; letter-spacing: 0.2em"
+                >
+                  ACTIVE_ALERT_QUEUE
+                </h2>
+                <div class="d-flex gap-3">
+                  <span
+                    class="d-flex align-items-center gap-1 text-danger-emphasis"
+                    style="font-size: 10px"
+                  >
+                    <span
+                      class="bg-danger rounded-circle d-inline-block"
+                      style="width: 6px; height: 6px"
+                    ></span>
+                    4 CRITICAL
+                  </span>
+                  <span
+                    class="d-flex align-items-center gap-1 text-warning-emphasis"
+                    style="font-size: 10px"
+                  >
+                    <span
+                      class="bg-warning rounded-circle d-inline-block"
+                      style="width: 6px; height: 6px"
+                    ></span>
+                    12 HIGH
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-column gap-3 overflow-y-auto"
+                style="max-height: 600px"
+              >
+                <!-- Critical Alert -->
+                <div
+                  class="glass-panel p-3 d-flex align-items-center gap-3 border-start border-4 border-danger am-alert-row"
+                >
+                  <div class="bg-danger bg-opacity-10 p-2 rounded">
+                    <span class="material-symbols-outlined text-danger-emphasis"
+                      >security_update_warning</span
+                    >
+                  </div>
+                  <div class="flex-grow-1">
+                    <div
+                      class="d-flex justify-content-between align-items-start flex-wrap gap-2"
+                    >
+                      <h3 class="h6 text-on-surface text-uppercase mb-0">
+                        DDoS_SYN_FLOOD_DETECTED
+                      </h3>
+                      <span
+                        class="font-monospace text-danger-emphasis border border-danger border-opacity-50 rounded px-2 py-1"
+                        style="font-size: 10px"
+                        >CRITICAL</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex gap-4 mt-1 text-on-surface-variant font-monospace flex-wrap"
+                      style="font-size: 11px"
+                    >
+                      <span>SRC: 192.168.1.104</span>
+                      <span>DEST: EDGE_CLUSTER_09</span>
+                      <span>TTL: 2s</span>
+                    </div>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-primary-container am-chevron"
+                    >chevron_right</span
+                  >
+                </div>
+                <!-- High Alert -->
+                <div
+                  class="glass-panel p-3 d-flex align-items-center gap-3 border-start border-4 border-warning am-alert-row"
+                >
+                  <div class="bg-warning bg-opacity-10 p-2 rounded">
+                    <span
+                      class="material-symbols-outlined text-warning-emphasis"
+                      >fingerprint</span
+                    >
+                  </div>
+                  <div class="flex-grow-1">
+                    <div
+                      class="d-flex justify-content-between align-items-start flex-wrap gap-2"
+                    >
+                      <h3 class="h6 text-on-surface text-uppercase mb-0">
+                        UNAUTHORIZED_AUTH_ATTEMPT
+                      </h3>
+                      <span
+                        class="font-monospace text-warning-emphasis border border-warning border-opacity-50 rounded px-2 py-1"
+                        style="font-size: 10px"
+                        >HIGH</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex gap-4 mt-1 text-on-surface-variant font-monospace flex-wrap"
+                      style="font-size: 11px"
+                    >
+                      <span>SRC: 45.19.201.32</span>
+                      <span>DEST: IDENTITY_VAULT</span>
+                      <span>TRIES: 15</span>
+                    </div>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-primary-container am-chevron"
+                    >chevron_right</span
+                  >
+                </div>
+                <!-- Medium Alert -->
+                <div
+                  class="glass-panel p-3 d-flex align-items-center gap-3 border-start border-4 border-primary-container am-alert-row"
+                >
+                  <div class="bg-primary-container bg-opacity-10 p-2 rounded">
+                    <span
+                      class="material-symbols-outlined text-dark"
+                      >dataset</span
+                    >
+                  </div>
+                  <div class="flex-grow-1">
+                    <div
+                      class="d-flex justify-content-between align-items-start flex-wrap gap-2"
+                    >
+                      <h3 class="h6 text-on-surface text-uppercase mb-0">
+                        DATA_EXFIL_ANOMALY
+                      </h3>
+                      <span
+                        class="font-monospace text-primary-container border border-primary-container border-opacity-50 rounded px-2 py-1"
+                        style="font-size: 10px"
+                        >MEDIUM</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex gap-4 mt-1 text-on-surface-variant font-monospace flex-wrap"
+                      style="font-size: 11px"
+                    >
+                      <span>SRC: ENDPOINT_772</span>
+                      <span>DEST: EXTERNAL_STORAGE</span>
+                      <span>SIZE: 4.2GB</span>
+                    </div>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-primary-container am-chevron"
+                    >chevron_right</span
+                  >
+                </div>
+                <!-- Low Alert -->
+                <div
+                  class="glass-panel p-3 d-flex align-items-center gap-3 border-start border-4 border-outline-variant am-alert-row"
+                >
+                  <div class="bg-secondary bg-opacity-10 p-2 rounded">
+                    <span
+                      class="material-symbols-outlined text-on-surface-variant"
+                      >dns</span
+                    >
+                  </div>
+                  <div class="flex-grow-1">
+                    <div
+                      class="d-flex justify-content-between align-items-start flex-wrap gap-2"
+                    >
+                      <h3 class="h6 text-on-surface text-uppercase mb-0">
+                        DNS_MISCONFIGURATION
+                      </h3>
+                      <span
+                        class="font-monospace text-on-surface-variant border border-outline-variant rounded px-2 py-1"
+                        style="font-size: 10px"
+                        >LOW</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex gap-4 mt-1 text-on-surface-variant font-monospace flex-wrap"
+                      style="font-size: 11px"
+                    >
+                      <span>SRC: DC_CONTROLLER</span>
+                      <span>DEST: LOCAL_DNS</span>
+                      <span>STATUS: PENDING</span>
+                    </div>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-primary-container am-chevron"
+                    >chevron_right</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Side Panels -->
+            <div class="col-12 col-xl-4 d-flex flex-column gap-4">
+              <!-- Risk Matrix -->
+              <div
+                class="glass-panel p-4 d-flex flex-column"
+                style="height: 288px"
+              >
+                <h2
+                  class="label-caps text-on-surface-variant mb-3"
+                  style="font-size: 10px; letter-spacing: 0.15em"
+                >
+                  RISK_MATRIX_V4.0
+                </h2>
+                <div
+                  class="flex-grow-1 position-relative border-start border-bottom border-outline-variant mt-2"
+                >
+                  <div
+                    class="position-absolute text-on-surface-variant"
+                    style="
+                      left: -28px;
+                      top: 50%;
+                      transform: rotate(-90deg);
+                      font-size: 8px;
+                      letter-spacing: 0.1em;
+                    "
+                  >
+                    IMPACT
+                  </div>
+                  <div
+                    class="position-absolute text-on-surface-variant"
+                    style="
+                      bottom: -22px;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      font-size: 8px;
+                      letter-spacing: 0.1em;
+                    "
+                  >
+                    PROBABILITY
+                  </div>
+                  <span
+                    class="position-absolute bg-danger rounded-circle am-pulse"
+                    style="top: 20%; left: 80%; width: 12px; height: 12px"
+                  ></span>
+                  <span
+                    class="position-absolute bg-warning rounded-circle opacity-75"
+                    style="top: 40%; left: 60%; width: 10px; height: 10px"
+                  ></span>
+                  <span
+                    class="position-absolute bg-primary-container rounded-circle opacity-75"
+                    style="top: 60%; left: 30%; width: 8px; height: 8px"
+                  ></span>
+                  <span
+                    class="position-absolute bg-primary-container rounded-circle opacity-50"
+                    style="top: 10%; left: 10%; width: 8px; height: 8px"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Sentinel Advisory -->
+              <div
+                class="glass-panel p-4 flex-grow-1 d-flex flex-column border-top border-primary-container"
+                style="border-top-width: 2px !important"
+              >
+                <h2
+                  class="label-caps text-on-surface-variant mb-3"
+                  style="font-size: 10px; letter-spacing: 0.15em"
+                >
+                  SENTINEL_ADVISORY
+                </h2>
+                <div class="flex-grow-1 d-flex flex-column gap-3">
+                  <div
+                    class="bg-surface-container-lowest p-3 rounded border border-outline-variant border-opacity-25"
+                  >
+                    <p
+                      class="font-monospace text-primary-container mb-0"
+                      style="font-size: 11px; line-height: 1.6"
+                    >
+                      <span class="text-on-surface-variant"
+                        >&gt; ANALYZING:</span
+                      >
+                      DDoS_SYN_FLOOD<br />
+                      <span class="text-on-surface-variant">&gt; PATTERN:</span>
+                      HEURISTIC_MATCH_98%<br />
+                      <span class="text-on-surface-variant">&gt; ORIGIN:</span>
+                      BOTNET_ID_ALFA_7
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      class="fw-bold text-uppercase text-on-surface mb-2"
+                      style="font-size: 11px"
+                    >
+                      Recommended Actions:
+                    </p>
+                    <ul
+                      class="list-unstyled text-on-surface-variant d-flex flex-column gap-2 mb-0"
+                      style="font-size: 11px"
+                    >
+                      <li class="d-flex align-items-start gap-2">
+                        <span
+                          class="material-symbols-outlined text-primary-container"
+                          style="font-size: 16px"
+                          >verified_user</span
+                        >
+                        SHAPING: Enable rate-limiting on Gateway_4.
+                      </li>
+                      <li class="d-flex align-items-start gap-2">
+                        <span
+                          class="material-symbols-outlined text-primary-container"
+                          style="font-size: 16px"
+                          >shield</span
+                        >
+                        ISOLATE: Quarantine IP Range 192.168.1.0/24.
+                      </li>
+                      <li class="d-flex align-items-start gap-2">
+                        <span
+                          class="material-symbols-outlined text-primary-container"
+                          style="font-size: 16px"
+                          >sync_problem</span
+                        >
+                        REROUTE: Shift critical workloads to Cluster_12.
+                      </li>
+                    </ul>
+                  </div>
+                  <button
+                    class="btn bg-primary-container text-dark fw-bold mt-auto text-uppercase"
+                    style="font-size: 11px; letter-spacing: 0.1em"
+                  >
+                    Execute Mitigation Chain
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Alert Detail Section -->
+            <div class="col-12">
+              <section class="glass-panel p-4 p-md-5 d-flex flex-column gap-4">
+                <div
+                  class="d-flex justify-content-between align-items-start flex-wrap gap-3"
+                >
+                  <div>
+                    <span
+                      class="label-caps text-danger-emphasis d-block mb-2"
+                      style="font-size: 11px"
+                      >SELECTED_ALERT // ID: 0x8FA42</span
+                    >
+                    <h2 class="h4 text-primary-container mb-0 text-uppercase">
+                      Threat Vector Analysis: DDoS_SYN_FLOOD_DETECTED
+                    </h2>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button
+                      class="btn btn-outline-custom"
+                      style="font-size: 11px"
+                    >
+                      DISMISS
+                    </button>
+                    <button
+                      class="btn btn-outline-custom"
+                      style="font-size: 11px"
+                    >
+                      ASSIGN_TO_SOC
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row g-4">
+                  <div class="col-12 col-md-4">
+                    <div
+                      class="bg-surface-container-low p-4 rounded border border-outline-variant border-opacity-25 h-100"
+                    >
+                      <p
+                        class="label-caps text-on-surface-variant mb-3"
+                        style="font-size: 10px"
+                      >
+                        SOURCE_ENTITY
+                      </p>
+                      <div class="d-flex align-items-center gap-3">
+                        <div
+                          class="d-flex align-items-center justify-content-center bg-danger bg-opacity-10 rounded border border-danger border-opacity-50"
+                          style="width: 48px; height: 48px"
+                        >
+                          <span
+                            class="material-symbols-outlined text-danger-emphasis"
+                            style="font-size: 26px"
+                            >public</span
+                          >
+                        </div>
+                        <div>
+                          <p
+                            class="font-monospace text-on-surface mb-0"
+                            style="font-size: 13px"
+                          >
+                            192.168.1.104
+                          </p>
+                          <p
+                            class="text-on-surface-variant mb-0"
+                            style="font-size: 10px"
+                          >
+                            GEO: Moscow, RU
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div
+                      class="bg-surface-container-low p-4 rounded border border-outline-variant border-opacity-25 h-100"
+                    >
+                      <p
+                        class="label-caps text-on-surface-variant mb-3"
+                        style="font-size: 10px"
+                      >
+                        TARGET_ASSET
+                      </p>
+                      <div class="d-flex align-items-center gap-3">
+                        <div
+                          class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded border border-primary-container border-opacity-50"
+                          style="width: 48px; height: 48px"
+                        >
+                          <span
+                            class="material-symbols-outlined text-dark"
+                            style="font-size: 26px"
+                            >dns</span
+                          >
+                        </div>
+                        <div>
+                          <p
+                            class="font-monospace text-on-surface mb-0"
+                            style="font-size: 13px"
+                          >
+                            EDGE_CLUSTER_09
+                          </p>
+                          <p
+                            class="text-on-surface-variant mb-0"
+                            style="font-size: 10px"
+                          >
+                            VULN: Port 80/443 Exposure
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div
+                      class="bg-surface-container-low p-4 rounded border border-outline-variant border-opacity-25 h-100"
+                    >
+                      <p
+                        class="label-caps text-on-surface-variant mb-3"
+                        style="font-size: 10px"
+                      >
+                        CONFIDENCE_SCORE
+                      </p>
+                      <div class="d-flex flex-column align-items-center">
+                        <div
+                          class="position-relative w-100 bg-surface-variant rounded overflow-hidden"
+                          style="height: 8px"
+                        >
+                          <div
+                            class="position-absolute top-0 start-0 h-100 bg-primary-container"
+                            style="width: 98%"
+                          ></div>
+                        </div>
+                        <div class="d-flex justify-content-between w-100 mt-2">
+                          <span class="h5 text-primary-container fw-bold mb-0"
+                            >98.4%</span
+                          >
+                          <span
+                            class="label-caps text-on-surface-variant text-uppercase"
+                            style="font-size: 10px"
+                            >Very High Confidence</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="position-relative rounded overflow-hidden border border-outline-variant"
+                  style="height: 200px"
+                >
+                  <div
+                    class="position-absolute top-0 start-0 w-100 h-100 opacity-25"
+                    style="
+                      background-image:
+                        linear-gradient(
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        ),
+                        linear-gradient(
+                          90deg,
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        );
+                      background-size: 32px 32px;
+                    "
+                  ></div>
+                  <div
+                    class="position-absolute top-0 start-0 h-100 d-flex flex-column justify-content-center p-4"
+                    style="
+                      background: linear-gradient(
+                        to right,
+                        rgba(16, 20, 21, 0.92),
+                        transparent
+                      );
+                      max-width: 420px;
+                      z-index: 1;
+                    "
+                  >
+                    <p
+                      class="label-caps text-primary-container text-uppercase mb-2"
+                      style="font-size: 11px; letter-spacing: 0.15em"
+                    >
+                      NETWORK_FLOW_VISUALIZATION
+                    </p>
+                    <p
+                      class="text-on-surface-variant mb-0"
+                      style="font-size: 13px"
+                    >
+                      Packet injection density heatmap shows anomalous traffic
+                      spike originating from unauthorized subnet.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      // Atmosphere logging
+      const logs = [
+        "SCANNING_PACKETS...",
+        "HEURISTIC_CHECK_COMPLETE",
+        "ENCRYPTION_LAYER_STATIC",
+        "IDPS_SIGNAL_STRENGTH_94%",
+        "NEW_THREAT_SIGNATURE_LOADED",
+        "OPERATOR_COMMAND_RECV",
+      ];
+
+      setInterval(() => {
+        const logIdx = Math.floor(Math.random() * logs.length);
+        console.log(
+          `[SENTINEL_KRNL] ${new Date().toISOString()} : ${logs[logIdx]}`,
+        );
+      }, 8000);
+
+      // Alert queue click feedback
+      document.querySelectorAll(".am-alert-row").forEach((el) => {
+        el.addEventListener("click", () => {
+          el.classList.add("am-flash");
+          setTimeout(() => el.classList.remove("am-flash"), 300);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -257,24 +257,32 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Incident Response",
           icon: "emergency",
-          url: "#incident-response",
+          url: "/pages/dashboard/security-operator/incident-response.html",
         },
-        { label: "Protocol Status", icon: "security", url: "#protocol-status" },
+        {
+          label: "Protocol Status",
+          icon: "security",
+          url: "/pages/dashboard/security-operator/protocol-status.html",
+        },
         {
           label: "Perimeter Defense",
           icon: "shield_person",
-          url: "#perimeter-defense",
+          url: "/pages/dashboard/security-operator/perimeter-defense.html",
         },
-        { label: "Traffic Control", icon: "traffic", url: "#traffic-control" },
+        {
+          label: "Traffic Control",
+          icon: "traffic",
+          url: "/pages/dashboard/security-operator/traffic-control.html",
+        },
         {
           label: "Alert Management",
           icon: "notification_important",
-          url: "#alert-management",
+          url: "/pages/dashboard/security-operator/alert-management.html",
         },
         {
           label: "System Health",
           icon: "monitor_heart",
-          url: "#system-health",
+          url: "/pages/dashboard/security-operator/system-health.html",
         },
       ],
     },
@@ -282,13 +290,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentRole = roleInfo[session.role] || roleInfo.operator;
 
-  // Welcome message
   // 2. Update UI Displays
-  document.getElementById("role-display").textContent = currentRole.title;
-  document.getElementById("op-id-display").textContent =
-    `OPERATOR: ${session.operatorId.split("@")[0].toUpperCase()}`;
+  const roleDisplay = document.getElementById("role-display");
+  const opDisplay = document.getElementById("op-id-display");
 
-  // Update Latency Card Content
+  if (roleDisplay) {
+    roleDisplay.textContent = currentRole.title;
+  }
+
+  if (opDisplay) {
+    opDisplay.textContent = `OPERATOR: ${session.operatorId.split("@")[0].toUpperCase()}`;
+  }
+
+  // Update Latency Card Content (only present on pages that have this card)
   const latTitle = document.getElementById("latency-title");
   const latBadge = document.getElementById("latency-badge");
   const latDetails = document.getElementById("latency-details");
@@ -316,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 3. Populate Sidebar
+  // 3. Populate Sidebar (present on every dashboard page)
   const sidebarNav = document.getElementById("sidebar-nav");
 
   // Helper to resolve paths correctly regardless of current page depth (GitHub Pages compatible)
@@ -324,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;
     if (
       path.includes("/system-analyst/") ||
-      path.includes("/security-analyst/") ||
+      path.includes("/security-operator/") ||
       path.includes("/system-adminstrator/")
     )
       return "../../../";
@@ -333,50 +347,54 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const prefix = getPrefix();
 
-  currentRole.nav.forEach((item) => {
-    const link = document.createElement("a");
+  if (sidebarNav) {
+    currentRole.nav.forEach((item) => {
+      const link = document.createElement("a");
 
-    // Resolve URL: absolute-style paths starting with '/' are corrected to relative ones
-    let resolvedUrl = item.url;
-    if (resolvedUrl && resolvedUrl.startsWith("/")) {
-      resolvedUrl = prefix + resolvedUrl.substring(1);
-    }
-    link.href = resolvedUrl || "#";
+      // Resolve URL: absolute-style paths starting with '/' are corrected to relative ones
+      let resolvedUrl = item.url;
+      if (resolvedUrl && resolvedUrl.startsWith("/")) {
+        resolvedUrl = prefix + resolvedUrl.substring(1);
+      }
+      link.href = resolvedUrl || "#";
 
-    // Determine active state by comparing the link's filename with the current pathname
-    const isCurrentPage =
-      item.url &&
-      !item.url.startsWith("#") &&
-      window.location.pathname.includes(item.url.split("/").pop());
-    link.className = `nav-link-custom ${isCurrentPage ? "active" : ""}`;
+      // Determine active state by comparing the link's filename with the current pathname
+      const isCurrentPage =
+        item.url &&
+        !item.url.startsWith("#") &&
+        window.location.pathname.includes(item.url.split("/").pop());
+      link.className = `nav-link-custom ${isCurrentPage ? "active" : ""}`;
 
-    link.innerHTML = `
-      <span class="material-symbols-outlined">${item.icon}</span>
-      ${item.label}
-    `;
-    sidebarNav.appendChild(link);
-  });
+      link.innerHTML = `
+        <span class="material-symbols-outlined">${item.icon}</span>
+        ${item.label}
+      `;
+      sidebarNav.appendChild(link);
+    });
+  }
 
-  // 4. Populate Stats
+  // 4. Populate Stats (only on pages that have a stats container, e.g. the main dashboard)
   const statsContainer = document.getElementById("stats-container");
-  currentRole.stats.forEach((stat) => {
-    const col = document.createElement("div");
-    col.className = "col-6 col-md-3";
-    col.innerHTML = `
-      <div class="glass-panel p-3 stat-card h-100 cyber-border position-relative overflow-hidden bg-black bg-opacity-50">
-        <div class="scan-line opacity-25"></div>
-        <div class="d-flex justify-content-between mb-2">
-          <span class="material-symbols-outlined fs-5" style="color: #00f0ff;">${stat.icon}</span>
-          <span class="small font-monospace text-success" style="font-size: 9px; letter-spacing: 1px;">LIVE</span>
+  if (statsContainer) {
+    currentRole.stats.forEach((stat) => {
+      const col = document.createElement("div");
+      col.className = "col-6 col-md-3";
+      col.innerHTML = `
+        <div class="glass-panel p-3 stat-card h-100 cyber-border position-relative overflow-hidden bg-black bg-opacity-50">
+          <div class="scan-line opacity-25"></div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="material-symbols-outlined fs-5" style="color: #00f0ff;">${stat.icon}</span>
+            <span class="small font-monospace text-success" style="font-size: 9px; letter-spacing: 1px;">LIVE</span>
+          </div>
+          <div class="h2 mb-1 fw-extrabold text-white font-monospace">${stat.val}</div>
+          <div class="small text-uppercase tracking-widest font-monospace" style="font-size: 10px; color: #00f0ff;">${stat.label}</div>
         </div>
-        <div class="h2 mb-1 fw-extrabold text-white font-monospace">${stat.val}</div>
-        <div class="small text-uppercase tracking-widest font-monospace" style="font-size: 10px; color: #00f0ff;">${stat.label}</div>
-      </div>
-    `;
-    statsContainer.appendChild(col);
-  });
+      `;
+      statsContainer.appendChild(col);
+    });
+  }
 
-  // 5. Sidebar Toggle for Mobile
+  // 5. Sidebar Toggle for Mobile (present on every dashboard page)
   const sidebarToggle = document.getElementById("sidebarToggle");
   if (sidebarToggle) {
     sidebarToggle.addEventListener("click", () => {
@@ -384,37 +402,48 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. Render Role-Specific Content
+  // 6. Render Role-Specific Content (only on pages that have this container)
   renderRoleSpecificContent(currentRole.content);
 
-  // 6. Terminal Log Emulation
+  // 7. Terminal Log Emulation (only on pages that have a log terminal)
   const terminal = document.getElementById("log-terminal");
-  const logs = [
-    { type: "INFO", msg: "INIT_SEQUENCE: Handshaking with satellite relay..." },
-    { type: "SUCCESS", msg: "ENCRYPTION: Layer_07 protocol established." },
-    { type: "INFO", msg: "FIREWALL: Perimeter breach attempt nullified." },
-    { type: "WARNING", msg: "SCAN: Heuristic anomaly detected in sector 4C." },
-    { type: "INFO", msg: "ROUTING: Traffic redirected via encrypted proxy." },
-    { type: "ERROR", msg: "CRITICAL: Unauthorized access attempt: 204.1.8.2" },
-    { type: "INFO", msg: "KERNEL: Integrity check complete. [OK]" },
-    { type: "SUCCESS", msg: "AUTH: Administrator session verified." },
-    { type: "WARNING", msg: "MEMORY: Buffer utilization at 88%." },
-    { type: "INFO", msg: "LOGS: Rotating local audit trails..." },
-  ];
+  if (terminal) {
+    const logs = [
+      {
+        type: "INFO",
+        msg: "INIT_SEQUENCE: Handshaking with satellite relay...",
+      },
+      { type: "SUCCESS", msg: "ENCRYPTION: Layer_07 protocol established." },
+      { type: "INFO", msg: "FIREWALL: Perimeter breach attempt nullified." },
+      {
+        type: "WARNING",
+        msg: "SCAN: Heuristic anomaly detected in sector 4C.",
+      },
+      { type: "INFO", msg: "ROUTING: Traffic redirected via encrypted proxy." },
+      {
+        type: "ERROR",
+        msg: "CRITICAL: Unauthorized access attempt: 204.1.8.2",
+      },
+      { type: "INFO", msg: "KERNEL: Integrity check complete. [OK]" },
+      { type: "SUCCESS", msg: "AUTH: Administrator session verified." },
+      { type: "WARNING", msg: "MEMORY: Buffer utilization at 88%." },
+      { type: "INFO", msg: "LOGS: Rotating local audit trails..." },
+    ];
 
-  function getLogTimestamp() {
-    const now = new Date();
-    return `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+    const getLogTimestamp = () => {
+      const now = new Date();
+      return `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+    };
+
+    setInterval(() => {
+      const logEntry = document.createElement("div");
+      const randomLog = logs[Math.floor(Math.random() * logs.length)];
+      logEntry.className = `log-${randomLog.type.toLowerCase()}`;
+      logEntry.innerHTML = `<span class="log-timestamp">[${getLogTimestamp()}]</span> <span class="log-type">${randomLog.type}</span>: ${randomLog.msg}`;
+      terminal.prepend(logEntry);
+      if (terminal.children.length > 8) terminal.lastChild.remove();
+    }, 3000);
   }
-
-  setInterval(() => {
-    const logEntry = document.createElement("div");
-    const randomLog = logs[Math.floor(Math.random() * logs.length)];
-    logEntry.className = `log-${randomLog.type.toLowerCase()}`;
-    logEntry.innerHTML = `<span class="log-timestamp">[${getLogTimestamp()}]</span> <span class="log-type">${randomLog.type}</span>: ${randomLog.msg}`;
-    terminal.prepend(logEntry);
-    if (terminal.children.length > 8) terminal.lastChild.remove();
-  }, 3000);
 });
 
 // Function to render role-specific content
@@ -463,24 +492,27 @@ function renderRoleSpecificContent(content) {
   container.innerHTML = html;
 }
 
-// Initialize Latency Graph
+// Initialize Latency Graph (only on pages that have this element, e.g. the main dashboard)
 const graph = document.getElementById("latency-graph");
-const barCount = 20;
-const baseLineHeight = 10;
-for (let i = 0; i < barCount; i++) {
-  const bar = document.createElement("div");
-  bar.className = "flex-grow-1 bg-primary-container opacity-50 rounded-top";
-  bar.style.height = Math.floor(Math.random() * 80 + 20) + "%";
-  graph.appendChild(bar);
-}
+if (graph) {
+  const barCount = 20;
+  const baseLineHeight = 10;
+  for (let i = 0; i < barCount; i++) {
+    const bar = document.createElement("div");
+    bar.className = "flex-grow-1 bg-primary-container opacity-50 rounded-top";
+    bar.style.height = Math.floor(Math.random() * 80 + 20) + "%";
+    graph.appendChild(bar);
+  }
 
-// Simulate real-time updates for latency bars
-const graphBars = graph.querySelectorAll("div");
-setInterval(() => {
-  graphBars.forEach((bar) => {
-    // Ensure bars are always visible and fluctuate
-    bar.style.height =
-      Math.floor(Math.random() * (100 - baseLineHeight) + baseLineHeight) + "%";
-    bar.style.transition = "height 1.5s ease-in-out";
-  });
-}, 2000);
+  // Simulate real-time updates for latency bars
+  const graphBars = graph.querySelectorAll("div");
+  setInterval(() => {
+    graphBars.forEach((bar) => {
+      // Ensure bars are always visible and fluctuate
+      bar.style.height =
+        Math.floor(Math.random() * (100 - baseLineHeight) + baseLineHeight) +
+        "%";
+      bar.style.transition = "height 1.5s ease-in-out";
+    });
+  }, 2000);
+}

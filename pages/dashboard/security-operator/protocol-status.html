@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Protocol Status</title>
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      /* Page-scoped effects specific to Protocol Status (not part of shared dashboard.css) */
+      @keyframes ps-scan {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 0 100%;
+        }
+      }
+      .ps-scan-line {
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(0, 219, 233, 0.12),
+          transparent
+        );
+        background-size: 100% 4px;
+        animation: ps-scan 10s linear infinite;
+      }
+      @keyframes ps-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .ps-pulse {
+        animation: ps-pulse 2s ease-in-out infinite;
+      }
+      @keyframes ps-ping {
+        75%,
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+      .ps-ping::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: currentColor;
+        animation: ps-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Header Section -->
+          <div
+            class="mb-5 d-flex flex-column flex-md-row align-items-center justify-content-between gap-4"
+          >
+            <div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">Protocol Status</h1>
+              <p class="lead text-on-surface-variant mb-0">
+                Real-time surveillance of global defensive frameworks. Automated
+                countermeasures currently active in sectors 4 and 9.
+              </p>
+            </div>
+            <div class="d-flex gap-3 align-items-stretch">
+              <div
+                class="glass-panel px-4 py-2 d-flex flex-column justify-content-center border-start border-4 border-primary-container"
+              >
+                <span
+                  class="label-caps text-on-surface-variant"
+                  style="font-size: 10px"
+                  >UPTIME</span
+                >
+                <span class="h4 mb-0 text-on-surface">99.998%</span>
+              </div>
+              <div
+                class="glass-panel px-4 py-2 d-flex flex-column justify-content-center border-start border-4 border-success text-nowrap"
+              >
+                <span
+                  class="label-caps text-on-surface-variant"
+                  style="font-size: 10px"
+                  >THREAT LEVEL</span
+                >
+                <span class="h4 mb-0 text-success-emphasis">LOW</span>
+              </div>
+              <button
+                class="btn bg-primary-container text-dark fw-bold d-none d-lg-flex align-items-center gap-2 px-4 text-nowrap"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >bolt</span
+                >
+                Deploy Countermeasure
+              </button>
+            </div>
+          </div>
+
+          <!-- Bento Grid Dashboard -->
+          <div class="row g-4">
+            <!-- Compliance Heatmap (Large) -->
+            <div class="col-12 col-lg-8">
+              <div
+                class="glass-panel p-4 h-100 position-relative overflow-hidden"
+              >
+                <div
+                  class="ps-scan-line position-absolute top-0 start-0 w-100 h-100 pe-none"
+                ></div>
+                <div
+                  class="d-flex align-items-center justify-content-between mb-4 position-relative"
+                >
+                  <div class="d-flex align-items-center gap-2">
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      >public</span
+                    >
+                    <h3
+                      class="label-caps text-on-surface mb-0"
+                      style="font-size: 12px"
+                    >
+                      Compliance Heatmap
+                    </h3>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <span
+                      class="text-on-surface-variant opacity-75"
+                      style="font-size: 10px"
+                      >RELOAD: 05s</span
+                    >
+                    <div
+                      class="bg-primary-container rounded-circle ps-pulse"
+                      style="width: 6px; height: 6px"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  class="position-relative d-flex align-items-center justify-content-center bg-surface-container-lowest rounded overflow-hidden"
+                  style="height: 400px"
+                >
+                  <div
+                    class="position-absolute top-0 start-0 w-100 h-100 opacity-25"
+                    style="
+                      background-image:
+                        linear-gradient(
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        ),
+                        linear-gradient(
+                          90deg,
+                          rgba(185, 202, 203, 0.15) 1px,
+                          transparent 1px
+                        );
+                      background-size: 40px 40px;
+                    "
+                  ></div>
+                  <span
+                    class="text-on-surface-variant opacity-50 small position-relative"
+                    >GLOBAL NODE MAP — RENDERING</span
+                  >
+                  <div
+                    class="position-absolute bottom-0 start-0 m-3 d-flex gap-3"
+                    style="font-size: 10px"
+                  >
+                    <div
+                      class="d-flex align-items-center gap-1 text-on-surface-variant"
+                    >
+                      <span
+                        class="d-inline-block bg-success"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      SECURE
+                    </div>
+                    <div
+                      class="d-flex align-items-center gap-1 text-on-surface-variant"
+                    >
+                      <span
+                        class="d-inline-block bg-danger"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      BREACH
+                    </div>
+                    <div
+                      class="d-flex align-items-center gap-1 text-on-surface-variant"
+                    >
+                      <span
+                        class="d-inline-block bg-surface-container-high"
+                        style="width: 8px; height: 8px"
+                      ></span>
+                      IDLE
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kernel Health Gauge -->
+            <div class="col-12 col-lg-4">
+              <div
+                class="glass-panel p-4 h-100 d-flex flex-column align-items-center"
+              >
+                <div
+                  class="d-flex align-items-center gap-2 align-self-start mb-4"
+                >
+                  <span class="material-symbols-outlined text-primary-container"
+                    >vital_signs</span
+                  >
+                  <h3
+                    class="label-caps text-on-surface mb-0"
+                    style="font-size: 12px"
+                  >
+                    Kernel Health
+                  </h3>
+                </div>
+                <div
+                  class="position-relative mb-4"
+                  style="width: 180px; height: 180px"
+                >
+                  <svg
+                    class="w-100 h-100"
+                    viewBox="0 0 100 100"
+                    style="transform: rotate(-90deg)"
+                  >
+                    <circle
+                      class="text-outline-variant"
+                      cx="50"
+                      cy="50"
+                      fill="none"
+                      r="45"
+                      stroke="currentColor"
+                      stroke-width="4"
+                      stroke-opacity="0.3"
+                    ></circle>
+                    <circle
+                      class="text-primary-container"
+                      cx="50"
+                      cy="50"
+                      fill="none"
+                      r="45"
+                      stroke="currentColor"
+                      stroke-dasharray="283"
+                      stroke-dashoffset="42"
+                      stroke-width="6"
+                      stroke-linecap="round"
+                    ></circle>
+                  </svg>
+                  <div
+                    class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+                  >
+                    <span class="h2 mb-0 text-on-surface fw-bold">85%</span>
+                    <span
+                      class="text-on-surface-variant"
+                      style="font-size: 10px"
+                      >NOMINAL</span
+                    >
+                  </div>
+                </div>
+                <div class="w-100">
+                  <div
+                    class="d-flex justify-content-between mb-1"
+                    style="font-size: 11px"
+                  >
+                    <span class="text-on-surface-variant"
+                      >MEMORY SHIELDING</span
+                    >
+                    <span class="text-primary-container">92%</span>
+                  </div>
+                  <div
+                    class="bg-surface-container-high mb-3"
+                    style="height: 4px"
+                  >
+                    <div
+                      class="bg-primary-container h-100"
+                      style="width: 92%"
+                    ></div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between"
+                    style="font-size: 11px"
+                  >
+                    <span class="text-on-surface-variant">CORE ENTROPY</span>
+                    <span class="text-primary-container">0.04</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Protocol Integrity (Line Chart) -->
+            <div class="col-12 col-lg-7">
+              <div class="glass-panel p-4 h-100">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-4"
+                >
+                  <div class="d-flex align-items-center gap-2">
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      >timeline</span
+                    >
+                    <h3
+                      class="label-caps text-on-surface mb-0"
+                      style="font-size: 12px"
+                    >
+                      Protocol Integrity (24H)
+                    </h3>
+                  </div>
+                  <div class="d-flex gap-3" style="font-size: 11px">
+                    <span
+                      class="text-primary-container border-bottom border-primary-container pb-1"
+                      role="button"
+                      >STABILITY</span
+                    >
+                    <span class="text-on-surface-variant" role="button"
+                      >LATENCY</span
+                    >
+                  </div>
+                </div>
+                <div class="position-relative" style="height: 220px">
+                  <svg
+                    class="w-100 h-100"
+                    viewBox="0 0 1000 220"
+                    preserveAspectRatio="none"
+                  >
+                    <line
+                      stroke="currentColor"
+                      class="text-outline-variant"
+                      stroke-dasharray="4"
+                      stroke-width="1"
+                      x1="0"
+                      x2="1000"
+                      y1="30"
+                      y2="30"
+                    ></line>
+                    <line
+                      stroke="currentColor"
+                      class="text-outline-variant"
+                      stroke-dasharray="4"
+                      stroke-width="1"
+                      x1="0"
+                      x2="1000"
+                      y1="110"
+                      y2="110"
+                    ></line>
+                    <line
+                      stroke="currentColor"
+                      class="text-outline-variant"
+                      stroke-dasharray="4"
+                      stroke-width="1"
+                      x1="0"
+                      x2="1000"
+                      y1="190"
+                      y2="190"
+                    ></line>
+                    <path
+                      d="M0,80 Q100,60 200,90 T400,50 T600,100 T800,40 T1000,70"
+                      fill="none"
+                      class="text-primary-container"
+                      stroke="currentColor"
+                      stroke-width="3"
+                    ></path>
+                    <defs>
+                      <linearGradient
+                        id="integrityGradient"
+                        x1="0"
+                        x2="0"
+                        y1="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0%"
+                          stop-color="currentColor"
+                          stop-opacity="0.2"
+                          class="text-primary-container"
+                        ></stop>
+                        <stop
+                          offset="100%"
+                          stop-color="currentColor"
+                          stop-opacity="0"
+                        ></stop>
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M0,80 Q100,60 200,90 T400,50 T600,100 T800,40 T1000,70 V220 H0 Z"
+                      fill="url(#integrityGradient)"
+                      class="text-primary-container"
+                    ></path>
+                    <circle
+                      cx="800"
+                      cy="40"
+                      r="4"
+                      class="text-primary-container"
+                      fill="currentColor"
+                    ></circle>
+                  </svg>
+                  <div
+                    class="d-flex justify-content-between px-1 mt-2 text-on-surface-variant"
+                    style="font-size: 9px"
+                  >
+                    <span>00:00</span>
+                    <span>06:00</span>
+                    <span>12:00</span>
+                    <span>18:00</span>
+                    <span>NOW</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Defensive Maneuvers -->
+            <div class="col-12 col-lg-5">
+              <div class="glass-panel p-4 h-100 d-flex flex-column">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                  <span class="material-symbols-outlined text-primary-container"
+                    >verified_user</span
+                  >
+                  <h3
+                    class="label-caps text-on-surface mb-0"
+                    style="font-size: 12px"
+                  >
+                    Active Defensive Maneuvers
+                  </h3>
+                </div>
+                <div
+                  class="flex-grow-1 d-flex flex-column gap-2"
+                  id="maneuvers-list"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-between p-3 bg-surface-container-low border border-outline-variant rounded"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <div
+                        class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded"
+                        style="width: 32px; height: 32px"
+                      >
+                        <span
+                          class="material-symbols-outlined text-dark"
+                          style="font-size: 18px"
+                          >lock</span
+                        >
+                      </div>
+                      <div>
+                        <div class="text-on-surface" style="font-size: 12px">
+                          QUANTUM-LOCKING
+                        </div>
+                        <div
+                          class="text-on-surface-variant"
+                          style="font-size: 10px"
+                        >
+                          MULTI-PHASE ENCRYPTION
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch m-0">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="m1"
+                        checked
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between p-3 bg-surface-container-low border border-outline-variant rounded"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <div
+                        class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded"
+                        style="width: 32px; height: 32px"
+                      >
+                        <span
+                          class="material-symbols-outlined text-dark"
+                          style="font-size: 18px"
+                          >shuffle</span
+                        >
+                      </div>
+                      <div>
+                        <div class="text-on-surface" style="font-size: 12px">
+                          IP-SHUFFLING
+                        </div>
+                        <div
+                          class="text-on-surface-variant"
+                          style="font-size: 10px"
+                        >
+                          DYNAMIC NODE ROTATION
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch m-0">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="m2"
+                        checked
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between p-3 bg-surface-container-low border border-outline-variant rounded"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <div
+                        class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded"
+                        style="width: 32px; height: 32px"
+                      >
+                        <span
+                          class="material-symbols-outlined text-dark"
+                          style="font-size: 18px"
+                          >shield</span
+                        >
+                      </div>
+                      <div>
+                        <div class="text-on-surface" style="font-size: 12px">
+                          VECTOR-MIRROR
+                        </div>
+                        <div
+                          class="text-on-surface-variant"
+                          style="font-size: 10px"
+                        >
+                          PASSIVE REDIRECTION
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch m-0">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="m3"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between p-3 bg-surface-container-low border border-outline-variant rounded"
+                  >
+                    <div class="d-flex align-items-center gap-3">
+                      <div
+                        class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded"
+                        style="width: 32px; height: 32px"
+                      >
+                        <span
+                          class="material-symbols-outlined text-dark"
+                          style="font-size: 18px"
+                          >radar</span
+                        >
+                      </div>
+                      <div>
+                        <div class="text-on-surface" style="font-size: 12px">
+                          GHOST-PINGING
+                        </div>
+                        <div
+                          class="text-on-surface-variant"
+                          style="font-size: 10px"
+                        >
+                          PROACTIVE DECEPTION
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch m-0">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="m4"
+                        checked
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Event Stream -->
+          <div
+            class="glass-panel p-4 mt-4 border-top border-primary-container"
+            style="border-top-width: 2px !important"
+          >
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined text-primary-container"
+                  >code</span
+                >
+                <h3
+                  class="label-caps text-on-surface mb-0"
+                  style="font-size: 12px"
+                >
+                  Live Event Stream
+                </h3>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="bg-primary-container rounded-circle ps-pulse"
+                  style="width: 6px; height: 6px"
+                ></div>
+                <span class="text-on-surface-variant" style="font-size: 10px"
+                  >CONNECTED TO SYNC_CORE_02</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-lowest p-3 rounded font-monospace text-primary-container overflow-y-auto"
+              id="event-stream"
+              style="height: 128px; font-size: 13px"
+            >
+              <div class="d-flex gap-3 opacity-75">
+                <span class="text-on-surface-variant"
+                  >[2024-07-15 14:22:01]</span
+                >
+                <span>SYSTEM: Handshake established with Orbital_Node_7.</span>
+              </div>
+              <div class="d-flex gap-3 opacity-75">
+                <span class="text-on-surface-variant"
+                  >[2024-07-15 14:22:04]</span
+                >
+                <span>PROTOCOL: IP-Shuffling initiated on Cluster_C.</span>
+              </div>
+              <div class="d-flex gap-3 opacity-75">
+                <span class="text-on-surface-variant"
+                  >[2024-07-15 14:22:15]</span
+                >
+                <span class="text-on-surface"
+                  >SECURITY: Unauthorized probe detected from 192.x.x.x -
+                  Redirecting.</span
+                >
+              </div>
+              <div class="d-flex gap-3 opacity-75">
+                <span class="text-on-surface-variant"
+                  >[2024-07-15 14:22:18]</span
+                >
+                <span class="text-danger-emphasis bg-danger bg-opacity-10 px-1"
+                  >ALERT: Buffer integrity at 88% - Threshold monitor
+                  active.</span
+                >
+              </div>
+              <div class="d-flex gap-3 opacity-75">
+                <span class="text-on-surface-variant"
+                  >[2024-07-15 14:22:25]</span
+                >
+                <span
+                  >SYSTEM: Re-verifying Kernel level credentials...
+                  Success.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      // Defensive maneuver toggle logging
+      document
+        .querySelectorAll("#maneuvers-list .form-check-input")
+        .forEach((toggle) => {
+          toggle.addEventListener("change", (e) => {
+            const label = e.target
+              .closest(".d-flex.align-items-center.justify-content-between")
+              .querySelector(".text-on-surface").innerText;
+            console.log(
+              `Protocol ${label} status: ${e.target.checked ? "ACTIVE" : "INACTIVE"}`,
+            );
+          });
+        });
+
+      // Dynamic terminal feed simulation
+      const stream = document.getElementById("event-stream");
+      const phrases = [
+        "SCAN: Deep packet inspection complete. No anomalies.",
+        "NET: Synchronizing delta-states across all shards.",
+        "AUTH: Rotating cryptographic keys for Session_8892.",
+        "ALERT: Minor deviation in sector 12 neutralized.",
+        "INFO: Kernel Health optimized via background garbage collection.",
+      ];
+
+      setInterval(() => {
+        const time = new Date().toISOString().replace("T", " ").split(".")[0];
+        const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+        const row = document.createElement("div");
+        row.className = "d-flex gap-3 opacity-0";
+        row.style.transition = "opacity 0.5s";
+        row.innerHTML = `<span class="text-on-surface-variant">[${time}]</span><span>${phrase}</span>`;
+        stream.appendChild(row);
+        setTimeout(() => (row.className = "d-flex gap-3 opacity-75"), 100);
+        stream.scrollTop = stream.scrollHeight;
+        if (stream.children.length > 50) stream.removeChild(stream.firstChild);
+      }, 8000);
+    </script>
+  </body>
+</html>

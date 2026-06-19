@@ -1,7 +1,7 @@
 // Helper function to determine the relative path prefix based on the current page location
 function getPathPrefix() {
   const path = window.location.pathname;
-  if (path.includes("/system-analyst/") || path.includes("/security-analyst/") || path.includes("/system-adminstrator/"))
+  if (path.includes("/system-analyst/") || path.includes("/security-operator/") || path.includes("/system-adminstrator/"))
     return "../../../";
   if (path.includes("/dashboard/")) return "../../";
   if (path.includes("/pages/auth/")) return "../../";

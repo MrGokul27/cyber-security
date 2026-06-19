@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stackly | Traffic Control</title>
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/dashboard.css" />
+    <style>
+      /* Page-scoped effects specific to Traffic Control (not part of shared dashboard.css) */
+      @keyframes tc-scan {
+        0% {
+          top: -2px;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+      .tc-scan-line {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 219, 233, 0.6),
+          transparent
+        );
+        position: absolute;
+        top: -2px;
+        left: 0;
+        animation: tc-scan 4s linear infinite;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .tc-terminal {
+        scrollbar-width: thin;
+      }
+      .tc-terminal::-webkit-scrollbar {
+        width: 4px;
+      }
+      .tc-terminal::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .tc-terminal::-webkit-scrollbar-thumb {
+        background: var(--bs-secondary-bg, #3b494b);
+      }
+      .tc-packet-line {
+        opacity: 0.6;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        transform: translateX(6px);
+      }
+      .tc-packet-line.tc-in {
+        transform: translateX(0);
+      }
+      @keyframes tc-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .tc-pulse {
+        animation: tc-pulse 2s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background bg-cyber-radial overflow-hidden"
+  >
+    <div id="magic-cursor"></div>
+
+    <!-- Dashboard Layout -->
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <div
+          class="p-3 border-bottom border-outline-variant d-flex align-items-center gap-2"
+        >
+          <a href="../../../index.html">
+            <img
+              src="../../../assets/images/logoStackly.webp"
+              alt="Logo"
+              width="100"
+            />
+          </a>
+        </div>
+
+        <div class="p-3" id="sidebar-nav">
+          <div class="label-caps mb-3 opacity-50 px-3" style="font-size: 10px">
+            Security Terminal
+          </div>
+          <!-- Nav items injected by dashboard.js -->
+        </div>
+
+        <div class="mt-auto p-3 border-top border-outline-variant">
+          <a href="../../auth/login.html" class="nav-link-custom text-danger">
+            <span class="material-symbols-outlined">logout</span>
+            TERMINATE_SESSION
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content w-100 vh-100 overflow-y-auto bg-background">
+        <!-- Header -->
+        <header
+          class="dashboard-header d-flex align-items-center justify-content-between px-4 sticky-top"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-link text-on-surface d-lg-none p-0"
+              id="sidebarToggle"
+            >
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="h5 mb-0 font-monospace" id="role-display">
+              LOADING_ROLE...
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="text-end d-none d-md-block">
+              <div
+                class="small fw-bold text-primary-container"
+                id="op-id-display"
+              >
+                ID: ---
+              </div>
+              <div
+                class="small opacity-50 font-monospace"
+                style="font-size: 10px"
+              >
+                UPLINK_STATUS: NOMINAL
+              </div>
+            </div>
+            <div class="status-dot"></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-4">
+          <!-- Header Section -->
+          <div
+            class="mb-5 d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-4"
+          >
+            <div>
+              <h1 class="h2 text-on-surface mb-2 fw-bold">
+                Traffic Control Center
+              </h1>
+              <p
+                class="text-on-surface-variant font-monospace mb-0 opacity-75"
+                style="font-size: 13px"
+              >
+                MONITORING GATEWAY: US-EAST-01 // NODE_STATUS: OPTIMAL
+              </p>
+            </div>
+            <div class="d-flex gap-3">
+              <div
+                class="d-flex align-items-center gap-2 px-3 py-2 bg-surface-container border border-outline-variant rounded"
+              >
+                <span
+                  class="bg-primary-container rounded-circle tc-pulse d-inline-block"
+                  style="width: 8px; height: 8px"
+                ></span>
+                <span
+                  class="label-caps text-primary-container"
+                  style="font-size: 11px"
+                  >LIVE CAPTURE ACTIVE</span
+                >
+              </div>
+              <button
+                class="btn btn-outline-custom d-flex align-items-center gap-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >file_download</span
+                >
+                Export PCAP
+              </button>
+            </div>
+          </div>
+
+          <!-- Bento Grid Layout -->
+          <div class="row g-4">
+            <!-- Live Packet Stream -->
+            <div class="col-12 col-lg-7">
+              <div
+                class="glass-panel h-100 d-flex flex-column position-relative"
+                style="min-height: 460px"
+              >
+                <div class="tc-scan-line"></div>
+                <div
+                  class="p-4 border-bottom border-outline-variant d-flex justify-content-between align-items-center"
+                >
+                  <h3
+                    class="label-caps text-primary-container mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 13px"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="font-size: 18px"
+                      >radar</span
+                    >
+                    Live Packet Stream
+                  </h3>
+                  <div
+                    class="d-flex gap-3 font-monospace text-on-surface-variant"
+                    style="font-size: 11px"
+                  >
+                    <span>FPS: 60.0</span>
+                    <span>PKT/S: 12.4K</span>
+                  </div>
+                </div>
+                <div
+                  class="flex-grow-1 bg-surface-container-lowest p-3 font-monospace tc-terminal overflow-y-auto"
+                  id="packet-stream"
+                  style="font-size: 12px"
+                >
+                  <div class="text-primary-container tc-packet-line tc-in mb-1">
+                    [ 102948.12 ] TCP SYN 192.168.1.45:443 -&gt;
+                    10.0.4.120:54213 ACK=0 WIN=64240
+                  </div>
+                  <div
+                    class="text-on-surface-variant tc-packet-line tc-in mb-1"
+                  >
+                    [ 102948.14 ] UDP 172.16.0.45:53 -&gt; 192.168.1.1:1024 DNS
+                    QUERY sentinel.sec
+                  </div>
+                  <div class="text-danger-emphasis tc-packet-line tc-in mb-1">
+                    [ 102948.18 ] ICMP UNREACHABLE 8.8.8.8 -&gt; 192.168.1.45
+                    TTL EXCEEDED
+                  </div>
+                  <div class="text-primary-container tc-packet-line tc-in mb-1">
+                    [ 102948.21 ] TCP PSH 10.0.0.1:80 -&gt; 192.168.1.201:8080
+                    SEQ=2401 ACK=112
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Traffic Distribution -->
+            <div class="col-12 col-lg-5">
+              <div class="glass-panel h-100 d-flex flex-column">
+                <div class="p-4 border-bottom border-outline-variant">
+                  <h3
+                    class="label-caps text-primary-container mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 13px"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="font-size: 18px"
+                      >donut_large</span
+                    >
+                    Traffic Distribution
+                  </h3>
+                </div>
+                <div
+                  class="flex-grow-1 d-flex flex-column align-items-center justify-content-center p-4"
+                >
+                  <div
+                    class="position-relative"
+                    style="width: 200px; height: 200px"
+                  >
+                    <svg
+                      class="w-100 h-100"
+                      viewBox="0 0 224 224"
+                      style="transform: rotate(-90deg)"
+                    >
+                      <circle
+                        class="text-surface-variant"
+                        cx="112"
+                        cy="112"
+                        fill="transparent"
+                        r="90"
+                        stroke="currentColor"
+                        stroke-width="12"
+                      ></circle>
+                      <circle
+                        class="text-primary-container"
+                        cx="112"
+                        cy="112"
+                        fill="transparent"
+                        r="90"
+                        stroke="currentColor"
+                        stroke-dasharray="565"
+                        stroke-dashoffset="140"
+                        stroke-width="12"
+                        stroke-linecap="round"
+                      ></circle>
+                      <circle
+                        class="text-info"
+                        cx="112"
+                        cy="112"
+                        fill="transparent"
+                        r="90"
+                        stroke="currentColor"
+                        stroke-dasharray="565"
+                        stroke-dashoffset="450"
+                        stroke-width="12"
+                        stroke-linecap="round"
+                      ></circle>
+                      <circle
+                        class="text-danger"
+                        cx="112"
+                        cy="112"
+                        fill="transparent"
+                        r="90"
+                        stroke="currentColor"
+                        stroke-dasharray="565"
+                        stroke-dashoffset="520"
+                        stroke-width="12"
+                        stroke-linecap="round"
+                      ></circle>
+                    </svg>
+                    <div
+                      class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <span class="h3 mb-0 text-on-surface fw-bold"
+                        >1.2 GB</span
+                      >
+                      <span
+                        class="label-caps text-on-surface-variant"
+                        style="font-size: 10px"
+                        >TOTAL / SEC</span
+                      >
+                    </div>
+                  </div>
+                  <div class="row w-100 mt-4 text-center">
+                    <div class="col-4 border-end border-outline-variant">
+                      <div class="text-primary-container fw-bold">72%</div>
+                      <div
+                        class="label-caps text-on-surface-variant"
+                        style="font-size: 10px"
+                      >
+                        TCP
+                      </div>
+                    </div>
+                    <div class="col-4 border-end border-outline-variant">
+                      <div class="text-info-emphasis fw-bold">18%</div>
+                      <div
+                        class="label-caps text-on-surface-variant"
+                        style="font-size: 10px"
+                      >
+                        UDP
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="text-danger-emphasis fw-bold">10%</div>
+                      <div
+                        class="label-caps text-on-surface-variant"
+                        style="font-size: 10px"
+                      >
+                        ICMP/OTHER
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bandwidth Allocation -->
+            <div class="col-12 col-lg-4">
+              <div class="glass-panel h-100">
+                <div class="p-4 border-bottom border-outline-variant">
+                  <h3
+                    class="label-caps text-primary-container mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 13px"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="font-size: 18px"
+                      >tune</span
+                    >
+                    Bandwidth Allocation
+                  </h3>
+                </div>
+                <div class="p-4 d-flex flex-column gap-4">
+                  <div>
+                    <div
+                      class="d-flex justify-content-between label-caps mb-1"
+                      style="font-size: 10px"
+                    >
+                      <span class="text-on-surface-variant"
+                        >CRITICAL AUTH SERVICES</span
+                      >
+                      <span class="text-primary-container">85%</span>
+                    </div>
+                    <div
+                      class="bg-surface-container-high rounded-pill overflow-hidden"
+                      style="height: 6px"
+                    >
+                      <div
+                        class="bg-primary-container h-100"
+                        style="width: 85%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="d-flex justify-content-between label-caps mb-1"
+                      style="font-size: 10px"
+                    >
+                      <span class="text-on-surface-variant"
+                        >INTERNAL DATALINK</span
+                      >
+                      <span class="text-primary-container">42%</span>
+                    </div>
+                    <div
+                      class="bg-surface-container-high rounded-pill overflow-hidden"
+                      style="height: 6px"
+                    >
+                      <div
+                        class="bg-primary-container h-100"
+                        style="width: 42%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="d-flex justify-content-between label-caps mb-1"
+                      style="font-size: 10px"
+                    >
+                      <span class="text-on-surface-variant"
+                        >CDN EDGE CACHING</span
+                      >
+                      <span class="text-primary-container">68%</span>
+                    </div>
+                    <div
+                      class="bg-surface-container-high rounded-pill overflow-hidden"
+                      style="height: 6px"
+                    >
+                      <div
+                        class="bg-primary-container h-100"
+                        style="width: 68%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="d-flex justify-content-between label-caps mb-1"
+                      style="font-size: 10px"
+                    >
+                      <span class="text-on-surface-variant"
+                        >GUEST NETWORK CAP</span
+                      >
+                      <span class="text-primary-container">15%</span>
+                    </div>
+                    <div
+                      class="bg-surface-container-high rounded-pill overflow-hidden"
+                      style="height: 6px"
+                    >
+                      <div
+                        class="bg-primary-container h-100"
+                        style="width: 15%"
+                      ></div>
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline-custom w-100 mt-1"
+                    style="font-size: 11px"
+                  >
+                    RECALIBRATE PRIORITY
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blacklisted IP Entities -->
+            <div class="col-12 col-lg-8">
+              <div class="glass-panel overflow-hidden">
+                <div
+                  class="p-4 border-bottom border-outline-variant d-flex justify-content-between align-items-center flex-wrap gap-3"
+                >
+                  <h3
+                    class="label-caps text-danger-emphasis mb-0 d-flex align-items-center gap-2"
+                    style="font-size: 13px"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="font-size: 18px"
+                      >gpp_bad</span
+                    >
+                    Blacklisted IP Entities
+                  </h3>
+                  <div
+                    class="d-flex align-items-center bg-surface-container-lowest rounded border border-outline-variant overflow-hidden"
+                  >
+                    <span
+                      class="material-symbols-outlined px-2 text-on-surface-variant"
+                      style="font-size: 16px"
+                      >search</span
+                    >
+                    <input
+                      class="form-control bg-transparent border-0 text-on-surface font-monospace pe-3"
+                      style="box-shadow: none; font-size: 11px; width: 180px"
+                      placeholder="SEARCH IP..."
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table
+                    class="table table-borderless w-100 text-start font-monospace mb-0"
+                    style="font-size: 12px"
+                  >
+                    <thead
+                      class="bg-surface-container-high text-on-surface-variant"
+                    >
+                      <tr>
+                        <th class="px-4 py-3 text-uppercase">
+                          Source IP Address
+                        </th>
+                        <th class="px-4 py-3 text-uppercase">Origin</th>
+                        <th class="px-4 py-3 text-uppercase">Threat Score</th>
+                        <th class="px-4 py-3 text-uppercase">Last Activity</th>
+                        <th class="px-4 py-3 text-uppercase text-end">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="transition-colors group">
+                        <td class="px-4 py-3 fw-bold text-danger-emphasis">
+                          192.88.2.14
+                        </td>
+                        <td class="px-4 py-3">RUSSIA // RU</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge rounded-pill bg-danger bg-opacity-10 text-danger-emphasis border-start border-danger border-2 px-2 py-1"
+                            >98/100</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 opacity-75">2s ago</td>
+                        <td class="px-4 py-3 text-end">
+                          <button
+                            class="btn btn-link text-on-surface-variant p-1"
+                          >
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >history</span
+                            >
+                          </button>
+                          <button class="btn btn-link text-danger-emphasis p-1">
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >block</span
+                            >
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="transition-colors group">
+                        <td class="px-4 py-3 fw-bold text-danger-emphasis">
+                          45.128.2.101
+                        </td>
+                        <td class="px-4 py-3">CHINA // CN</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge rounded-pill bg-danger bg-opacity-10 text-danger-emphasis border-start border-danger border-2 px-2 py-1"
+                            >84/100</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 opacity-75">14s ago</td>
+                        <td class="px-4 py-3 text-end">
+                          <button
+                            class="btn btn-link text-on-surface-variant p-1"
+                          >
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >history</span
+                            >
+                          </button>
+                          <button class="btn btn-link text-danger-emphasis p-1">
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >block</span
+                            >
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="transition-colors group">
+                        <td class="px-4 py-3 fw-bold text-danger-emphasis">
+                          103.22.200.5
+                        </td>
+                        <td class="px-4 py-3">NETHERLANDS // NL</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge rounded-pill bg-danger bg-opacity-10 text-danger-emphasis border-start border-danger border-2 px-2 py-1"
+                            >91/100</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 opacity-75">1m ago</td>
+                        <td class="px-4 py-3 text-end">
+                          <button
+                            class="btn btn-link text-on-surface-variant p-1"
+                          >
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >history</span
+                            >
+                          </button>
+                          <button class="btn btn-link text-danger-emphasis p-1">
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >block</span
+                            >
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="transition-colors group">
+                        <td class="px-4 py-3 fw-bold text-danger-emphasis">
+                          212.4.56.222
+                        </td>
+                        <td class="px-4 py-3">IRAN // IR</td>
+                        <td class="px-4 py-3">
+                          <span
+                            class="badge rounded-pill bg-danger bg-opacity-10 text-danger-emphasis border-start border-danger border-2 px-2 py-1"
+                            >77/100</span
+                          >
+                        </td>
+                        <td class="px-4 py-3 opacity-75">4m ago</td>
+                        <td class="px-4 py-3 text-end">
+                          <button
+                            class="btn btn-link text-on-surface-variant p-1"
+                          >
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >history</span
+                            >
+                          </button>
+                          <button class="btn btn-link text-danger-emphasis p-1">
+                            <span
+                              class="material-symbols-outlined"
+                              style="font-size: 18px"
+                              >block</span
+                            >
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Status -->
+          <footer
+            class="mt-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-4 border-top border-outline-variant pt-4 pb-4"
+          >
+            <div class="d-flex gap-5 flex-wrap">
+              <div class="d-flex flex-column">
+                <span
+                  class="label-caps text-on-surface-variant"
+                  style="font-size: 10px"
+                  >CORE CLUSTER</span
+                >
+                <span class="text-on-surface fw-bold">SEC-01-DELTA</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span
+                  class="label-caps text-on-surface-variant"
+                  style="font-size: 10px"
+                  >ENCRYPTION LEVEL</span
+                >
+                <span class="text-on-surface fw-bold">AES-4096-XTS</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span
+                  class="label-caps text-on-surface-variant"
+                  style="font-size: 10px"
+                  >ACTIVE THREATS</span
+                >
+                <span class="text-danger-emphasis fw-bold">14.2K DETECTED</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+              <div class="text-end">
+                <p
+                  class="label-caps text-on-surface-variant text-uppercase mb-0"
+                  style="font-size: 10px"
+                >
+                  Local Time
+                </p>
+                <p
+                  class="font-monospace text-on-surface mb-0"
+                  id="local-clock"
+                  style="font-size: 12px"
+                >
+                  00:00:00 UTC
+                </p>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center bg-primary-container bg-opacity-10 rounded-circle border border-primary-container border-opacity-25"
+                style="width: 48px; height: 48px"
+              >
+                <span class="material-symbols-outlined text-dark"
+                  >verified_user</span
+                >
+              </div>
+            </div>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/dashboard.js"></script>
+    <script>
+      // Packet Stream Simulation
+      const packetStream = document.getElementById("packet-stream");
+      const protocols = [
+        "TCP SYN",
+        "UDP",
+        "ICMP",
+        "TCP ACK",
+        "TLS HELLO",
+        "HTTP GET",
+        "DNS QUERY",
+      ];
+      const ips = [
+        "192.168.1.45",
+        "10.0.0.12",
+        "172.16.54.21",
+        "8.8.8.8",
+        "45.2.14.88",
+        "192.168.10.1",
+      ];
+
+      function addPacket() {
+        const time = (performance.now() + 100000).toFixed(2);
+        const proto = protocols[Math.floor(Math.random() * protocols.length)];
+        const src = ips[Math.floor(Math.random() * ips.length)];
+        const dst = ips[Math.floor(Math.random() * ips.length)];
+        const colorClass = proto.includes("TCP")
+          ? "text-primary-container"
+          : proto.includes("ICMP")
+            ? "text-danger-emphasis"
+            : "text-on-surface-variant";
+
+        const line = document.createElement("div");
+        line.className = `${colorClass} tc-packet-line mb-1`;
+        line.innerHTML = `<span class="opacity-50">[ ${time} ]</span> ${proto} ${src} -> ${dst} LEN=${Math.floor(Math.random() * 1500)}`;
+
+        packetStream.appendChild(line);
+        setTimeout(() => line.classList.add("tc-in"), 10);
+
+        if (packetStream.children.length > 30) {
+          packetStream.removeChild(packetStream.firstChild);
+        }
+        packetStream.scrollTop = packetStream.scrollHeight;
+      }
+
+      setInterval(addPacket, 400);
+
+      // Local Clock
+      function updateClock() {
+        const now = new Date();
+        document.getElementById("local-clock").innerText =
+          now.toUTCString().split(" ")[4] + " UTC";
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>
